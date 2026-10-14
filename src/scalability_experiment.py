@@ -73,19 +73,32 @@ def parse_args():
 def detect_cluster_resource(spark):
     """
     Xác định cấu hình tài nguyên thực tế từ SparkContext.
+
+    PySpark 4.x không còn trả id và số nhân của executor trong getExecutorInfos(), nên đếm executor bằng host
+    khác host của driver và lấy số nhân từ spark.executor.cores. Chạy một job nhỏ rồi đợi số executor ổn định
+    (executor đăng ký bất đồng bộ, đếm sớm có thể thiếu).
     """
     sc = spark.sparkContext
-    status = sc.statusTracker()
-    executors = status.getExecutorInfos()
-    # Loại trừ driver (thường có id 'driver')
-    worker_executors = [e for e in executors if e.id() != "driver"]
-    n_executors = len(worker_executors)
-    total_cores = sum(e.totalCores() for e in worker_executors)
-    
+    sc.parallelize(range(64), 8).count()
+    driver_host = sc.getConf().get("spark.driver.host", "")
+    cores_per_executor = int(sc.getConf().get("spark.executor.cores", "2"))
+
+    def count_executors():
+        return len([e for e in sc.statusTracker().getExecutorInfos() if e.host != driver_host])
+
+    n_executors, stable = count_executors(), 0
+    for _ in range(30):
+        time.sleep(1)
+        current = count_executors()
+        stable = stable + 1 if current == n_executors else 0
+        n_executors = current
+        if stable >= 3 and n_executors >= 1:
+            break
+
     if n_executors <= 1:
         return "1 Worker (2 Cores)"
     else:
-        return f"{n_executors} Workers ({total_cores} Cores)"
+        return f"{n_executors} Workers ({n_executors * cores_per_executor} Cores)"
 
 
 def run_experiment_for_ratio(spark, ratio_pct, recipes_df, train_base_df, test_base_df, clean_interactions_df, all_users_df):
