@@ -207,10 +207,7 @@ if ($WebOnly) {
         return
     }
 
-    # 2. Kiểm tra cụm bằng một lượt đọc và ghi nhỏ
-    if (-not $SkipSmoke) { Invoke-InClient "kiem_tra_cum_smoke_test" "src/smoke_test_cluster.py" }
-
-    # 3. Nạp dữ liệu thô lên HDFS (chỉ đọc từ /data/raw_host trong container namenode, gắn từ data/raw)
+    # 2. Nạp dữ liệu thô lên HDFS (chỉ đọc từ /data/raw_host trong container namenode, gắn từ data/raw)
     if (-not $SkipLoad) {
         $files = @("food_com/RAW_interactions.csv", "food_com/RAW_recipes.csv", "food_vietnam/foods.csv", "food_vietnam/ratings.csv")
         foreach ($f in $files) {
@@ -225,6 +222,9 @@ if ($WebOnly) {
         }
         [void](Invoke-Step -Name "kiem_tra_du_lieu_tho" -CommandLine "docker exec namenode $Hdfs dfs -ls -R -h $HdfsRoot/data/raw")
     }
+
+    # 3. Kiểm tra cụm bằng một lượt đọc dữ liệu thô và ghi Parquet nhỏ (cần dữ liệu đã nạp)
+    if (-not $SkipSmoke) { Invoke-InClient "kiem_tra_cum_smoke_test" "src/smoke_test_cluster.py" }
 
     # 4. Làm sạch cả hai bộ và kiểm tra
     Invoke-InClient "lam_sach_hai_bo" "src/run_pipeline_p3.py"
