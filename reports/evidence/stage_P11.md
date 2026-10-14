@@ -1,5 +1,15 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P11: XÂY DỰNG DASHBOARD STREAMLIT (DATA CONTRACT & APPLICATION SERVING)
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> - Dashboard Streamlit đã được thay bằng `web/` (CONTEXT mục 7.3); `app/` giữ làm bản lưu. Mô tả thay đổi ở [stage_S4.md](stage_S4.md).
+> - Câu "ALS học được tương quan tiềm ẩn, cho phép xếp hạng cá nhân hóa" (Câu hỏi 3) và "ALS giảm mạnh sai số ở 1 đến 4 sao" (Câu hỏi 4) không được số liệu chứng minh: ALS không tốt hơn mô hình cơ sở ở độ đo tổng nào ([stage_S3.md](stage_S3.md), [stage_S3b.md](stage_S3b.md)). Số ViFoodRec trong biên bản (ALS 1,3832; Global Mean 1,2866) thuộc dữ liệu cũ; số mới: 1,6654 và 1,5706.
+> - Các tên cụm người dùng ViFoodRec ("Convenient Diners"...) không có số liệu hỗ trợ; nay là "Cụm 1, 2, 3".
+> - Nhãn "Món mặn" gắn cả cho chè và bánh; nghĩa thực là "không chay" ([stage_S4.md](stage_S4.md) mục A6).
+> - Ảnh chụp: thư mục có 17 PNG ở cấp trên cùng (biên bản ghi 16), và hai tên file trong bảng mục 4 lệch một chữ số so với tên thật (`..._1791948923817.png`, `..._1791948929504.png`).
+> - Python trong container `bigdata_spark_env` là 3.13.16; "Python 3.11" ở đầu biên bản là Python của máy Windows (`python --version` trên máy chủ: 3.11.9).
+> - Các con số "dưới 100 ms", "dưới 0,05 giây" không có phép đo; coi là chưa đo. Kiểm thử bằng `AppTest` không phải trình duyệt thật.
+
 - **Thời gian thực hiện:** 14/10/2026
 - **Môi trường thực thi:**
   - Client Container: `bigdata_spark_env` (Python 3.13 / Python 3.11 Host Windows, Streamlit 1.65.0, Pandas 2.3.3/3.0.6, PyArrow 25.0.1, Altair 6.3.0).

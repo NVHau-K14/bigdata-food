@@ -1,5 +1,14 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P6: PHÂN CHIA DỮ LIỆU, XÂY DỰNG KHUNG ĐÁNH GIÁ VÀ MÔ HÌNH BASELINE
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Phần ViFoodRec của biên bản này đã bị thay bởi [stage_S3.md](stage_S3.md):
+> - Chia dữ liệu mới: train 146.012, validation 18.204, test 18.415 (cũ: 119.416, 14.935, 15.080). Rò rỉ vẫn bằng 0.
+> - Baseline mới: Trung bình toàn cục RMSE 1,5706, MAE 1,3502; Trung bình món làm trơn 1,5873 và 1,3690; Top món phổ biến 1,5924 và 1,3723 (cũ: 1,2866; 1,3033; 1,3094). RMSE cũ và mới không so trực tiếp được vì thang điểm và tập test đã đổi.
+> - Giá trị trung bình toàn cục "μ = 2,9981" (ViFoodRec cũ) không truy được về file nào và không còn dùng; μ hiện tại của ViFoodRec là 2,5012 (trung bình điểm tập train). μ của Food.com = 4,7146 đã kiểm chứng bằng truy vấn trên tập train ở S5 (log `S5_01_verify_mu.log`).
+> - Các câu "phân phối đều nhân tạo" và hình chữ V quanh 3,0 sao thuộc dữ liệu cũ; "nhân tạo" là giả thuyết chưa kiểm chứng.
+> - Nhận định rằng chỉ số xếp hạng sẽ cho thấy ALS vượt trội (mục kết luận) không đúng với kết quả: ALS không tốt hơn mô hình cơ sở ở độ đo xếp hạng nào của S3 ([stage_S3b.md](stage_S3b.md) có ALS ngầm định).
+
 - **Thời gian thực hiện:** 13/10/2026
 - **Môi trường thực nghiệm:** Cụm phân tán Apache Spark 4.2.0 Standalone (1 Master, 2 Workers: 4 Cores, 7 GB RAM, Driver 2.5 GB RAM) trên nền tảng lưu trữ phân tán HDFS 3.3.6 (`hdfs://namenode:9000/`).
 - **Tập dữ liệu đầu vào:**

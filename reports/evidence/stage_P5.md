@@ -1,5 +1,12 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P5: PHÂN TÍCH KHÁM PHÁ DỮ LIỆU (EDA) TRÊN CỤM SPARK
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Số liệu ViFoodRec trong biên bản này (149.431 dòng, độ thưa 63,01%, điểm trung bình 3,00, trung vị 1.469 đánh giá mỗi người, "mỗi mức 11,11%") thuộc dữ liệu cũ đã loại 0,0 và 0,5. Số mới ([stage_S3.md](stage_S3.md) mục 6, `results/eda/eda_12_dataset_comparison.csv`): 182.631 dòng, độ thưa 54,79%, điểm trung bình 2,50, trung vị 1.795 đánh giá mỗi người và 46 mỗi món, phân phối 11 mức từ 8,99% đến 9,23%.
+> - Câu hỏi 3: "phân phối điểm đều nhân tạo" là giả thuyết chưa kiểm chứng. Điều đo được là phân phối gần đều (độ lệch chuẩn 1,5798 so với 1,5811 của phân phối đều lý thuyết, [stage_S2.md](stage_S2.md)).
+> - Số Food.com không đổi: 12 file CSV EDA được so bằng `cmp` với bản sao lưu khi chạy lại ở S3 (log `S3_11`).
+> - Biên bản không có log lệnh nguyên văn.
+
 - **Thời gian thực hiện:** 13/10/2026
 - **Môi trường thực nghiệm:** Cụm phân tán Apache Spark 4.2.0 Standalone (1 Master, 2 Workers: 4 Cores, 7 GB RAM, Driver 2.5 GB RAM) trên nền tảng lưu trữ phân tán HDFS 3.3.6 (`hdfs://namenode:9000/`).
 - **Tập dữ liệu đầu vào:** 

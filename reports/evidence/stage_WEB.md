@@ -1,5 +1,13 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN WEB: XÂY DỰNG DASHBOARD WEB TĨNH ĐỘC LẬP THAY THẾ STREAMLIT
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Bản web v1 mô tả ở đây đã được thay bằng bản v2 ở [stage_S4.md](stage_S4.md). Các chỗ sai trong biên bản này:
+> - Mục 4.2 và 5: "24.325 người dùng" Food.com sai, đúng là 30.836 (`results/eda/eda_12_dataset_comparison.csv`); "5.000 người dùng đầu tiên" lên web sai, web nạp 1.000 người dùng (10.000 gợi ý); "độ thưa 99,963%" đúng là 99,97%; "điểm trung bình 4,68" là trung bình của trung bình từng người dùng, điểm trung bình gộp theo tương tác là 4,71.
+> - Số ViFoodRec (độ thưa 63,01%, 149.431 dòng) thuộc dữ liệu cũ; số mới ở [stage_S2.md](stage_S2.md).
+> - Chuỗi "Spark 3.5" trên giao diện sai (Spark 4.2.0); đã sửa ở S4.
+> - `verify_web.py` 32/32 là bản cũ; bản mới kiểm tra 122 mục (log `S4_07`).
+
 - **Thời gian thực hiện:** 14/10/2026
 - **Môi trường thực thi:**
   - Client / Host: Windows (PowerShell), Python 3.11 / Python 3.13 venv.

@@ -1,0 +1,25 @@
+ĐẠT  Food.com ALS RMSE: nguồn = 0.6747 | STATUS = 0.6747
+ĐẠT  Food.com ALS ngầm định P@10: nguồn = 0.0057 | STATUS = 0.0057
+ĐẠT  ViFoodRec Global Mean RMSE: nguồn = 1.5706 | STATUS = 1.5706
+ĐẠT  ViFoodRec ALS MAE: nguồn = 1.4185 | STATUS = 1.4185
+ĐẠT  ViFoodRec Top-N P@10: nguồn = 0.02277 | STATUS = 0.02277
+ĐẠT  ViFoodRec ALS ngầm định R@10: nguồn = 0.00428 | STATUS = 0.00428
+ĐẠT  Food.com số dòng thô: nguồn = 1132367.0 | STATUS = 1132367
+ĐẠT  Food.com số dòng sạch: nguồn = 706514.0 | STATUS = 706514
+ĐẠT  ViFoodRec số dòng sạch: nguồn = 182631.0 | STATUS = 182631
+ĐẠT  ViFoodRec dòng loại khóa ngoại: nguồn = 47.0 | STATUS = 47
+ĐẠT  Food.com dòng bị loại tổng: nguồn = 425853.0 | STATUS = 425853
+ĐẠT  Food.com số người dùng: nguồn = 30836.0 | STATUS = 30836
+ĐẠT  ViFoodRec độ thưa: nguồn = 54.79 | STATUS = 54.79
+ĐẠT  Food.com điểm TB: nguồn = 4.71 | STATUS = 4.71
+ĐẠT  Food.com train: nguồn = 565420.0 | STATUS = 565420
+ĐẠT  ViFoodRec test: nguồn = 18415.0 | STATUS = 18415
+ĐẠT  Food.com cold-start val: nguồn = 422.0 | STATUS = 422
+ĐẠT  Silhouette Food.com k=4: nguồn = 0.2743 | STATUS = 0.2743
+ĐẠT  Silhouette ViFoodRec Users k=3: nguồn = 0.2219 | STATUS = 0.2219
+ĐẠT  Silhouette ViFoodRec Foods k=4: nguồn = 0.2334 | STATUS = 0.2334
+ĐẠT  Storage nén interactions sạch: nguồn = 4.19 | STATUS = 4.19
+ĐẠT  Mở rộng 2W 100%: nguồn = 7.933 | STATUS = 7.933
+ĐẠT  Mở rộng 1W 10%: nguồn = 10.583 | STATUS = 10.583
+Tổng: 23 | sai: 0
+5 số chọn ngẫu nhiên: ['Silhouette ViFoodRec Foods k=4', 'ViFoodRec số dòng sạch', 'Food.com số người dùng', 'Mở rộng 1W 10%', 'Storage nén interactions sạch']

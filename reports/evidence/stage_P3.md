@@ -1,5 +1,14 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P3: LÀM SẠCH DỮ LIỆU CHUẨN HÓA VÀ KIỂM CHỨNG TỰ ĐỘNG
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Phần ViFoodRec của biên bản này đã bị thay bởi [stage_S2.md](stage_S2.md):
+> - Bước "lọc rating trong [1,0; 5,0]" loại 33.211 dòng (điểm 0,0: 16.509; điểm 0,5: 16.702) không có căn cứ. Các câu "0,0 là không đánh giá" và "0,5 ngoài thang đo" không đúng: thang bài báo là 0,0 đến 5,0 bước 0,5, và mỗi mức chiếm từ 8,99% đến 9,23% số dòng. Nay: ViFoodRec nay giữ 11 mức điểm 0,0 đến 5,0 (không còn loại 0,0 và 0,5): 182.631 dòng sạch, 101 người dùng, 4.000 món, độ thưa 54,79%, điểm trung bình 2,50 ([stage_S2.md](stage_S2.md)).
+> - Số 36 dòng khóa ngoại (`food_id = 4000`) là số sau khi đã bỏ 0,0 và 0,5; trên dữ liệu đầy đủ là 47 dòng.
+> - Dòng nhật ký "100 user và 4000 món" sai (đúng là 101 user); đã sửa ở S2, và nay được sinh từ số đo.
+> - Ở Câu hỏi 3, cụm từ "phân phối điểm đều nhân tạo" là suy đoán chưa kiểm chứng (giả thuyết chưa kiểm chứng).
+> - Phần Food.com (706.514 dòng sau K-core) không chạy lại và không đổi.
+
 - **Thời gian thực hiện:** 13/10/2026
 - **Môi trường thực thi:** Cụm phân tán Spark Standalone (1 Master, 2 Workers: 4 cores, 7GB RAM) kết hợp HDFS (`apache/hadoop:3.3.6`) trên Docker.
 - **Trạng thái giai đoạn:** **HOÀN THÀNH TOÀN DIỆN (ĐẠT 100% TIÊU CHÍ NGHIỆM THU)**

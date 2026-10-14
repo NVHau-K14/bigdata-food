@@ -1,4 +1,9 @@
 # BÁO CÁO PHÂN TÍCH KHÁM PHÁ DỮ LIỆU (EDA INSIGHTS)
+
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Phần ViFoodRec của báo cáo này viết trên dữ liệu cũ (149.431 dòng, độ thưa 63,01%, điểm trung bình 3,00, trung vị 1.469 đánh giá mỗi người, "phân phối đều nhân tạo"). Số mới ([stage_S3.md](stage_S3.md) mục 6): 182.631 dòng, 101 người dùng, độ thưa 54,79%, điểm trung bình 2,50, trung vị 1.795 đánh giá mỗi người và 46 mỗi món, phân phối 11 mức từ 8,99% đến 9,23%; món không chay 3.805 (điểm trung bình 2,4993), món chay 195 (2,4974). "Nhân tạo" là giả thuyết chưa kiểm chứng. Phần Food.com không đổi (12 file CSV so bằng `cmp`, log `S3_11`).
+
 **Hệ thống Gợi ý Món ăn Big Data - Bộ dữ liệu Food.com & ViFoodRec**
 
 *Ngày thực hiện:* 2026-10-13  

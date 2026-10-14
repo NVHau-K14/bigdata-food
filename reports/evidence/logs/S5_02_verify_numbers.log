@@ -1,0 +1,21 @@
+food_com: mu suy từ mức 5.0 = 4.7146; từ mức 1.0 = 4.7146
+food_vietnam: mu suy từ mức 5.0 = 2.5012; từ mức 0.0 = 2.5012
+Food.com mức 1,0: ALS 3.0118 so với Global Mean 3.7146 -> -18.9%
+Food.com mức 1,0: ALS 3.0118 so với Smoothed Item Mean 3.6135 -> -16.7%
+Food.com mức 1,0: ALS 3.0118 so với Top-N Popular 3.5519 -> -15.2%
+  mức 1.0: ALS so với Smoothed Item Mean -16.7%
+  mức 2.0: ALS so với Smoothed Item Mean -21.0%
+  mức 3.0: ALS so với Smoothed Item Mean -27.3%
+  mức 4.0: ALS so với Smoothed Item Mean -27.0%
+  mức 5.0: ALS so với Smoothed Item Mean +94.8%
+Food.com tỷ lệ người dùng mỗi cụm: {0: 12.98, 1: 34.7, 2: 25.69, 3: 26.63} | nhỏ nhất = 12.98
+ViFoodRec người dùng mỗi cụm: {-1: 100.0, 0: 32.67, 1: 30.69, 2: 36.63}
+Cột của kmeans_tuning.csv: ['task', 'k', 'silhouette', 'wssse', 'time_sec']
+Cột của scalability.csv: ['sample_ratio', 'num_rows', 'resource', 'step', 'time_run_1', 'time_run_2', 'avg_time', 'rmse']
+                     time_run_1                             time_run_2                               avg_time                    
+resource     1 Worker (2 Cores) 2 Workers (4 Cores) 1 Worker (2 Cores) 2 Workers (4 Cores) 1 Worker (2 Cores) 2 Workers (4 Cores)
+sample_ratio                                                                                                                     
+10%                      13.557              15.179              7.610               8.793             10.583              11.986
+100%                     10.402               7.203              9.380               8.663              9.891               7.933
+25%                       7.544               7.539              7.029               9.248              7.287               8.393
+50%                       9.008               7.634              7.467               6.698              8.238               7.166

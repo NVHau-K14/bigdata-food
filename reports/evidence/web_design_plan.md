@@ -1,5 +1,11 @@
 # KẾ HOẠCH THIẾT KẾ DASHBOARD WEB TĨNH (WEB DESIGN PLAN)
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> - Dòng tiêu đề mẫu của trang Hệ thống (dòng 66) ghi "Spark 3.5"; phiên bản đúng là Spark 4.2.0 (đã sửa trên web ở S4).
+> - Tương phản của màu cam `#C85A17` ghi 4,88:1 (dòng 20) không đúng; đo lại ở S4 được 4,26:1, nên đổi cam thành `#B24E10` (5,26:1 trên nền trắng) ([stage_S4.md](stage_S4.md) mục C1).
+> - Nhiều chi tiết thiết kế đã đổi ở S4 (bỏ cột "Độ phủ", thêm bộ chọn "ViFoodRec: món", ngăn Chú giải); [stage_S4.md](stage_S4.md) là bản hiện hành.
+
 - **Mục tiêu:** Xây dựng dashboard tĩnh (HTML/CSS/JS thuần), chuẩn mực báo cáo kỹ thuật, mỗi trang vừa đúng một màn hình (1920x1080 và 1366x768), không cuộn dọc, thay thế hoàn toàn giao diện Streamlit cũ.
 - **Phong cách:** Nghiêm túc, thanh lịch, kỷ luật, lấy cảm hứng từ in ấn kỹ thuật và đồ họa thông tin khoa học (Information Design).
 

@@ -1,5 +1,13 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P10: XUẤT KẾT QUẢ CHO DASHBOARD VÀ HỢP ĐỒNG DỮ LIỆU (DATA CONTRACT)
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> - Dashboard chính nay là `web/` (HTML tĩnh), không phải Streamlit (CONTEXT mục 7.3); `app/` giữ làm bản lưu và nguồn dữ liệu. Hợp đồng của web: [docs/web_data_contract.md](../../docs/web_data_contract.md).
+> - `app/data/` đã tạo lại ở S3 và S3b: tổng 17,79 MB, `model_comparison.csv` 11 dòng, `verify_export.py` 66/66 (log `S3b_04`). Các số ViFoodRec trong biên bản này (1.010 dòng gợi ý là đúng; dung lượng 19,25 KB, tên cụm diễn giải) thuộc bản cũ; xem [docs/data_contract.md](../../docs/data_contract.md) bản 1.1.
+> - Các con số độ trễ và tốc độ đọc ("dưới 200 ms", "hàng trăm MB/giây") không có phép đo nào trong `reports/evidence/`; coi là chưa đo.
+> - Python trong container `bigdata_spark_env` là 3.13.16; "Python 3.11" ở đầu biên bản là Python của máy Windows (`python --version` trên máy chủ: 3.11.9).
+> - `verify_export.py` kiểm tra tồn tại, schema, số dòng và khóa ngoại; không kiểm đúng sai của số liệu.
+
 - **Thời gian thực hiện:** 14/10/2026
 - **Môi trường thực thi:** Container client `bigdata_spark_env` (Python 3.11, Pandas 2.3.3, PyArrow 25.0.0, PySpark 4.2.0) kết nối HDFS 3.3.6 (`hdfs://namenode:9000/`) và filesystem mount dự án (`/home/jovyan/work/`).
 - **Thư mục kết xuất mục tiêu:** `app/data/` (phục vụ Streamlit Dashboard P11 chạy bằng Pandas, không cần Spark).

@@ -1,5 +1,13 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P7: HUẤN LUYỆN, TINH CHỈNH VÀ ĐÁNH GIÁ MÔ HÌNH ALS MATRIX FACTORIZATION
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Biên bản này có kết luận bị số liệu bác bỏ. Số đúng và kết quả mới nằm ở [stage_S3.md](stage_S3.md), [stage_S3b.md](stage_S3b.md), `results/model_comparison.csv`:
+> - "ALS vượt trội áp đảo", "giảm sai số 19 đến 27%": ALS không tốt hơn mô hình cơ sở ở RMSE, MAE, Precision@10 và Recall@10 trên cả hai bộ. Ở Food.com, ALS chỉ thấp hơn ở RMSE của các mức 1 đến 4 sao, nhưng cao hơn rõ ở mức 5 sao (0,5903 so với 0,3030 của Trung bình món làm trơn; +94,8%), mức chiếm 78,40% dữ liệu.
+> - Con số "−19,2%" ở mức 1,0 sao không đúng. Tính lại từ `als_rmse_breakdown.csv` và `baseline_rmse_breakdown.csv` (log `S5_02_verify_numbers.log`): 3,6135 xuống 3,0118 là −16,7% so với Trung bình món làm trơn, −18,9% so với Trung bình toàn cục. Các mức 2, 3, 4 sao (−21,0%, −27,3%, −27,0%) khớp.
+> - ViFoodRec: kết quả cũ (ALS RMSE 1,3832) thay bằng ALS RMSE 1,6654 (rank 10, regParam 0,5, maxIter 10) trên dữ liệu 11 mức. Câu "nguyên nhân hoàn toàn do dữ liệu sinh nhân tạo / thiếu cấu trúc ẩn" là giả thuyết chưa kiểm chứng.
+> - Đối chiếu bài báo ("ALS nhỏ hơn khoảng 33%"): không so trực tiếp được (bài báo đo 200 điểm test) và Trung bình toàn cục của nhóm còn thấp hơn ALS; xem [stage_S3.md](stage_S3.md) mục 7.
+
 - **Thời gian thực hiện:** 13/10/2026
 - **Môi trường thực nghiệm:** Cụm phân tán Apache Spark 4.2.0 Standalone (1 Master, 2 Workers: 4 Cores, 7 GB RAM, Driver 2.5 GB RAM) trên nền tảng lưu trữ phân tán HDFS 3.3.6 (`hdfs://namenode:9000/`).
 - **Dữ liệu đầu vào (Tập chia P6 trên HDFS):**

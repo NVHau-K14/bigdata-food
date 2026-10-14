@@ -1,5 +1,14 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P8: PHÂN TÍCH HÀNH VI NGƯỜI DÙNG VÀ MÓN ĂN BẰNG K-MEANS CLUSTERING
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Phần K-means ViFoodRec và nhãn cụm đã được làm lại ở [stage_S3.md](stage_S3.md) mục 5:
+> - Ba cụm người dùng ViFoodRec không có số liệu hỗ trợ cho các tên "Thực khách chuộng bữa nhanh (Convenient Diners)" và tương tự; nay gọi "Cụm 1, 2, 3" (người dùng quyết định ngày 14/10/2026). Hồ sơ cụm mới: 33, 31 và 37 người (32,67%; 30,69%; 36,63%), điểm trung bình 2,5381; 2,4996; 2,4691; Silhouette k = 3 là 0,2219.
+> - Nhãn cụm Food.com đổi sang tiếng Việt ở S3 (số không đổi: 3.993; 10.679; 7.905; 8.195 người); tên cũ của cụm 1 "phổ thông dễ tính" không khớp đặc điểm nổi bật của cụm (nấu lâu, nhiều calo).
+> - Câu "cụm nhỏ nhất của Food.com là 7,77% đến 12,98%" sai: không có cụm 7,77%; cụm nhỏ nhất là 12,98% (`results/cluster_profiles_food_com.csv`, log `S5_02_verify_numbers.log`).
+> - "k = 5 của ViFoodRec Users xuất hiện cụm quá nhỏ (dưới 10 người dùng)": không truy được, vì `kmeans_tuning.csv` không lưu kích thước cụm; kết quả ViFoodRec Users nay đã chạy lại.
+> - Tiêu chí "Silhouette cao": Food.com chọn k = 4 (Silhouette 0,2743) trong khi k = 2 đạt 0,5257 là cao nhất; k chọn theo khả năng diễn giải cụm, không theo Silhouette. Silhouette 0,2 đến 0,3 cho thấy cấu trúc cụm yếu.
+
 - **Thời gian thực hiện:** 13/10/2026
 - **Môi trường thực nghiệm:** Cụm phân tán Apache Spark 4.2.0 Standalone (1 Master, 2 Workers: 4 Cores, 7 GB RAM, Driver 2.5 GB RAM) trên nền tảng lưu trữ phân tán HDFS 3.3.6 (`hdfs://namenode:9000/`).
 - **Dữ liệu đầu vào (Tập chia P6 trên HDFS):**

@@ -1,0 +1,4 @@
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:>                                                          (0 + 4) / 8][Stage 1:============================================>              (6 + 2) / 8]                                                                                food_com: số dòng train = 565420, mu (trung bình điểm tập train) = 4.714605
+food_vietnam: số dòng train = 146012, mu (trung bình điểm tập train) = 2.501157

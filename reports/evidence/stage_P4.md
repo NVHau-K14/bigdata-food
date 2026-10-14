@@ -1,5 +1,11 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P4: THỰC NGHIỆM LƯU TRỮ VÀ HIỆU NĂNG (CSV VS PARQUET CÔNG BẰNG)
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> - Giải thích "CSV đa dòng không chia được split" (mục 5) không áp dụng cho thí nghiệm đã đo: bảng ở thí nghiệm C là `interactions_clean` 4 cột, 19,11 MB, không phải CSV đa dòng thô. Đây là giả thuyết chưa kiểm chứng cho phần đo thời gian.
+> - Biên bản chỉ có bảng số, không có log lệnh nguyên văn; số dung lượng và thời gian truy được về `data/results/storage_benchmark.csv` (14 dòng, không đổi ở S2 đến S4).
+> - Truy vấn đo trên bảng 19 MB, 3 lần đo sau 1 lần khởi động, nên chênh lệch thời gian (1,71 đến 2,06 lần) chỉ có giá trị tham khảo.
+
 - **Thời gian thực hiện:** 13/10/2026
 - **Môi trường thực nghiệm:** Cụm phân tán Apache Spark 4.2.0 Standalone (1 Master, 2 Workers: 4 Cores, 7 GB RAM, Driver 2.5 GB RAM) trên nền tảng lưu trữ phân tán HDFS 3.3.6 (`hdfs://namenode:9000/`).
 - **Trạng thái giai đoạn:** **HOÀN THÀNH TOÀN DIỆN (ĐẠT 100% TIÊU CHÍ NGHIỆM THU)**

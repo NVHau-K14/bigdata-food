@@ -1,5 +1,15 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P9: THỰC NGHIỆM MỞ RỘNG QUY MÔ DỮ LIỆU VÀ TÀI NGUYÊN (SCALABILITY EXPERIMENT)
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Số đo trong `results/scalability.csv` không đổi; một số giải thích dưới đây chưa được kiểm chứng và nay ghi là giả thuyết:
+> - "Phần tuần tự khoảng 35 đến 40%, trần 1,33 lần theo định luật Amdahl": không có phép đo nào tách phần tuần tự; giá trị được suy ngược từ kết quả 1,25 lần. Giả thuyết chưa kiểm chứng.
+> - "Lượt 10% chậm vì khởi động JVM và JIT": giả thuyết chưa kiểm chứng. Số liệu chỉ cho thấy lượt chạy 1 chậm hơn lượt 2 ở mức 10% (15,179 so với 8,793 giây với 2 Worker; 13,557 so với 7,610 giây với 1 Worker); ở mức 25% và 100% với 2 Worker lượt 1 lại nhanh hơn lượt 2. Thứ tự chạy các mức và cấu hình không được ghi, nên không phân biệt được hiệu ứng khởi động với dao động.
+> - "Parquet và pushdown loại bỏ hoàn toàn nút thắt I/O": thí nghiệm này không có đối chứng với CSV, nên chưa kiểm chứng.
+> - "Trùng khớp hoàn hảo" giữa RMSE ALS ở P7 (0,6747) và ở đây (0,6745): hai số khác nhau 0,0002 (hai lần huấn luyện riêng).
+> - Kết luận "mở rộng được" không được số liệu hỗ trợ: thời gian tổng gần phẳng và không đơn điệu (2 Worker: 11,986; 8,393; 7,166; 7,933 giây ở 10%, 25%, 50%, 100%), dữ liệu chỉ tới 706.514 dòng; chỉ kết luận được là chưa thấy thời gian tăng theo dữ liệu trong khoảng này.
+> - Biên bản không có log lệnh nguyên văn.
+
 - **Thời gian thực hiện:** 14/10/2026
 - **Môi trường thực nghiệm:** Cụm phân tán Apache Spark 4.2.0 Standalone (1 Master, 2 Workers: 4 Cores, 7 GB RAM, Driver 2.5 GB RAM) trên nền tảng lưu trữ phân tán HDFS 3.3.6 (`hdfs://namenode:9000/`).
 - **Bộ dữ liệu mục tiêu:** Food.com (706,514 tương tác sạch, 30,836 users duy nhất, 78,171 công thức nấu ăn).

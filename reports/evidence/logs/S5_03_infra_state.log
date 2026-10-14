@@ -1,0 +1,133 @@
+### docker ps
+NAMES               STATUS
+spark-worker-1      Up 3 hours (healthy)
+bigdata_spark_env   Up 3 hours (healthy)
+spark-worker-2      Up 3 hours (healthy)
+datanode2           Up 3 hours
+datanode1           Up 3 hours
+spark-master        Up 3 hours (healthy)
+namenode            Up 3 hours
+### dfsadmin report
+Configured Capacity: 2162202353664 (1.97 TB)
+Present Capacity: 2026078806016 (1.84 TB)
+DFS Remaining: 2023712972800 (1.84 TB)
+DFS Used: 2365833216 (2.20 GB)
+DFS Used%: 0.12%
+Replicated Blocks:
+	Under replicated blocks: 0
+	Blocks with corrupt replicas: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+Erasure Coded Block Groups: 
+	Low redundancy block groups: 0
+	Block groups with corrupt internal blocks: 0
+	Missing block groups: 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+
+-------------------------------------------------
+Live datanodes (2):
+
+Name: 172.18.0.4:9866 (datanode2.bigdata-food_bigdata-net)
+Hostname: datanode2
+Decommission Status : Normal
+### fsck /data /models
+### spark version
+pyspark 4.2.0 python 3.13.16
+### master json
+{
+  "url" : "spark://spark-master:7077",
+  "workers" : [ {
+    "id" : "worker-20261014133232-172.18.0.6-34781",
+    "host" : "172.18.0.6",
+    "port" : 34781,
+    "webuiaddress" : "http://172.18.0.6:8081",
+    "cores" : 2,
+    "coresused" : 0,
+    "coresfree" : 2,
+    "memory" : 3500,
+    "memoryused" : 0,
+    "memoryfree" : 3500,
+    "resources" : { },
+    "resourcesused" : { },
+    "resourcesfree" : { },
+    "state" : "ALIVE",
+    "lastheartbeat" : 1791994832967
+  }, {
+    "id" : "worker-20261014133231-172.18.0.5-43853",
+    "host" : "172.18.0.5",
+    "port" : 43853,
+    "webuiaddress" : "ht
+### compose workers
+6:    image: apache/hadoop:3.3.6
+12:      HDFS-SITE_XML_dfs.replication: "2"
+32:    image: apache/hadoop:3.3.6
+38:      HDFS-SITE_XML_dfs.replication: "2"
+58:    image: apache/hadoop:3.3.6
+64:      HDFS-SITE_XML_dfs.replication: "2"
+84:    image: quay.io/jupyter/pyspark-notebook:spark-4.2.0
+106:    image: quay.io/jupyter/pyspark-notebook:spark-4.2.0
+110:      SPARK_WORKER_CORES: "2"
+111:      SPARK_WORKER_MEMORY: "3500M"
+133:    image: quay.io/jupyter/pyspark-notebook:spark-4.2.0
+137:      SPARK_WORKER_CORES: "2"
+138:      SPARK_WORKER_MEMORY: "3500M"
+160:    image: quay.io/jupyter/pyspark-notebook:spark-4.2.0
+ Missing replicas:		0 (0.0 %)
+ Blocks queued for replication:	0
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+ Blocks queued for replication:	0
+FSCK ended at Wed Oct 14 16:20:44 UTC 2026 in 13 milliseconds
+
+
+The filesystem under path '/data' is HEALTHY
+ Missing replicas:		0 (0.0 %)
+ Blocks queued for replication:	0
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+ Blocks queued for replication:	0
+FSCK ended at Wed Oct 14 16:20:45 UTC 2026 in 6 milliseconds
+
+
+The filesystem under path '/models' is HEALTHY
+== fsck /data
+Status: HEALTHY
+ Total files:	115
+ Under-replicated blocks:	0 (0.0 %)
+ Average block replication:	2.0
+ Missing blocks:		0
+ Total files:	0
+ Average block group size:	0.0
+== fsck /models
+Status: HEALTHY
+ Total files:	48
+ Under-replicated blocks:	0 (0.0 %)
+ Average block replication:	2.0
+ Missing blocks:		0
+ Total files:	0
+ Average block group size:	0.0

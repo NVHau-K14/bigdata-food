@@ -1,5 +1,13 @@
 # BIÊN BẢN NGHIỆM THU GIAI ĐOẠN P2: HẠ TẦNG CỤM HDFS + SPARK TRONG DOCKER
 
+> **ĐÍNH CHÍNH ngày 14/10/2026.** Biên bản này giữ nguyên nội dung gốc; các điểm sau đã bị bác bỏ hoặc thay bằng kết quả mới. Biên bản chi tiết: [stage_S5.md](stage_S5.md).
+>
+> Phần hạ tầng đã được sửa và kiểm tra lại ở [stage_S1.md](stage_S1.md):
+> - Sơ đồ và chú thích "Replication = 2" không đúng với file do Spark ghi (có replication 3, 144 khối thiếu bản sao). Sau S1: `Under replicated blocks` = 0, replication 2 (log `S1_07` đến `S1_13`).
+> - Container `spark-master` và `spark-worker-*` báo `unhealthy` do healthcheck mặc định của image kiểm tra Jupyter; đã khai báo healthcheck riêng ở S1.
+> - Python trong container `bigdata_spark_env` là 3.13.16 (ghi "3.12" hoặc "3.11" ở đây là sai).
+> - Bước thử `compose down` và `up` giữ dữ liệu (mục 3.7) khi đó chưa có log nguyên văn; log nằm ở `reports/evidence/logs/S1_11_down_up.log`.
+
 - **Thời gian thực hiện:** 13/10/2026
 - **Môi trường thực thi:** Docker Desktop trên Windows 11 (WSL2), RAM máy vật lý 24 GB (Docker cấp phát 16 GB, tổng RAM cụm phân bổ ~13.5 GB).
 - **Trạng thái giai đoạn:** **HOÀN THÀNH TOÀN DIỆN (ĐẠT 100% TIÊU CHÍ, KHÔNG CẦN DỰ PHÒNG)**

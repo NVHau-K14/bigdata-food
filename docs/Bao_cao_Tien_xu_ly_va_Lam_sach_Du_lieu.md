@@ -1,3 +1,5 @@
+> **ĐÃ LỖI THỜI (đánh dấu ngày 14/10/2026).** Báo cáo này viết ngày 13/10/2026 bởi công cụ trước đó và đã bị thay thế. Các điểm sai đã biết: "Hoàn thành 100%" không có căn cứ; Food.com 735.006 dòng là kết quả K-core một lượt chưa hội tụ (kết quả hội tụ là 706.514); ViFoodRec 149.467 dòng là số sau khi loại điểm 0,0 và 0,5 (quyết định đã bị bác bỏ; nay 182.631 dòng); so sánh dung lượng "giảm gần 60 lần" không công bằng (so CSV thô có cột review với Parquet đã bỏ cột và bỏ dòng; so sánh công bằng ở `data/results/storage_benchmark.csv`). Không trích dẫn từ báo cáo này. Xem [reports/evidence/stage_S5.md](../reports/evidence/stage_S5.md).
+
 # BÁO CÁO TỔNG HỢP: TIỀN XỬ LÝ VÀ LÀM SẠCH DỮ LIỆU (DATA PREPROCESSING & CLEANING)
 
 **Đề tài:** Phân tích hành vi ăn uống và hệ thống gợi ý món ăn  

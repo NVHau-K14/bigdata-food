@@ -5,12 +5,12 @@
 Nhóm xử lý hai bộ dữ liệu bằng CÙNG MỘT pipeline Spark, KHÔNG gộp dữ liệu vì không có người dùng chung:
 - Food.com (Kaggle: RAW_interactions.csv, RAW_recipes.csv): quy mô lớn, dùng để chứng minh khả năng mở rộng và phân tích hành vi theo thời gian.
 - ViFoodRec (món Việt Nam: foods.csv, ratings.csv): dùng cho ứng dụng gợi ý món Việt. Lưu ý: chỉ khoảng 100 người dùng, đánh giá do khảo sát, tác giả đã điền một phần giá trị thiếu bằng trung vị, và foods.csv thực tế có 4.000 món.
-Mục tiêu kỹ thuật: baseline -> K-means (phân tích hành vi) -> ALS (gợi ý, Spark MLlib, explicit feedback) -> thực nghiệm mở rộng -> dashboard Streamlit.
+Mục tiêu kỹ thuật: baseline -> K-means (phân tích hành vi) -> ALS (gợi ý, Spark MLlib, explicit feedback) -> thực nghiệm mở rộng -> dashboard web tĩnh `web/` (HTML, CSS, JS; thay Streamlit từ ngày 14/10/2026, xem mục 7.3).
 
 ## 2. Môi trường
 - Máy Windows (PowerShell), Docker Desktop, 24GB RAM (cấp cho Docker khoảng 16GB).
 - Dữ liệu thô nằm ở data/raw/ (CHỈ ĐỌC, tuyệt đối không sửa hay xóa).
-- Thư mục: data/raw, data/processed, src/, notebooks/, app/, reports/, docs/, results/.
+- Thư mục: data/raw, data/processed, src/, notebooks/, web/ (dashboard chính), app/ (bản Streamlit lưu trữ và nguồn dữ liệu xuất), reports/, docs/, results/.
 - Mọi đường dẫn đọc và ghi dữ liệu phải đi qua src/config.py. Có hai chế độ: STORAGE_MODE=hdfs (đường dẫn hdfs://...) và STORAGE_MODE=local (đường dẫn thư mục). Cùng một mã nguồn phải chạy được ở cả hai chế độ.
 
 ## 3. Quy tắc trung thực (QUAN TRỌNG NHẤT)
@@ -39,7 +39,7 @@ Sau mỗi tác vụ, tạo reports/evidence/stage_<mã>.md gồm:
 ## 6. Điều cấm
 - Cấm sửa data/raw. Cấm xóa file ngoài phạm vi tác vụ. Cấm commit dữ liệu nặng.
 - Cấm viết báo cáo Word, slide (chưa làm giai đoạn này).
-- Cấm thay đổi quyết định đã chốt (hai bộ dữ liệu, K-core=3, ALS, K-means, Streamlit) khi chưa hỏi người dùng.
+- Cấm thay đổi quyết định đã chốt (hai bộ dữ liệu, K-core=3, ALS, K-means, dashboard web tĩnh) khi chưa hỏi người dùng.
 
 ## 7. Cập nhật ngày 14/10/2026 (người dùng đã xác nhận)
 1. ViFoodRec: giữ toàn bộ thang điểm 0,0 đến 5,0 (11 mức, bước 0,5). Chỉ loại NULL, trùng cặp (user, món) và dòng có food_id không có trong danh mục món. Lý do: 0,0 và 0,5 có số dòng ngang các mức khác, không có bằng chứng đó là "chưa chấm".

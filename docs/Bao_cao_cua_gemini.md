@@ -1,3 +1,5 @@
+> **ĐÃ LỖI THỜI (đánh dấu ngày 14/10/2026).** Báo cáo này do công cụ trước đó viết ở giai đoạn đầu (khảo sát, thiết lập hệ thống, kế hoạch) và chưa được đối chiếu lại với kết quả thật. Số liệu, sơ đồ thư mục (ví dụ `app/` là dashboard Streamlit) và kế hoạch trong đó có thể không còn đúng. Dashboard chính nay là `web/`. Số liệu hiện hành nằm ở `reports/evidence/STATUS.md`, `docs/Q_and_A.md` và các biên bản `stage_S*.md`. Không trích dẫn từ báo cáo này. Xem [reports/evidence/stage_S5.md](../reports/evidence/stage_S5.md).
+
 # BÁO CÁO KỸ THUẬT: KHẢO SÁT, THIẾT LẬP HỆ THỐNG VÀ TIỀN XỬ LÝ DỮ LIỆU
 **HỌC PHẦN: NHẬP MÔN BIG DATA**
 

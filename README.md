@@ -1,95 +1,122 @@
-# Đồ Án Big Data: Phân Tích Hành Vi Ăn Uống Và Gợi Ý Món Ăn
+# Đồ án Big Data: phân tích hành vi ăn uống và gợi ý món ăn
 
-Dự án môn học **Nhập môn Big Data** xử lý và phân tích song song hai bộ dữ liệu ẩm thực quy mô lớn và đặc thù trên nền tảng **Apache Spark** và **HDFS**, đánh giá mô hình gợi ý cộng tác và trực quan hóa qua giao diện Web tĩnh độc lập.
+Đồ án môn Nhập môn Big Data. Hai bộ dữ liệu ẩm thực được xử lý bằng cùng một pipeline Spark trên HDFS: làm sạch, mô hình cơ sở, ALS (gợi ý), K-means (hành vi), thực nghiệm mở rộng quy mô, rồi xuất kết quả cho dashboard web tĩnh.
 
----
-
-## 1. Dữ liệu nghiên cứu
-
-| Đặc trưng | ViFoodRec (Ẩm thực Việt Nam) | Food.com (Ẩm thực Âu - Mỹ) |
-|---|---|---|
-| **Mục đích** | Xây dựng ứng dụng gợi ý món ăn Việt Nam | Đánh giá khả năng mở rộng Big Data & phân tích hành vi theo thời gian |
-| **Quy mô thô** | 4.000 món ăn, 101 người dùng, 149.431 đánh giá | 231.637 công thức, 226.570 người dùng, 1.132.367 đánh giá |
-| **Quy mô sau sạch** | 3.964 món, 101 người dùng, 116.184 đánh giá | 78.171 công thức, 24.325 người dùng, 706.514 đánh giá (K-core=3) |
-| **Độ thưa (Sparsity)** | 71,0% (dữ liệu khảo sát điền trung vị) | 99,963% (rất thưa thớt, tương tác tự nhiên) |
-| **Đặc điểm điểm** | Phân phối tương đối đều (~11% mỗi mức 1 - 5 sao) | Lệch mạnh về 5 sao (78,4% đánh giá đạt 5 sao, điểm TB 4,68) |
-
-> **Lưu ý trung thực:** Hai bộ dữ liệu không có người dùng chung nên KHÔNG được gộp, chạy độc lập trên cùng một pipeline xử lý PySpark.
+Số liệu trong tệp này lấy từ các tệp kết quả ghi ở cột "Nguồn". Bảng số đầy đủ và các hạn chế nằm ở [reports/evidence/STATUS.md](reports/evidence/STATUS.md); câu hỏi phản biện ở [docs/Q_and_A.md](docs/Q_and_A.md).
 
 ---
 
-## 2. Kiến trúc hạ tầng Big Data
+## 1. Dữ liệu
 
-- **Lưu trữ phân tán HDFS 3.3.6:** 1 NameNode, 2 DataNodes (hệ số nhân bản replication = 2).
-- **Tính toán phân tán Apache Spark 3.5.0:** 1 Spark Master, 2 Spark Workers (mỗi Worker: 2 Cores, 3.5 GB RAM).
-- **Định dạng tối ưu:** Chuyển đổi toàn diện từ CSV sang Apache Parquet (Snappy), giúp giảm dung lượng 1,76 đến 7,03 lần và tăng tốc truy vấn 1,7 đến 2,1 lần.
+Hai bộ không có người dùng chung nên không gộp; mỗi bộ chạy độc lập qua cùng một pipeline.
+
+| Chỉ số | ViFoodRec (món Việt) | Food.com (món Âu Mỹ) | Nguồn |
+|---|---:|---:|---|
+| Số đánh giá thô | 182.678 | 1.132.367 | `reports/evidence/cleaning_log.csv` |
+| Số đánh giá sau làm sạch | 182.631 | 706.514 | `reports/evidence/cleaning_log.csv` |
+| Số người dùng sau làm sạch | 101 | 30.836 | `results/eda/eda_12_dataset_comparison.csv` |
+| Số món có đánh giá | 4.000 | 78.171 | `results/eda/eda_12_dataset_comparison.csv` |
+| Độ thưa của ma trận | 54,79% | 99,97% | `results/eda/eda_12_dataset_comparison.csv` |
+| Điểm trung bình | 2,50 | 4,71 | `results/eda/eda_12_dataset_comparison.csv` |
+| Thang điểm | 11 mức, 0,0 đến 5,0, bước 0,5 | 5 mức, 1 đến 5 (đã bỏ điểm 0) | `reports/evidence/cleaning_log.csv` |
+
+- ViFoodRec: giữ cả điểm 0,0 và 0,5 vì số dòng mỗi mức ngang nhau (từ 8,99% đến 9,23%), không có bằng chứng 0,0 là "chưa chấm". Chỉ loại 47 dòng có `food_id` không có trong danh mục (`reports/evidence/stage_S2.md`).
+- Food.com: phân phối lệch, 78,40% đánh giá là 5 sao (`results/eda/eda_01_food_com_rating_dist.csv`).
+- Giấy phép của dữ liệu ViFoodRec: chưa xác nhận. Khi trích dẫn, ghi nguồn bài báo PACLIC 2024.
 
 ---
 
-## 3. Dashboard Web Tĩnh Báo Cáo (`web/`)
+## 2. Hạ tầng
 
-Giao diện báo cáo được xây dựng hoàn toàn mới dưới dạng **Trang web tĩnh độc lập (Vanilla HTML/CSS/JS)** thay thế cho giao diện Streamlit:
-- **Không phụ thuộc build-tool:** Chạy trực tiếp qua trình duyệt bằng cách nhấp đúp `web/index.html` hoặc chạy máy chủ nội bộ.
-- **Hoạt động Offline 100%:** Toàn bộ phông chữ `Source Sans 3` (woff2) và dữ liệu (`web/data/*.js`) được lưu trữ cục bộ, không cần kết nối mạng.
-- **Thiết kế tối ưu cho máy chiếu:** Vừa khít 1 khung hình màn hình ở độ phân giải `1920x1080` và `1366x768`, **tuyệt đối không cuộn trang** (`scrollHeight == innerHeight`).
-- **Trung thực dữ liệu khoa học:** Phản ánh đúng kết quả thực nghiệm (mô hình ALS không vượt qua baseline điểm trung bình; các cụm người dùng ViFoodRec có độ lệch < 10% nên để tên trung tính; thời gian mở rộng quy mô phi tuyến do chi phí khởi động JVM).
+Cụm giả lập chạy bằng Docker Compose trên một máy Windows (các container dùng chung CPU và RAM của máy, mạng là cầu nối ảo của Docker, không có mạng thật giữa các máy).
+
+- HDFS 3.3.6 (`apache/hadoop:3.3.6`): 1 NameNode, 2 DataNode, `dfs.replication = 2`.
+- Spark 4.2.0 chế độ Standalone (`quay.io/jupyter/pyspark-notebook:spark-4.2.0`): 1 Master, 2 Worker, mỗi Worker 2 nhân và 3.500 MB.
+- Python 3.13.16 trong container `bigdata_spark_env`.
+- Trạng thái kiểm tra ngày 14/10/2026: `hdfs fsck` báo HEALTHY, Under-replicated blocks = 0 (`reports/evidence/logs/S5_03_infra_state.log`).
+- Chế độ `STORAGE_MODE=local` có trong `src/config.py` nhưng chưa được kiểm chứng.
 
 ---
 
-## 4. Cấu trúc thư mục
+## 3. Kết quả chính (tập test)
+
+Nguồn: `results/model_comparison.csv`. RMSE và MAE 4 chữ số thập phân, P@10 và R@10 5 chữ số.
+
+| Bộ | Mô hình | RMSE | MAE | P@10 | R@10 |
+|---|---|---:|---:|---:|---:|
+| Food.com | Trung bình toàn cục | 0,6266 | 0,4468 | 0,00000 | 0,00000 |
+| Food.com | Trung bình món làm trơn | 0,6177 | 0,4214 | 0,00048 | 0,00130 |
+| Food.com | Top món phổ biến | 0,6568 | 0,4120 | 0,00534 | 0,02170 |
+| Food.com | ALS dự đoán điểm | 0,6747 | 0,5094 | 0,00017 | 0,00096 |
+| Food.com | ALS ngầm định | không áp dụng | không áp dụng | 0,00570 | 0,02118 |
+| ViFoodRec | Trung bình toàn cục | 1,5706 | 1,3502 | 0,00000 | 0,00000 |
+| ViFoodRec | Trung bình món làm trơn | 1,5873 | 1,3690 | 0,01584 | 0,00321 |
+| ViFoodRec | Top món phổ biến | 1,5924 | 1,3723 | 0,02277 | 0,00461 |
+| ViFoodRec | ALS dự đoán điểm | 1,6654 | 1,4185 | 0,01386 | 0,00285 |
+| ViFoodRec | ALS ngầm định | không áp dụng | không áp dụng | 0,01980 | 0,00428 |
+
+ALS dự đoán điểm không tốt hơn mô hình cơ sở ở độ đo nào, trên cả hai bộ. ALS ngầm định (xem [reports/evidence/stage_S3b.md](reports/evidence/stage_S3b.md)) trên Food.com có P@10 cao hơn Top món phổ biến một chút (0,00570 so với 0,00534) và R@10 thấp hơn một chút (0,02118 so với 0,02170); trên ViFoodRec vẫn thua. Rò rỉ giữa train, validation và test bằng 0 (`reports/evidence/split_log.csv`).
+
+Bảng nhạy cảm cho 3 cách xử lý thang điểm ViFoodRec: `results/vifoodrec_sensitivity.csv`. Ở cả 3 biến thể thứ tự RMSE giữa các mô hình không đổi.
+
+---
+
+## 4. Dashboard web (`web/`)
+
+Trang web tĩnh (HTML, CSS, JS thuần), mở được bằng cách nhấp đúp `web/index.html`, không cần mạng (phông chữ và dữ liệu lưu cục bộ). Năm trang: Dữ liệu, Hệ thống, Hành vi, Gợi ý, Mô hình. Mỗi trang vừa một màn hình ở 1920x1080 và 1366x768.
+
+Kiểm thử (log trong `reports/evidence/logs/`): `verify_web.py` 122 mục (`S4_07`), `verify_web_ui.mjs` 129 mục (`S4_08`), `verify_web_style.py` 21 mục (`S4_09`). Chi tiết ở [reports/evidence/stage_S4.md](reports/evidence/stage_S4.md).
+
+Thư mục `app/` là bản Streamlit cũ, giữ làm bản lưu; `app/data/` vẫn là nguồn dữ liệu mà `src/export_for_web.py` đọc.
+
+---
+
+## 5. Cấu trúc thư mục
 
 ```text
 bigdata-food/
-├── data/
-│   ├── raw/                 # Dữ liệu thô (CHỈ ĐỌC)
-│   └── processed/           # Dữ liệu sau làm sạch (Parquet/CSV)
-├── src/
-│   ├── config.py            # Cấu hình đường dẫn (HDFS / Local), seed=42
-│   ├── export_for_web.py    # Trích xuất dữ liệu pipeline sang web/data/*.js
-│   └── verify_web.py        # Kiểm thử đối chiếu 32 chỉ số tự động giữa web và raw
-├── web/                     # ỨNG DỤNG WEB TĨNH BÁO CÁO
-│   ├── index.html           # Khung HTML 5 trang chuẩn semantic
-│   ├── config.js            # Thông tin nhóm sinh viên
-│   ├── serve.ps1            # Kịch bản khởi chạy máy chủ cục bộ
-│   ├── css/                 # CSS chuẩn thiết kế (style.css, fonts.css)
-│   ├── js/                  # JS ứng dụng (app.js, charts.js, format.js)
-│   ├── fonts/               # Phông Source Sans 3 woff2 cục bộ
-│   └── data/                # Dữ liệu tĩnh đã xuất (summary, system, behavior, models, recs)
-├── results/                 # Bảng kết quả thực nghiệm, so sánh mô hình, chỉ số
-├── reports/                 # Báo cáo, biên bản thực hiện, ảnh chụp kiểm thử
-│   ├── evidence/            # Biên bản thực thi stage_*.md, web_design_plan.md, web_contrast.md
-│   └── figures/screenshots/ # Ảnh chụp kiểm thử giao diện các trang ở 2 độ phân giải
-├── docs/                    # Tài liệu đặc tả (CONTEXT.md, data_contract.md, web_data_contract.md)
-├── app/                     # Bản lưu trữ giao diện Streamlit cũ và nguồn dữ liệu CSV
-├── docker-compose.yml       # Cấu hình cụm HDFS và Spark
-└── run_all.ps1              # Kịch bản chạy toàn diện pipeline và khởi chạy web
+├── data/raw/                # Dữ liệu thô (chỉ đọc)
+├── src/                     # Mã pipeline, xuất dữ liệu và kiểm thử
+├── web/                     # Dashboard web tĩnh
+├── app/                     # Bản Streamlit lưu trữ và dữ liệu xuất (app/data)
+├── results/                 # Bảng kết quả thực nghiệm
+├── reports/evidence/        # Biên bản stage_*.md, STATUS.md, nhật ký trong logs/
+├── reports/figures/         # Hình biểu đồ và ảnh chụp giao diện
+├── docs/                    # CONTEXT.md, data_contract.md, web_data_contract.md, Q_and_A.md
+├── docker-compose.yml       # Cụm HDFS và Spark
+└── run_all.ps1              # Xuất dữ liệu web, kiểm thử, mở web
 ```
 
 ---
 
-## 5. Hướng dẫn khởi chạy
+## 6. Chạy
 
-### Cách 1: Chạy nhanh qua kịch bản PowerShell
+Pipeline nặng (làm sạch, chia dữ liệu, ALS, K-means) chạy trong container `bigdata_spark_env`, thư mục `/home/jovyan/work`. Ví dụ (đã dùng ở stage S3, xem `reports/evidence/stage_S3.md`):
+
 ```powershell
-.\run_all.ps1
+docker compose up -d
+docker exec -w /home/jovyan/work bigdata_spark_env /opt/conda/bin/python src/smoke_test_cluster.py
+docker exec -w /home/jovyan/work bigdata_spark_env /opt/conda/bin/python src/split_data.py --only vietnam
 ```
-Kịch bản sẽ tự động:
-1. Xuất dữ liệu mới nhất từ kết quả thực nghiệm (`src/export_for_web.py`).
-2. Chạy kiểm thử đối chiếu 32 chỉ số (`src/verify_web.py`).
-3. Khởi chạy máy chủ nội bộ phục vụ web tại `http://localhost:8000/`.
 
-### Cách 2: Mở thủ công không cần server (Offline hoàn toàn)
-Vào thư mục `web/` và nhấp đúp vào tệp `index.html`.
+Phần xuất dữ liệu và web chạy trên máy chủ, không cần Spark:
 
-### Cách 3: Xuất và xác minh dữ liệu thủ công
 ```powershell
+.\run_all.ps1                 # xuất dữ liệu web, kiểm thử, mở web tại http://localhost:8000/
 python src/export_for_web.py
 python src/verify_web.py
 ```
 
+Kịch bản chạy từ đầu đến cuối và thử trên bản sao sạch là việc của stage S6, chưa làm.
+
 ---
 
-## 6. Phím tắt trình chiếu
-- **Phím 1 đến 5:** Chuyển nhanh giữa 5 trang (Dữ liệu -> Hệ thống -> Hành vi -> Gợi ý -> Mô hình).
-- **Phím Esc:** Đóng ngăn trượt Chú giải thuật ngữ hoặc hộp thoại Tinh chỉnh mô hình.
-- **Nút Segmented:** Chuyển đổi giữa bộ dữ liệu Món Việt (ViFoodRec) và Món Âu Mỹ (Food.com).
+## 7. Hạn chế đã biết
+
+- Cụm Spark và HDFS là giả lập trên một máy; thực nghiệm mở rộng quy mô chỉ tới 706.514 dòng và thời gian không tăng theo dữ liệu, nên chưa kết luận được về khả năng mở rộng (`results/scalability.csv`).
+- ViFoodRec chỉ có 101 người dùng, phân phối điểm gần đều trên 11 mức (độ lệch chuẩn 1,5798 so với 1,5811 của phân phối đều lý thuyết, `stage_S2.md`). Nguồn gốc dữ liệu chưa được kiểm chứng.
+- Độ tương đồng giữa các món ViFoodRec đều bằng 1,0 (40.000 điểm), nên gợi ý cho người dùng mới ở bộ này không phản ánh khác biệt giữa món (`stage_S4.md`).
+- Ba cụm người dùng ViFoodRec không có tên diễn giải vì chênh lệch giữa các cụm nhỏ ở hầu hết đặc trưng (`stage_S3.md` mục 5).
+- Hình PCA cụm Food.com (`reports/figures/kmeans_user_clusters_foodcom_pca.png`) còn tên cụm cũ bằng tiếng Anh, chưa vẽ lại.
+- Chia train, validation, test theo dòng ngẫu nhiên, không theo thời gian; K-core tính trên toàn bộ dữ liệu trước khi chia.
+- Đã kiểm thử web trên Chrome headless, chưa thử Edge, Firefox, Safari.

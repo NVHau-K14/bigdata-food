@@ -1,11 +1,13 @@
-# HỢP ĐỒNG DỮ LIỆU GIAO TIẾP VỚI DASHBOARD STREAMLIT (DATA CONTRACT)
+# Hợp đồng dữ liệu của thư mục `app/data/` (nguồn dữ liệu cho bản Streamlit lưu trữ và cho web)
 
-- **Phiên bản:** 1.0 (Giai đoạn P10 - Code & Data Freeze Ready)
+> **Cập nhật ngày 14/10/2026 (stage S5):** dashboard chính là `web/` (HTML, CSS, JS tĩnh), hợp đồng của nó nằm ở [web_data_contract.md](web_data_contract.md). Thư mục `app/` (Streamlit) giữ làm bản lưu; `app/data/` vẫn là nguồn CSV và Parquet mà `src/export_for_web.py` đọc. Bảng ở mục 2 và các số ở mục 3, 4 đã đối chiếu lại với thư mục `app/data/` sau S3b (log `reports/evidence/logs/S5_04_app_data_inventory.log`). Các tên cụm diễn giải cũ ở mục 3.6 đã thay bằng tên hiện hành.
+
+- **Phiên bản:** 1.1 (bản 1.0 ở giai đoạn P10; bản 1.1 cập nhật ở S5)
 - **Thư mục lưu trữ đích:** `app/data/`
-- **Mục tiêu kỹ thuật:** Chuẩn hóa giao diện dữ liệu giữa pipeline xử lý phân tán Big Data (PySpark, Spark MLlib, HDFS) và ứng dụng người dùng cuối (Streamlit Dashboard).
+- **Mục tiêu kỹ thuật:** Chuẩn hóa giao diện dữ liệu giữa pipeline xử lý phân tán Big Data (PySpark, Spark MLlib, HDFS) và ứng dụng người dùng cuối (bản Streamlit lưu trữ và dashboard web).
 - **Nguyên tắc cốt lõi:**
-  1. **Độc lập cụm (Cluster Independence):** Toàn bộ ứng dụng Streamlit đọc dữ liệu từ `app/data/` thuần túy bằng thư viện **Pandas** và **PyArrow**, tuyệt đối **KHÔNG gọi Spark** khi chạy.
-  2. **Tối ưu dung lượng (Compact Footprint):** Tổng dung lượng toàn bộ thư mục `app/data/` phải nhỏ hơn **100 MB** (thực tế đo được: **18.22 MB**).
+  1. **Độc lập cụm (Cluster Independence):** Ứng dụng người dùng cuối đọc dữ liệu từ `app/data/` thuần túy bằng thư viện **Pandas** và **PyArrow**, tuyệt đối **KHÔNG gọi Spark** khi chạy.
+  2. **Tối ưu dung lượng (Compact Footprint):** Tổng dung lượng toàn bộ thư mục `app/data/` phải nhỏ hơn **100 MB** (đo ngày 14/10/2026: **17,79 MB**).
   3. **Toàn vẹn quan hệ (Referential Integrity):** Khóa chính (Primary Key) và khóa ngoại (Foreign Key) giữa các tập gợi ý, hàng xóm tương đồng, phân cụm và danh mục món ăn khớp nhau 100%.
   4. **Bảo mật và Tinh gọn (Privacy & Cleanliness):** Đã loại bỏ hoàn toàn các trường văn bản bình luận tự do (review/comment text) và dữ liệu thô nhạy cảm.
 
@@ -31,30 +33,31 @@ erDiagram
 
 | STT | Đường dẫn tương đối | Định dạng | Số dòng | Số cột | Dung lượng | Mục đích nghiệp vụ trên Dashboard |
 |:---:|---|:---:|:---:|:---:|:---:|---|
-| 1 | `foods_vietnam.parquet` | Parquet | 4,000 | 17 | 3.28 MB | Danh mục 4,000 món Việt: tên, calo, dinh dưỡng, thời gian nấu, nguyên liệu hiển thị. |
-| 2 | `recipes_foodcom_sample.parquet`| Parquet | 78,171 | 15 | 10.27 MB | Danh mục 78,171 công thức Food.com sạch: calo, dinh dưỡng, nguyên liệu, tags. |
-| 3 | `recommendations_vietnam.parquet`| Parquet | 1,010 | 7 | 19.25 KB | Top-10 gợi ý món ăn cho toàn bộ 101 user ViFoodRec (ALS Matrix Factorization). |
-| 4 | `recommendations_foodcom_sample.parquet`| Parquet | 50,000 | 6 | 254.50 KB | Top-10 gợi ý món ăn cho mẫu 5,000 user Food.com (ALS Matrix Factorization). |
-| 5 | `item_neighbors_vietnam.parquet`| Parquet | 4,000 | 3 | 311.79 KB | Ma trận Top-10 món tương đồng gần nhất (Item Latent Factor Cosine) cho 4,000 món Việt. |
+| 1 | `foods_vietnam.parquet` | Parquet | 4,000 | 17 | 3,28 MB | Danh mục 4,000 món Việt: tên, calo, dinh dưỡng, thời gian nấu, nguyên liệu hiển thị. |
+| 2 | `recipes_foodcom_sample.parquet`| Parquet | 78,171 | 15 | 10,27 MB | Danh mục 78,171 công thức Food.com sạch: calo, dinh dưỡng, nguyên liệu, tags. |
+| 3 | `recommendations_vietnam.parquet`| Parquet | 1,010 | 7 | 8,34 KB | Top-10 gợi ý món ăn cho toàn bộ 101 user ViFoodRec (ALS dự đoán điểm). |
+| 4 | `recommendations_foodcom_sample.parquet`| Parquet | 50,000 | 6 | 254,50 KB | Top-10 gợi ý món ăn cho mẫu 5,000 user Food.com (ALS dự đoán điểm). |
+| 5 | `item_neighbors_vietnam.parquet`| Parquet | 4,000 | 3 | 311.79 KB | Ma trận Top-10 món tương đồng gần nhất (cosine trên vector nhân tố ẩn của món) cho 4,000 món Việt. Cả 40.000 điểm đều bằng 1,0 (xem `stage_S4.md`). |
 | 6 | `item_neighbors_foodcom.parquet`| Parquet | 20,000 | 3 | 1.52 MB | Ma trận Top-10 món tương đồng cho Top 20,000 món phổ biến nhất của Food.com. |
-| 7 | `user_clusters_vietnam.parquet`| Parquet | 101 | 3 | 3.12 KB | Nhãn phân cụm K-means cho 101 user ViFoodRec (3 cụm hành vi). |
-| 8 | `user_clusters_foodcom.parquet`| Parquet | 30,772 | 3 | 194.69 KB | Nhãn phân cụm K-means cho 30,772 user Food.com (4 cụm hành vi). |
-| 9 | `food_clusters_vietnam.parquet`| Parquet | 4,000 | 4 | 91.48 KB | Nhãn phân cụm dinh dưỡng K-means cho 4,000 món ăn ViFoodRec (4 cụm ẩm thực). |
-| 10 | `cluster_profiles_food_vietnam.csv`| CSV | 4 | 11 | 0.88 KB | Bảng hồ sơ định lượng 3 cụm người dùng ViFoodRec so với trung bình hệ thống. |
-| 11 | `cluster_profiles_food_com.csv`| CSV | 5 | 12 | 1.18 KB | Bảng hồ sơ định lượng 4 cụm người dùng Food.com so với trung bình hệ thống. |
-| 12 | `food_cluster_profiles_vietnam.csv`| CSV | 5 | 11 | 0.92 KB | Bảng hồ sơ định lượng 4 cụm món ăn ViFoodRec (calo, đạm, béo, thời gian nấu). |
-| 13 | `kmeans_tuning.csv` | CSV | 18 | 5 | 0.71 KB | Nhật ký dò tìm số cụm k tối ưu (Silhouette Score & WSSSE) cho cả 3 bài toán phân cụm. |
-| 14 | `model_comparison.csv` | CSV | 8 | 7 | 0.54 KB | Bảng so sánh trực diện 3 mô hình Baseline và ALS MLlib trên tập Test của 2 bộ dữ liệu. |
+| 7 | `user_clusters_vietnam.parquet`| Parquet | 101 | 3 | 2,78 KB | Nhãn phân cụm K-means cho 101 user ViFoodRec (3 cụm, tên "Cụm 1, 2, 3"). |
+| 8 | `user_clusters_foodcom.parquet`| Parquet | 30,772 | 3 | 194,60 KB | Nhãn phân cụm K-means cho 30,772 user Food.com (4 cụm). |
+| 9 | `food_clusters_vietnam.parquet`| Parquet | 4,000 | 4 | 91,18 KB | Nhãn phân cụm dinh dưỡng K-means cho 4,000 món ăn ViFoodRec (4 cụm). |
+| 10 | `cluster_profiles_food_vietnam.csv`| CSV | 4 | 11 | 0,73 KB | Bảng hồ sơ định lượng 3 cụm người dùng ViFoodRec và dòng toàn hệ thống. |
+| 11 | `cluster_profiles_food_com.csv`| CSV | 5 | 12 | 1,11 KB | Bảng hồ sơ định lượng 4 cụm người dùng Food.com và dòng toàn hệ thống. |
+| 12 | `food_cluster_profiles_vietnam.csv`| CSV | 5 | 11 | 0,78 KB | Bảng hồ sơ định lượng 4 cụm món ăn ViFoodRec (calo, đạm, béo, thời gian nấu). |
+| 13 | `kmeans_tuning.csv` | CSV | 18 | 5 | 0,70 KB | Nhật ký dò tìm số cụm k (hệ số Silhouette và WSSSE) cho 3 bài toán phân cụm. |
+| 14 | `model_comparison.csv` | CSV | 11 | 7 | 0,75 KB | Bảng so sánh mô hình cơ sở, ALS dự đoán điểm và ALS ngầm định trên tập test của 2 bộ dữ liệu (11 dòng, gồm dòng "lưới mở rộng" trùng ALS cũ của Food.com). |
 | 15 | `als_tuning_food_vietnam.csv` | CSV | 24 | 7 | 1.01 KB | Toàn bộ 24 cấu hình Grid Search ALS cho ViFoodRec trên tập Validation. |
 | 16 | `als_tuning_food_com.csv` | CSV | 8 | 7 | 0.35 KB | Toàn bộ 8 cấu hình Grid Search ALS cho Food.com trên tập Validation. |
 | 17 | `scalability.csv` | CSV | 32 | 8 | 2.54 KB | Dữ liệu đo mở rộng quy mô (10%, 25%, 50%, 100% data $\times$ 1 Worker vs 2 Workers). |
 | 18 | `storage_benchmark.csv` | CSV | 14 | 7 | 1.73 KB | Dữ liệu thực nghiệm đo lường hiệu quả nén và tốc độ truy vấn Parquet vs CSV. |
-| 19 | `cleaning_log.csv` | CSV | 18 | 6 | 2.32 KB | Nhật ký chi tiết số dòng trước/sau qua từng bước làm sạch của cả 2 bộ dữ liệu. |
+| 19 | `cleaning_log.csv` | CSV | 18 | 6 | 2,34 KB | Nhật ký chi tiết số dòng trước/sau qua từng bước làm sạch của cả 2 bộ dữ liệu. |
 | 20 | `baseline_metrics.csv` | CSV | 6 | 7 | 0.40 KB | Các chỉ số đánh giá chi tiết của các mô hình Baseline (RMSE, MAE, P@10, R@10). |
-| 21 | `baseline_rmse_breakdown.csv` | CSV | 42 | 4 | 1.57 KB | Phân rã sai số RMSE theo từng thang điểm thật (1 đến 5 sao) của Baseline. |
-| 22 | `als_rmse_breakdown.csv` | CSV | 14 | 4 | 0.68 KB | Phân rã sai số RMSE theo từng thang điểm thật của mô hình ALS. |
+| 21 | `baseline_rmse_breakdown.csv` | CSV | 48 | 4 | 1,80 KB | Phân rã sai số RMSE theo từng mức điểm thật của mô hình cơ sở (Food.com 1 đến 5; ViFoodRec 0,0 đến 5,0). |
+| 22 | `als_rmse_breakdown.csv` | CSV | 16 | 4 | 0,77 KB | Phân rã sai số RMSE theo từng mức điểm thật của mô hình ALS. |
 | 23 | `eda_12_dataset_comparison.csv`| CSV | 7 | 3 | 0.29 KB | Bảng so sánh tổng quan đặc tính quy mô và độ thưa của Food.com vs ViFoodRec. |
-| 24 | `eda/*.csv` (20 tệp) | CSV | — | — | ~16 KB | Toàn bộ 20 bảng tổng hợp khám phá dữ liệu (phân phối rating, thời gian, calo, v.v.). |
+| 24 | `cluster_top_items.csv` | CSV | 70 | 9 | 4,88 KB | Món có điểm từ 4 trở lên nhiều lượt nhất trong tập train theo từng cụm người dùng (S4). |
+| 25 | `eda/*.csv` (20 tệp) | CSV | — | — | 11,0 KB | Toàn bộ 20 bảng tổng hợp khám phá dữ liệu (phân phối rating, thời gian, calo, v.v.). |
 
 ---
 
@@ -62,7 +65,7 @@ erDiagram
 
 ### 3.1. `foods_vietnam.parquet` (Danh mục Món ăn ViFoodRec)
 - **Đường dẫn:** `app/data/foods_vietnam.parquet`
-- **Số dòng thực tế:** 4,000 dòng | **Số cột:** 17 cột | **Dung lượng:** 3.28 MB
+- **Số dòng thực tế:** 4,000 dòng | **Số cột:** 17 cột | **Dung lượng:** 3,28 MB
 - **Khóa chính:** `food_id` (duy nhất, không NULL)
 
 | Tên cột | Kiểu dữ liệu | Nullable | Mô tả & Ý nghĩa nghiệp vụ | Ví dụ minh họa |
@@ -89,7 +92,7 @@ erDiagram
 
 ### 3.2. `recipes_foodcom_sample.parquet` (Danh mục Công thức Food.com)
 - **Đường dẫn:** `app/data/recipes_foodcom_sample.parquet`
-- **Số dòng thực tế:** 78,171 dòng | **Số cột:** 15 cột | **Dung lượng:** 10.27 MB
+- **Số dòng thực tế:** 78,171 dòng | **Số cột:** 15 cột | **Dung lượng:** 10,27 MB
 - **Khóa chính:** `recipe_id` (duy nhất, không NULL)
 
 | Tên cột | Kiểu dữ liệu | Nullable | Mô tả & Ý nghĩa nghiệp vụ | Ví dụ minh họa |
@@ -97,7 +100,7 @@ erDiagram
 | `recipe_id` | `int32` | No | Định danh duy nhất của công thức Food.com | `339814` |
 | `name` | `string` | No | Tên món ăn tiếng Anh đã làm sạch | `"mom s corn pudding"` |
 | `minutes` | `int32` | Yes | Thời gian nấu nguyên bản (phút) | `35` |
-| `minutes_clean` | `float32` | Yes | Thời gian nấu đã lọc ngoại lai (>1440p gắn cờ NULL) | `35.0` |
+| `minutes_clean` | `float32` | Yes | Thời gian nấu đã lọc ngoại lai (trên 1440 phút, tức 24 giờ, gắn cờ NULL; ngưỡng chọn tay, không phải phân vị) | `35.0` |
 | `n_steps` | `int32` | Yes | Số bước thực hiện nấu ăn | `7` |
 | `n_ingredients` | `int32` | Yes | Số lượng nguyên liệu thành phần | `6` |
 | `calories` | `float32` | Yes | Lượng calo tính toán (kcal) | `132.6` |
@@ -114,13 +117,13 @@ erDiagram
 
 ### 3.3. `recommendations_vietnam.parquet` (Top-10 Gợi ý ViFoodRec)
 - **Đường dẫn:** `app/data/recommendations_vietnam.parquet`
-- **Số dòng thực tế:** 1,010 dòng (101 users $\times$ 10 món) | **Số cột:** 7 cột | **Dung lượng:** 19.25 KB
+- **Số dòng thực tế:** 1,010 dòng (101 users $\times$ 10 món) | **Số cột:** 7 cột | **Dung lượng:** 8,34 KB
 - **Khóa ngoại:** `user_id` $\rightarrow$ `user_clusters_vietnam.user_id`, `food_id` $\rightarrow$ `foods_vietnam.food_id`
 
 | Tên cột | Kiểu dữ liệu | Nullable | Mô tả & Ý nghĩa nghiệp vụ | Ví dụ minh họa |
 |---|:---:|:---:|---|---|
 | `user_id` | `int32` | No | Mã định danh người dùng khảo sát (101 users) | `70` |
-| `rank` | `int64` | No | Thứ hạng gợi ý từ 1 đến 10 theo mô hình ALS | `1` |
+| `rank` | `int64` | No | Thứ hạng gợi ý từ 1 đến 10 theo mô hình ALS dự đoán điểm | `1` |
 | `food_id` | `int32` | No | Mã món ăn được gợi ý | `1248` |
 | `dish_name` | `string` | No | Tên món ăn gợi ý | `"Chè Bí Đỏ Nước Cốt Dừa"` |
 | `dish_type` | `string` | No | Phân loại món (Mặn / Chay) phục vụ bộ lọc UI | `"Món mặn"` |
@@ -131,7 +134,7 @@ erDiagram
 
 ### 3.4. `recommendations_foodcom_sample.parquet` (Top-10 Gợi ý Food.com Mẫu)
 - **Đường dẫn:** `app/data/recommendations_foodcom_sample.parquet`
-- **Số dòng thực tế:** 50,000 dòng (5,000 users $\times$ 10 món) | **Số cột:** 6 cột | **Dung lượng:** 254.50 KB
+- **Số dòng thực tế:** 50,000 dòng (5,000 users $\times$ 10 món) | **Số cột:** 6 cột | **Dung lượng:** 254,50 KB
 - **Khóa ngoại:** `user_id` $\rightarrow$ `user_clusters_foodcom.user_id`, `recipe_id` $\rightarrow$ `recipes_foodcom_sample.recipe_id`
 
 | Tên cột | Kiểu dữ liệu | Nullable | Mô tả & Ý nghĩa nghiệp vụ | Ví dụ minh họa |
@@ -145,9 +148,9 @@ erDiagram
 
 ---
 
-### 3.5. `item_neighbors_vietnam.parquet` & `item_neighbors_foodcom.parquet` (Món Tương Đồng - Phục vụ Cold-Start)
+### 3.5. `item_neighbors_vietnam.parquet` & `item_neighbors_foodcom.parquet` (món tương đồng, phục vụ gợi ý cho người dùng mới)
 - **Đường dẫn:** `app/data/item_neighbors_vietnam.parquet` (4,000 món) và `app/data/item_neighbors_foodcom.parquet` (20,000 món)
-- **Mục tiêu:** Cung cấp ma trận độ tương đồng Cosine trích xuất từ Item Latent Factor Matrix ($V \in \mathbb{R}^{M \times r}$) của ALS để gợi ý món tương tự cho người dùng mới (Cold-Start Recommender).
+- **Mục tiêu:** Cung cấp độ tương đồng cosine tính từ ma trận nhân tố ẩn của món ($V \in \mathbb{R}^{M \times r}$) trong ALS để gợi ý món tương tự cho người dùng mới.
 
 | Tên cột | Kiểu dữ liệu | Nullable | Mô tả & Ý nghĩa nghiệp vụ | Ví dụ minh họa |
 |---|:---:|:---:|---|---|
@@ -160,12 +163,12 @@ erDiagram
 ### 3.6. Các tệp Phân Cụm Hành Vi & Hồ Sơ (`user_clusters_*` & `food_clusters_*`)
 1. **`user_clusters_vietnam.parquet` (101 dòng):**
    - `user_id` (`int32`): Mã người dùng.
-   - `cluster` (`int32`): Cụm hành vi (0, 1, 2).
-   - `cluster_name` (`string`): Tên tiếng Việt diễn giải cụm (ví dụ: *"Thực Khách Chuộng Bữa Nhanh"*, *"Thực Khách Tiết Chế & Khắt Khe"*, *"Thành Viên Đánh Giá Tích Cực"*).
+   - `cluster` (`int32`): Cụm (0, 1, 2).
+   - `cluster_name` (`string`): "Cụm 1", "Cụm 2", "Cụm 3" (không đặt tên diễn giải, theo CONTEXT mục 7.4; xem `stage_S3.md` mục 5).
 2. **`user_clusters_foodcom.parquet` (30,772 dòng):**
-   - `user_id` (`int32`), `cluster` (`int32`: 0 đến 3), `cluster_name` (`string`: *"Đánh giá Khắt khe"*, *"Phổ thông Dễ tính"*, *"Chuộng Món Nhanh Gọn"*, *"Thâm niên Tích cực"*).
+   - `user_id` (`int32`), `cluster` (`int32`: 0 đến 3), `cluster_name` (`string`: "Người dùng khắt khe", "Người chuộng món nấu lâu, nhiều calo", "Người chuộng món nấu nhanh, ít calo", "Thành viên lâu năm, đánh giá nhiều").
 3. **`food_clusters_vietnam.parquet` (4,000 dòng):**
-   - `food_id` (`int32`), `dish_name` (`string`), `cluster` (`int32`: 0 đến 3), `cluster_name` (`string`: *"Món Mặn Chiên Xào Đậm Vị"*, *"Món Canh & Hầm Dinh Dưỡng"*, v.v.).
+   - `food_id` (`int32`), `dish_name` (`string`), `cluster` (`int32`: 0 đến 3), `cluster_name` (`string`: "Món mặn nhiều calo và đường", "Món mặn ít đường", "Món chay", "Món mặn ít calo"; "mặn" là nhãn nguồn, nghĩa là không chay, xem `stage_S4.md` mục A6).
 
 ---
 
@@ -175,27 +178,28 @@ Mọi tệp tin trong `app/data/` đều phải vượt qua bài kiểm chứng 
 ```bash
 python src/verify_export.py
 ```
-*Kết quả kiểm thử chính thức ngày 14/10/2026:*
-- **Tổng số tiêu chí:** 66/66 ĐẠT (100.0%).
+*Kết quả kiểm thử ngày 14/10/2026 sau S3b (log `reports/evidence/logs/S3b_04_verify_export.log`):*
+- **Tổng số tiêu chí:** 66/66 ĐẠT.
 - **Lỗi khóa ngoại:** 0 (Không có bất kỳ `food_id`, `recipe_id` hay `user_id` nào bị mồ côi).
 - **Văn bản bình luận nhạy cảm:** 0 phát hiện.
-- **Tổng dung lượng:** 18.22 MB $\ll$ 100 MB.
+- **Tổng dung lượng:** 17,79 MB $\ll$ 100 MB (đo lại ở S5).
+- Ghi chú: `verify_export.py` kiểm tra tồn tại, schema, số dòng và khóa ngoại; không kiểm đúng sai của số liệu. Việc đối chiếu số hiển thị với nguồn do `src/verify_web.py` làm.
 
 ---
 
-## 5. Dữ liệu sạch đầu vào của pipeline (cập nhật ngày 14/10/2026, stage S2)
+## 5. Dữ liệu sạch đầu vào của pipeline (stage S2)
 
 Phần này mô tả dữ liệu sạch trên HDFS (`/data/clean/...`) mà các stage sau đọc. Bản cũ (P3) loại rating 0,0 và 0,5 của ViFoodRec; bản này giữ lại.
 
 | Bảng | Khóa | Quy tắc làm sạch | Số dòng (nguồn: `reports/evidence/cleaning_log.csv`) |
 |---|---|---|---:|
-| `food_com/interactions_clean.parquet` | (`user_id`, `recipe_id`) | rating thuộc [1, 5] (đã bỏ rating 0), không trùng cặp, khóa ngoại tới recipes, K-core lặp K = 3 | 706.514 |
+| `food_com/interactions_clean.parquet` | (`user_id`, `recipe_id`) | rating thuộc [1, 5] (đã bỏ rating 0; `cleaning_log.csv` còn tên bước `filter_rating_range_1_to_5`), không trùng cặp, khóa ngoại tới recipes, K-core lặp K = 3 | 706.514 |
 | `food_vietnam/ratings_clean.parquet` | (`user_id`, `food_id`) | rating thuộc đúng 11 mức 0,0; 0,5; ...; 5,0 (`RATING_MIN_VN`, `RATING_MAX_VN`, `RATING_STEP_VN` trong `src/config.py`); bỏ NULL; không trùng cặp; `food_id` phải có trong `foods`; K-core lặp K = 3 | 182.631 |
 
 - Thang điểm ViFoodRec: 11 mức, bước 0,5. Mức 0,0 và 0,5 được giữ vì số dòng mỗi mức ngang nhau (khoảng 9,0% đến 9,2%), không có bằng chứng 0,0 là "chưa chấm".
 - Dòng bị loại của ViFoodRec: 47 dòng có `food_id = 4000` không có trong danh mục món (danh mục có `food_id` từ 0 đến 3999). Không loại dòng nào vì NULL, trùng cặp hay K-core.
 - Tên bước lọc điểm trong `cleaning_log.csv` đổi từ `filter_rating_range_1_to_5` thành `filter_rating_scale_0_to_5_step_half` cho dòng `vifoodrec_ratings`. Food.com vẫn dùng tên cũ.
-- Các file trong `app/data/` và `web/data/` chưa được tạo lại từ dữ liệu sạch mới; việc đó thuộc S3 và S4.
+- Các file trong `app/data/` được tạo lại ở S3 và S3b, `web/data/` ở S4 (từ dữ liệu sạch mới).
 
 ---
-*Tài liệu Hợp đồng Dữ liệu được ban hành chính thức cho Giai đoạn P10 & P11; mục 5 bổ sung ở stage S2.*
+*Hợp đồng dữ liệu ban hành ở giai đoạn P10 và P11; mục 5 bổ sung ở stage S2; mục 2, 3, 4 và phần đầu cập nhật ở stage S5.*

@@ -27,7 +27,8 @@ LOCAL_DATA_DIR = PROJECT_ROOT / "data"
 # Tham số tiền xử lý mặc định
 K_CORE_DEFAULT = int(os.environ.get("K_CORE_THRESHOLD", 3))
 
-# Phân vị cắt ngoại lai minutes cho Food.com recipes (ngưỡng 99.9% là 1440 phút / 24 giờ)
+# Ngưỡng cắt ngoại lai minutes cho Food.com recipes: 1440 phút (24 giờ) là giá trị chọn tay, KHÔNG phải phân vị.
+# Phân vị đo được (stage_P1_audit.md mục 2.2): 99% = 750 phút, 99.9% = 2.147.483.647 phút.
 MAX_MINUTES_THRESHOLD = 1440
 
 # Thang điểm ViFoodRec: 11 mức từ 0.0 đến 5.0, bước 0.5 (trùng thang trong bài báo gốc).
