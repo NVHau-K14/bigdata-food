@@ -201,6 +201,8 @@ if ($WebOnly) {
                 "-e PYSPARK_PYTHON=$Py -e PYSPARK_DRIVER_PYTHON=$Py -e HDFS_NAMENODE_URL=hdfs://namenode:9000 -e SPARK_MASTER_URL=spark://spark-master:7077 " +
                 "-v ""${root}:/home/jovyan/work"" -w /home/jovyan/work $SparkImage sleep infinity"
             [void](Invoke-Step -Name "tao_container_client" -CommandLine $runCmd)
+        } else {
+            $script:stepNo++   # giữ số thứ tự log ổn định giữa lần chạy đầu và lần chạy tiếp bằng -StartAt
         }
         Wait-HdfsReady
         Wait-Workers -Expected 2
