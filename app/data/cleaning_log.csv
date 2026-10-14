@@ -1,0 +1,19 @@
+﻿dataset,step_name,rows_before,rows_after,rows_dropped,notes
+food_com_recipes,raw_input,231637,231637,0,Đọc dữ liệu thô RAW_recipes.csv với schema tường minh
+food_com_recipes,filter_null_id_name,231637,231636,1,Loại bỏ bản ghi thiếu id hoặc name rỗng
+food_com_recipes,drop_duplicate_id,231636,231636,0,Khử trùng lặp khóa chính id (recipe_id)
+food_com_interactions,raw_input,1132367,1132367,0,Đọc dữ liệu thô RAW_interactions.csv
+food_com_interactions,filter_null_keys_drop_review,1132367,1132367,0,"Bỏ NULL ở user_id, recipe_id, rating và lược bỏ cột text review"
+food_com_interactions,filter_rating_zero,1132367,1071520,60847,Loại bỏ các tương tác rating = 0 (không có đánh giá điểm)
+food_com_interactions,filter_rating_range_1_to_5,1071520,1071520,0,"Giữ rating trong khoảng hợp lệ [1.0, 5.0]"
+food_com_interactions,deduplicate_user_recipe_pairs,1071520,1071520,0,"Khử trùng lặp cặp (user, món), giữ bản ghi có date mới nhất"
+food_com_interactions,foreign_key_join_recipes,1071520,1071520,0,Bảo đảm toàn vẹn khóa ngoại: mọi recipe_id phải tồn tại trong bảng recipes sạch
+food_com_interactions,iterative_k_core_convergence,1071520,706514,365006,"Lọc K-core lặp tới hội tụ (K=3, hội tụ sau 5 vòng lặp)"
+vifoodrec_foods,raw_input,4000,4000,0,Đọc dữ liệu thô foods.csv với schema tường minh
+vifoodrec_foods,filter_null_id_name,4000,4000,0,Loại bỏ món thiếu food_id hoặc tên rỗng
+vifoodrec_ratings,raw_input,182678,182678,0,"Đọc dữ liệu thô ratings.csv, đổi tên userId -> user_id, foodId -> food_id"
+vifoodrec_ratings,filter_null_keys,182678,182678,0,"Bỏ NULL ở user_id, food_id, rating"
+vifoodrec_ratings,filter_rating_range_1_to_5,182678,149467,33211,"Loại bỏ điểm ngoài [1.0, 5.0] (gồm 16,509 dòng rating 0.0 và 16,702 dòng rating 0.5)"
+vifoodrec_ratings,deduplicate_user_food_pairs,149467,149467,0,"Khử trùng lặp cặp (user_id, food_id)"
+vifoodrec_ratings,foreign_key_join_foods,149467,149431,36,Bảo đảm khóa ngoại: loại bỏ 36 dòng có food_id=4000 không tồn tại trong danh mục foods
+vifoodrec_ratings,iterative_k_core_convergence,149431,149431,0,"Lọc K-core lặp tới hội tụ (K=3, hội tụ sau 1 vòng lặp, 100 user và 4000 món đều thỏa mãn)"

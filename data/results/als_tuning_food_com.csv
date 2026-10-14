@@ -1,0 +1,9 @@
+dataset,rank,regParam,maxIter,val_rmse,train_time_sec,total_time_sec
+food_com,10,0.01,10,0.972,10.04,11.09
+food_com,10,0.05,10,0.7593,7.27,8.24
+food_com,10,0.1,10,0.6887,6.22,7.15
+food_com,10,0.2,10,0.6754,6.59,7.26
+food_com,20,0.05,10,0.7669,7.91,8.6
+food_com,20,0.1,10,0.685,6.74,7.33
+food_com,20,0.05,15,0.7467,10.66,11.29
+food_com,50,0.1,10,0.6865,16.7,18.02

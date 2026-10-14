@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phân tích hành vi ăn uống và gợi ý món ăn | Dashboard Báo cáo Big Data</title>
+  <meta name="description" content="Dashboard phân tích hành vi ăn uống và gợi ý món ăn dựa trên hệ sinh thái Apache Spark và HDFS, đối chiếu ViFoodRec và Food.com.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       THANH ĐIỀU HƯỚNG TRÊN CÙNG (CHỈ CHỮ, PHÍM TẮT 1 - 5)
+       ======================================================================== -->
+  <header class="top-header" role="banner">
+    <div class="header-brand">
+      <span class="project-title">Phân tích hành vi ăn uống và gợi ý món ăn</span>
+      <span class="project-sub">Đồ án Nhập môn Big Data</span>
+    </div>
+
+    <nav class="header-nav" role="navigation" aria-label="Điều hướng chính">
+      <a href="#/du-lieu" class="nav-link active" id="nav-du-lieu">Dữ liệu <span class="shortcut-badge">1</span></a>
+      <a href="#/he-thong" class="nav-link" id="nav-he-thong">Hệ thống <span class="shortcut-badge">2</span></a>
+      <a href="#/hanh-vi" class="nav-link" id="nav-hanh-vi">Hành vi <span class="shortcut-badge">3</span></a>
+      <a href="#/goi-y" class="nav-link" id="nav-goi-y">Gợi ý <span class="shortcut-badge">4</span></a>
+      <a href="#/mo-hinh" class="nav-link" id="nav-mo-hinh">Mô hình <span class="shortcut-badge">5</span></a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="btn-secondary" id="btn-open-glossary" title="Mở chú giải thuật ngữ (Phím Esc để đóng)">
+        Chú giải
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       VÙNG NỘI DUNG CHÍNH (KHÔNG CUỘN TRANG TRÊN MÀN HÌNH >= 1280x720)
+       ======================================================================== -->
+  <main class="main-viewport" role="main">
+
+    <!-- TRANG 1: DỮ LIỆU (#/du-lieu) -->
+    <section id="page-du-lieu" class="page-view active" aria-labelledby="title-page-du-lieu">
+      <div class="page-header-row">
+        <h1 class="page-finding-title" id="title-page-du-lieu">
+          Hai bộ dữ liệu có đặc tính đối lập: ViFoodRec dày đặc nhưng quy mô nhỏ, Food.com mở rộng nhưng cực thưa
+        </h1>
+      </div>
+
+      <div class="grid-page-1">
+        <!-- CỘT TRÁI (7 CỘT): PHỄU LÀM SẠCH DỮ LIỆU -->
+        <div class="panel-block">
+          <div class="panel-header">
+            <span class="panel-title">Phễu tinh lọc dữ liệu (Data Cleaning Funnel)</span>
+            <span class="project-sub">Đơn vị: Số lượng bản ghi (dòng)</span>
+          </div>
+          <div class="panel-body">
+            <div id="cleaning-funnel-container" style="width: 100%; height: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI (5 CỘT): ĐỐI CHIẾU & PHÂN PHỐI ĐIỂM ĐÁNH GIÁ -->
+        <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+          <!-- Nửa trên: Bảng đối chiếu 2 bộ dữ liệu (7 hàng) -->
+          <div class="panel-block" style="flex: 1.35;">
+            <div class="panel-header">
+              <span class="panel-title">Đối chiếu đặc tính hai bộ dữ liệu</span>
+              <span class="project-sub">Sau làm sạch & K-core</span>
+            </div>
+            <div class="panel-body" style="padding: 4px 12px; overflow: hidden;">
+              <table class="comparison-table" id="dataset-comparison-table">
+                <thead>
+                  <tr>
+                    <th>Chỉ số đo lường</th>
+                    <th style="text-align: right;">ViFoodRec (Việt Nam)</th>
+                    <th style="text-align: right;">Food.com (Kaggle)</th>
+                  </tr>
+                </thead>
+                <tbody id="dataset-comparison-tbody">
+                  <!-- Dữ liệu nạp từ window.WEB_DATA_SUMMARY.dataset_comparison -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Nửa dưới: Biểu đồ cột phân phối điểm đánh giá mini side-by-side -->
+          <div class="panel-block" style="flex: 0.95;">
+            <div class="panel-header">
+              <span class="panel-title">Phân phối điểm đánh giá (Thang điểm 1 đến 5 sao)</span>
+              <span class="project-sub">Chung thang đo 0% đến 85%</span>
+            </div>
+            <div class="panel-body" style="padding: 4px 10px;">
+              <div id="rating-dist-container" class="dist-chart-box"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DÒNG THÔNG BÁO GIỚI HẠN DỮ LIỆU & NGUỒN SỐ LIỆU -->
+      <footer class="page-footer-bar">
+        <div class="data-limits-block">
+          <strong>Giới hạn dữ liệu:</strong>
+          <span class="data-limits-item">1. ViFoodRec thu thập qua khảo sát gồm 101 người dùng (tác giả điền khuyết một phần); Food.com là cộng đồng phương Tây 30.836 người dùng.</span>
+          <span class="data-limits-item">2. Không gian định danh hoàn toàn tách biệt (không có người dùng chung), không thể gộp thành một ma trận duy nhất.</span>
+          <span class="data-limits-item">3. ViFoodRec bị loại 16.702 đánh giá 0,5 sao ở bước lọc ngoài [1, 5] theo quy chuẩn thiết kế ban đầu; đây là giới hạn dữ liệu cần lưu ý.</span>
+        </div>
+        <div class="source-credit">
+          Nguồn số liệu: cleaning_log.csv, eda_12_dataset_comparison.csv, eda_01_*_rating_dist.csv
+        </div>
+      </footer>
+    </section>
+
+    <!-- TRANG 2: HỆ THỐNG (#/he-thong) -->
+    <section id="page-he-thong" class="page-view" aria-labelledby="title-page-he-thong">
+      <div class="page-header-row">
+        <h1 class="page-finding-title" id="title-page-he-thong">
+          Hạ tầng phân tán Docker HDFS và Spark 3.5; Parquet nén dữ liệu sạch 4 đến 7 lần và tăng tốc truy vấn
+        </h1>
+      </div>
+
+      <div class="grid-page-2">
+        <!-- CỘT TRÁI (7 CỘT): SƠ ĐỒ KIẾN TRÚC SVG & THÔNG SỐ CỤM -->
+        <div class="panel-block" style="flex: 1; display: flex; flex-direction: column;">
+          <div class="panel-header">
+            <span class="panel-title">Sơ đồ luồng xử lý và kiến trúc phân tán Docker</span>
+            <span class="project-sub">HDFS + Apache Spark (Đúng hạ tầng thật)</span>
+          </div>
+          <div class="panel-body" style="padding: 8px 12px; flex: 1.2;">
+            <div id="architecture-diagram-container" style="width: 100%; height: 100%;"></div>
+          </div>
+          <div style="border-top: 1px solid var(--border); padding: 8px 14px; background-color: var(--bg-subtle);">
+            <div style="font-size: 0.9375rem; font-weight: 700; margin-bottom: 4px; color: var(--text-primary);">
+              Thông số cấu hình cụm đo đạc thực tế:
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 0.875rem; color: var(--text-secondary);">
+              <div>• <strong>Host:</strong> Win11 WSL2 (24GB RAM, Docker 16GB)</div>
+              <div>• <strong>HDFS:</strong> 1 NameNode, 2 DataNodes (rep=2)</div>
+              <div>• <strong>Spark:</strong> 1 Master, 2 Workers (4 Cores, 7GB RAM)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI (5 CỘT): TAB LƯU TRỮ HOẶC MỞ RỘNG QUY MÔ -->
+        <div class="panel-block" style="flex: 1; display: flex; flex-direction: column;">
+          <div class="panel-header" style="padding: 6px 14px;">
+            <div class="segmented-tabs" id="system-tabs">
+              <button type="button" class="tab-btn active" id="tab-btn-storage" data-tab="storage">Hiệu quả lưu trữ</button>
+              <button type="button" class="tab-btn" id="tab-btn-scalability" data-tab="scalability">Mở rộng quy mô</button>
+            </div>
+            <span class="project-sub" id="system-tab-sub">So sánh Parquet Snappy vs CSV</span>
+          </div>
+
+          <!-- Nội dung Tab 1: Lưu trữ -->
+          <div class="panel-body tab-content" id="tab-storage-body" style="padding: 8px 12px; overflow-y: auto;">
+            <div style="font-size: 0.9375rem; font-weight: 700; margin-bottom: 4px; color: var(--text-primary);">
+              Dung lượng tệp (Parquet Snappy vs CSV)
+            </div>
+            <table class="comparison-table" style="font-size: 0.875rem; margin-bottom: 12px;">
+              <thead>
+                <tr>
+                  <th>Tập dữ liệu & Giai đoạn</th>
+                  <th style="text-align: right;">CSV</th>
+                  <th style="text-align: right;">Parquet</th>
+                  <th style="text-align: right;">Hiệu quả</th>
+                </tr>
+              </thead>
+              <tbody id="storage-benchmark-tbody"></tbody>
+            </table>
+
+            <div style="font-size: 0.9375rem; font-weight: 700; margin-bottom: 4px; color: var(--text-primary);">
+              Độ trễ truy vấn Food.com (Giây ± độ lệch chuẩn)
+            </div>
+            <table class="comparison-table" style="font-size: 0.875rem;">
+              <thead>
+                <tr>
+                  <th>Loại truy vấn PySpark</th>
+                  <th style="text-align: right;">CSV</th>
+                  <th style="text-align: right;">Parquet</th>
+                  <th style="text-align: right;">Tốc độ</th>
+                </tr>
+              </thead>
+              <tbody id="query-latency-tbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Nội dung Tab 2: Mở rộng quy mô -->
+          <div class="panel-body tab-content" id="tab-scalability-body" style="padding: 8px 12px; display: none; flex-direction: column;">
+            <div style="font-size: 0.875rem; color: var(--accent-orange); font-weight: 700; margin-bottom: 4px;">
+              * Phát hiện thực nghiệm: Thời gian không đơn điệu (10% chậm hơn 100% do chi phí khởi tạo JVM)
+            </div>
+            <div id="scalability-chart-container" style="flex: 1; width: 100%; min-height: 200px;"></div>
+            <div style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 4px;">
+              Đo trên cụm Spark Standalone Docker: 10% (71K dòng) -> 100% (706K dòng).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer-bar">
+        <div class="data-limits-block">
+          <strong>Minh chứng hạ tầng:</strong>
+          <span>Đo đạc thực tế trên Docker cluster theo biên bản stage_P2.md; Parquet nén Snappy đạt tỷ lệ 7,03 lần với công thức sạch và 4,19 lần với tương tác sạch.</span>
+        </div>
+        <div class="source-credit">Nguồn: storage_benchmark.csv, scalability.csv, stage_P2.md</div>
+      </footer>
+    </section>
+
+    <!-- TRANG 3: HÀNH VI (#/hanh-vi) -->
+    <section id="page-hanh-vi" class="page-view" aria-labelledby="title-page-hanh-vi">
+      <div class="page-header-row">
+        <h1 class="page-finding-title" id="title-page-hanh-vi">
+          Người dùng Food.com chia 4 nhóm rõ rệt theo mức độ khắt khe và thời gian; ViFoodRec chưa phân hóa
+        </h1>
+        <div class="page-meta-row">
+          <div class="dataset-switch" id="behavior-dataset-switch">
+            <button type="button" class="dataset-btn active" data-bds="food_com">Food.com (Âu Mỹ)</button>
+            <button type="button" class="dataset-btn" data-bds="vifoodrec_users">ViFoodRec (User)</button>
+            <button type="button" class="dataset-btn" data-bds="vifoodrec_foods">ViFoodRec (Món ăn)</button>
+          </div>
+          <button type="button" class="btn-secondary" id="btn-open-tuning-modal" style="font-size: 0.875rem; padding: 4px 10px;">
+            Cách chọn số cụm (k)
+          </button>
+        </div>
+      </div>
+
+      <div class="grid-page-3">
+        <!-- CỘT TRÁI (7 CỘT): BIỂU ĐỒ ĐỘ LỆCH SO VỚI TRUNG BÌNH HỆ THỐNG -->
+        <div class="panel-block">
+          <div class="panel-header">
+            <span class="panel-title" id="behavior-chart-title">Độ lệch đặc trưng so với trung bình hệ thống</span>
+            <span class="project-sub" id="behavior-cluster-select-badge">Cụm đang chọn: Cụm 0</span>
+          </div>
+          <div class="panel-body" style="padding: 8px 12px;">
+            <div id="cluster-deviation-container" style="width: 100%; height: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI (5 CỘT): DANH SÁCH CỤM & MÓN TIÊU BIỂU -->
+        <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+          <!-- Danh sách cụm (hàng) -->
+          <div class="panel-block" style="flex: 1.1;">
+            <div class="panel-header">
+              <span class="panel-title">Danh sách hồ sơ định lượng từng cụm</span>
+              <span class="project-sub">Nhấp chọn để xem chi tiết</span>
+            </div>
+            <div class="panel-body" style="padding: 4px 8px; overflow-y: auto;" id="cluster-profiles-list"></div>
+          </div>
+
+          <!-- Món tiêu biểu của cụm đang chọn -->
+          <div class="panel-block" style="flex: 1.0;">
+            <div class="panel-header">
+              <span class="panel-title" id="rep-items-title">Món ăn tiêu biểu của cụm</span>
+              <span class="project-sub">Trích xuất từ dữ liệu sạch</span>
+            </div>
+            <div class="panel-body" style="padding: 4px 8px; overflow-y: auto;" id="rep-items-container"></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer-bar">
+        <div class="data-limits-block">
+          <strong>Quy tắc trung thực:</strong>
+          <span id="behavior-rule-note">Nếu độ lệch giữa các cụm trên mọi đặc trưng &lt; 10% thì giao diện nêu rõ "chưa phân biệt rõ" và không dùng tên gán ghép chủ quan.</span>
+        </div>
+        <div class="source-credit">Nguồn: cluster_profiles_*.csv, food_cluster_profiles_vietnam.csv, kmeans_tuning.csv</div>
+      </footer>
+    </section>
+
+    <!-- TRANG 4: GỢI Ý (#/goi-y) -->
+    <section id="page-goi-y" class="page-view" aria-labelledby="title-page-goi-y">
+      <div class="page-header-row">
+        <h1 class="page-finding-title" id="title-page-goi-y">
+          Trình diễn gợi ý thực đơn cá nhân hóa từ mô hình ALS và giải quyết Cold-Start bằng ma trận tương đồng
+        </h1>
+        <div class="page-meta-row">
+          <div class="dataset-switch" id="recs-dataset-switch">
+            <button type="button" class="dataset-btn active" data-rds="vifoodrec">ViFoodRec (Món Việt)</button>
+            <button type="button" class="dataset-btn" data-rds="food_com">Food.com (Âu Mỹ)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-page-4">
+        <!-- CỘT TRÁI (4 CỘT): ĐIỀU KHIỂN & BỘ LỌC -->
+        <div class="panel-block" style="overflow-y: auto;">
+          <div class="panel-header">
+            <span class="panel-title">Thiết lập gợi ý & Bộ lọc</span>
+          </div>
+          <div class="panel-body" style="padding: 10px 12px; display: flex; flex-direction: column; gap: 10px;">
+            <!-- Chế độ: Người dùng có sẵn / Người dùng mới -->
+            <div>
+              <label class="control-label">Chế độ gợi ý:</label>
+              <div class="segmented-control" id="recs-mode-switch" style="width: 100%;">
+                <button type="button" class="seg-btn active" data-mode="existing" style="flex: 1;">Người dùng có sẵn</button>
+                <button type="button" class="seg-btn" data-mode="new" style="flex: 1;">Người dùng mới</button>
+              </div>
+            </div>
+
+            <!-- Chế độ 1: Chọn user có sẵn -->
+            <div id="mode-existing-box">
+              <label class="control-label" for="select-user-id">Chọn mã người dùng:</label>
+              <select id="select-user-id" class="input-control"></select>
+              <div id="user-cluster-badge" style="font-size: 0.8125rem; color: var(--brand-green); font-weight: 600; margin-top: 4px;"></div>
+            </div>
+
+            <!-- Chế độ 2: Chọn 3-5 món cold-start (tìm không dấu) -->
+            <div id="mode-new-box" style="display: none; position: relative;">
+              <label class="control-label" for="search-food-input">Tìm món yêu thích (không dấu):</label>
+              <input type="text" id="search-food-input" class="input-control" placeholder="Ví dụ: bun bo, canh chua, pho...">
+              <div id="search-results-dropdown" class="search-dropdown" style="display: none;"></div>
+              
+              <div style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 4px;">
+                Đã chọn <span id="selected-count">0</span>/5 món:
+              </div>
+              <div id="selected-chips-container" class="chips-container"></div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border); margin: 2px 0;"></div>
+
+            <!-- Bộ lọc dinh dưỡng / thời gian -->
+            <div id="filter-type-box">
+              <label class="control-label">Loại món ẩm thực:</label>
+              <div class="segmented-control" id="filter-dish-type">
+                <button type="button" class="seg-btn active" data-dtype="all">Tất cả</button>
+                <button type="button" class="seg-btn" data-dtype="Món mặn">Món mặn</button>
+                <button type="button" class="seg-btn" data-dtype="Món chay">Món chay</button>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                <label class="control-label">Thời gian nấu tối đa:</label>
+                <span id="label-max-time" style="font-weight: 600;">Không giới hạn</span>
+              </div>
+              <input type="range" id="filter-max-time" min="15" max="120" step="15" value="120" class="range-control">
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                <label class="control-label">Lượng calo tối đa:</label>
+                <span id="label-max-calo" style="font-weight: 600;">Không giới hạn</span>
+              </div>
+              <input type="range" id="filter-max-calo" min="200" max="1000" step="100" value="1000" class="range-control">
+            </div>
+
+            <div>
+              <label class="control-label">Số lượng món (Top-N):</label>
+              <select id="filter-top-n" class="input-control">
+                <option value="5">Top 5 món</option>
+                <option value="10" selected>Top 10 món</option>
+                <option value="15">Top 15 món</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn-secondary" id="btn-reset-filters" style="margin-top: 4px;">
+              Xóa bộ lọc
+            </button>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI (8 CỘT): KẾT QUẢ DẠNG HÀNG THỰC ĐƠN (MENU LIST ITEMS) -->
+        <div class="panel-block" style="flex: 1; display: flex; flex-direction: column;">
+          <div class="panel-header">
+            <span class="panel-title" id="recs-result-title">Thực đơn gợi ý món ăn</span>
+            <span class="project-sub" id="recs-result-count">Hiển thị 10 món</span>
+          </div>
+          <div class="panel-body" style="padding: 4px 10px; overflow-y: auto;" id="recs-menu-list"></div>
+          <div id="filter-warning-banner" style="display: none; padding: 6px 14px; background-color: var(--bg-subtle); border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--accent-orange); font-weight: 600;"></div>
+        </div>
+      </div>
+
+      <footer class="page-footer-bar">
+        <div class="data-limits-block">
+          <strong>Thuật toán gợi ý:</strong>
+          <span>Người dùng có sẵn: Ma trận nhân tử ẩn ALS Matrix Factorization. Người dùng mới (Cold-Start): Ma trận Cosine Item Latent Factor Neighbors (tính từ trọng số item vector V).</span>
+        </div>
+        <div class="source-credit">Nguồn: recommendations_*.parquet, item_neighbors_*.parquet</div>
+      </footer>
+    </section>
+
+    <!-- TRANG 5: MÔ HÌNH (#/mo-hinh) -->
+    <section id="page-mo-hinh" class="page-view" aria-labelledby="title-page-mo-hinh">
+      <div class="page-header-row">
+        <h1 class="page-finding-title" id="title-page-mo-hinh">
+          Mô hình ALS không vượt qua baseline về RMSE và Precision@10 do tập dữ liệu lệch điểm mạnh
+        </h1>
+        <div class="page-meta-row">
+          <div class="dataset-switch" id="model-dataset-switch">
+            <button type="button" class="dataset-btn active" data-mds="food_vietnam">ViFoodRec (Món Việt)</button>
+            <button type="button" class="dataset-btn" data-mds="food_com">Food.com (Âu Mỹ)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-page-5">
+        <!-- CỘT TRÁI (6 CỘT): BẢNG ĐỐI ĐẦU MODEL VÀ GRID SEARCH -->
+        <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+          <!-- Bảng mô hình x độ đo -->
+          <div class="panel-block" style="flex: 1.2;">
+            <div class="panel-header">
+              <span class="panel-title">Bảng so sánh trực diện mô hình (Tập Test)</span>
+              <span class="project-sub">Chữ đậm + gạch chân là giá trị tốt nhất</span>
+            </div>
+            <div class="panel-body" style="padding: 4px 10px; overflow-y: auto;">
+              <table class="comparison-table" id="model-comparison-table">
+                <thead>
+                  <tr>
+                    <th>Mô hình</th>
+                    <th style="text-align: right;">RMSE (↓)</th>
+                    <th style="text-align: right;">MAE (↓)</th>
+                    <th style="text-align: right;">P@10 (↑)</th>
+                    <th style="text-align: right;">R@10 (↑)</th>
+                    <th style="text-align: right;">Độ phủ</th>
+                  </tr>
+                </thead>
+                <tbody id="model-comparison-tbody"></tbody>
+              </table>
+              <div style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 4px;">
+                Chú thích: (↓) Giá trị càng thấp càng tốt; (↑) Giá trị càng cao càng tốt. Độ phủ 100%.
+              </div>
+            </div>
+          </div>
+
+          <!-- Bảng Tinh chỉnh ALS (Grid Search) -->
+          <div class="panel-block" style="flex: 1.0;">
+            <div class="panel-header">
+              <span class="panel-title">Tinh chỉnh siêu tham số ALS (Grid Search trên Validation)</span>
+              <span class="project-sub">Cấu hình được chọn</span>
+            </div>
+            <div class="panel-body" style="padding: 4px 10px; overflow-y: auto;">
+              <table class="comparison-table" style="font-size: 0.875rem;" id="als-tuning-table">
+                <thead>
+                  <tr>
+                    <th>Hạng</th>
+                    <th style="text-align: right;">Rank</th>
+                    <th style="text-align: right;">regParam</th>
+                    <th style="text-align: right;">maxIter</th>
+                    <th style="text-align: right;">Val RMSE</th>
+                    <th style="text-align: right;">Thời gian</th>
+                  </tr>
+                </thead>
+                <tbody id="als-tuning-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI (6 CỘT): PHÂN RÃ RMSE THEO BẬC ĐIỂM THẬT -->
+        <div class="panel-block" style="flex: 1; display: flex; flex-direction: column;">
+          <div class="panel-header">
+            <span class="panel-title">Phân rã sai số RMSE theo từng thang điểm thật (1 đến 5 sao)</span>
+            <span class="project-sub">Baseline vs ALS</span>
+          </div>
+          <div class="panel-body" style="padding: 8px 12px; flex: 1;">
+            <div id="rmse-breakdown-chart-container" style="width: 100%; height: 100%;"></div>
+          </div>
+          <div style="border-top: 1px solid var(--border); padding: 8px 14px; background-color: var(--bg-subtle); font-size: 0.875rem; color: var(--text-secondary);">
+            <strong>Giải thích khoa học:</strong> ALS có xu hướng co cụm dự đoán quanh điểm trung bình hệ thống, nên sai số RMSE tại các điểm biên (1 sao và 5 sao) cao hơn so với điểm giữa (3 sao).
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer-bar">
+        <div class="data-limits-block">
+          <strong>Minh bạch kết quả:</strong>
+          <span>ALS không đánh bại baseline ở cả 2 bộ dữ liệu trên tập Test. Food.com lệch mạnh 5 sao khiến baseline Smoothed Item Mean cực mạnh; ViFoodRec quy mô 101 người dùng khảo sát hạn chế khả năng khái quát của ALS.</span>
+        </div>
+        <div class="source-credit">Nguồn: model_comparison.csv, als_tuning_*.csv, als_rmse_breakdown.csv, baseline_rmse_breakdown.csv</div>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- MODAL BẢNG SILHOUETTE & WSSSE (CÁCH CHỌN SỐ CỤM K) -->
+  <div class="tuning-modal" id="tuning-modal">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;">
+      <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);">Nhật ký dò tìm số cụm k tối ưu (K-means Tuning)</h3>
+      <button type="button" class="btn-secondary" id="btn-close-tuning-modal" style="padding: 2px 8px;">Đóng</button>
+    </div>
+    <div style="max-height: 320px; overflow-y: auto;">
+      <table class="comparison-table" style="font-size: 0.875rem;">
+        <thead>
+          <tr>
+            <th>Bài toán phân cụm</th>
+            <th style="text-align: right;">k</th>
+            <th style="text-align: right;">Silhouette</th>
+            <th style="text-align: right;">WSSSE</th>
+            <th style="text-align: right;">Thời gian</th>
+          </tr>
+        </thead>
+        <tbody id="kmeans-tuning-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- NẠP CẤU HÌNH VÀ DỮ LIỆU TĨNH (100% OFFLINE, HỖ TRỢ FILE://) -->
+  <script src="config.js"></script>
+  <script src="data/summary.js"></script>
+  <script src="data/system.js"></script>
+  <script src="data/behavior.js"></script>
+  <script src="data/models.js"></script>
+  <script src="data/recs_vietnam.js"></script>
+
+  <!-- MÃ ĐIỀU KHIỂN & BIỂU ĐỒ SVG -->
+  <script src="js/format.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

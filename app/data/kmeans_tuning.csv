@@ -1,0 +1,19 @@
+task,k,silhouette,wssse,time_sec
+Food.com Users,2,0.5257,191218.7,8.27
+Food.com Users,3,0.2867,162761.91,5.51
+Food.com Users,4,0.2743,144664.63,4.77
+Food.com Users,5,0.282,132476.28,4.06
+Food.com Users,6,0.2838,125002.85,4.09
+Food.com Users,7,0.2734,120476.63,4.08
+Food.com Users,8,0.3045,108203.71,4.41
+ViFoodRec Users,2,0.2561,585.73,1.81
+ViFoodRec Users,3,0.2534,508.31,1.67
+ViFoodRec Users,4,0.2116,472.12,1.86
+ViFoodRec Users,5,0.2255,433.53,1.69
+ViFoodRec Foods,2,0.213,25009.62,1.78
+ViFoodRec Foods,3,0.2495,21143.98,1.04
+ViFoodRec Foods,4,0.2334,19132.25,1.89
+ViFoodRec Foods,5,0.246,17317.67,1.82
+ViFoodRec Foods,6,0.2405,16081.88,2.28
+ViFoodRec Foods,7,0.2405,15131.96,1.84
+ViFoodRec Foods,8,0.2444,14477.91,1.7

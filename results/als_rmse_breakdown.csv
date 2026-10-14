@@ -1,0 +1,15 @@
+dataset,model,rating_level,rmse
+food_vietnam,ALS Matrix Factorization,1.0,1.9511
+food_vietnam,ALS Matrix Factorization,1.5,1.4677
+food_vietnam,ALS Matrix Factorization,2.0,1.0016
+food_vietnam,ALS Matrix Factorization,2.5,0.5998
+food_vietnam,ALS Matrix Factorization,3.0,0.4927
+food_vietnam,ALS Matrix Factorization,3.5,0.7786
+food_vietnam,ALS Matrix Factorization,4.0,1.2346
+food_vietnam,ALS Matrix Factorization,4.5,1.7036
+food_vietnam,ALS Matrix Factorization,5.0,2.1751
+food_com,ALS Matrix Factorization,1.0,3.0118
+food_com,ALS Matrix Factorization,2.0,2.0866
+food_com,ALS Matrix Factorization,3.0,1.2047
+food_com,ALS Matrix Factorization,4.0,0.506
+food_com,ALS Matrix Factorization,5.0,0.5903

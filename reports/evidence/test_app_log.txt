@@ -1,0 +1,48 @@
+
+---> [TEST 1/6] Kiểm tra app/main.py...
+     ✓ app/main.py chạy thành công 0 exception!
+
+---> [TEST 2/6] Kiểm tra app/pages/1_Tong_quan.py...
+     ✓ Trang 1_Tong_quan.py chạy thành công 0 exception, số liệu khớp 100%!
+
+---> [TEST 3/6] Kiểm tra app/pages/2_Hanh_vi_nguoi_dung.py...
+     ✓ Trang 2_Hanh_vi_nguoi_dung.py chạy thành công 0 exception!
+
+---> [TEST 4/6] Kiểm tra app/pages/3_Goi_y_mon.py...
+     ✓ Trang 3_Goi_y_mon.py chạy thành công 0 exception!
+
+---> [TEST 5/6] Kiểm tra app/pages/4_Danh_gia_mo_hinh.py...
+     ✓ Trang 4_Danh_gia_mo_hinh.py chạy thành công 0 exception, số liệu mô hình khớp!
+
+---> [TEST 6/6] Thẩm định chất lượng gợi ý Cold-Start trên 3 bộ món thử nghiệm...
+     ✓ Bộ 1 (Thuần Chay): ĐẠT -> Top 1 là 'Rau Củ Kho Chay Dinh Dưỡng' (Món chay)
+     ✓ Bộ 2 (Bữa Nhanh & Đậm Vị): ĐẠT -> Top 1 là 'Bánh Dâu Tây' (Món mặn)
+     ✓ Bộ 3 (Canh Hầm & Ăn Vặt): ĐẠT -> Top 1 là 'BáNh Khoai Lang TíM BọC Phô Mai Chiên' (Món mặn)
+     ✓ Food.com Cold-Start: ĐẠT -> Top 1 là 'french toast strata'
+
+2026-10-14 11:31:03.526 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.527 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.527 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.528 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.528 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.528 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.529 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.529 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.529 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.529 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.530 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.530 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.530 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.531 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.531 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.532 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-14 11:31:03.533 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+.2026-10-14 11:31:04.190 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+.2026-10-14 11:31:04.330 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+.2026-10-14 11:31:04.785 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+.2026-10-14 11:31:05.197 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+..
+----------------------------------------------------------------------
+Ran 6 tests in 2.458s
+
+OK

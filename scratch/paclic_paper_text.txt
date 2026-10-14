@@ -1,0 +1,880 @@
+--- PAGE 1 ---
+A New Dataset and Empirical Evaluation for Vietnamese Food
+Recommendation System
+An Huynh-Quoc Tran, Hong Thi-Thuy Dang, Thanh Chi Dang, Tin Van Huynh
+Faculty of Information Science and Engineering, University of Information Technology,
+Ho Chi Minh City, Vietnam
+Vietnam National University, Ho Chi Minh City, Vietnam
+{20520955,20520523,20520761}@gm.uit.edu.vn
+tinhv@uit.edu.vn
+Abstract
+In the era of digitization, concern for health
+and quality of life has become a top priority.
+However, maintaining a balanced nutritional
+lifestyle remains a challenge for many, espe-
+cially as daily life becomes increasingly hectic.
+Inadequate and imbalanced dietary habits can
+lead to various health issues, such as nutritional
+imbalances, a weakened immune system, and
+more. Many people have resorted to overus-
+ing dietary supplements as meal replacements,
+causing unwanted side effects on the body. Par-
+ticularly, choosing suitable dietary regimes is
+crucial for individuals suffering from various
+illnesses. To address this issue and support
+consumers, especially in Vietnam, in selecting
+meals that match their tastes and nutritional
+needs while saving time, we have developed a
+Vietnamese food recommendation system. In
+this study, we constructed the Vietnamese food
+dataset - ViFoodRec and processed the data to
+create a high-quality dataset consisting of the
+foods dataset with over 5000 data points and
+the ratings dataset with approximately 180,000
+data points. Furthermore, we applied Collab-
+orative Filtering and Content-based Filtering
+techniques for recommending meals based on
+users preferences. In both methods, Pearson
+and Cosine are utilized. However, in the context
+of Content-Based Filtering, we incorporated
+four additional similarity measures, namely
+Jaccard, BM25, TfIdf Recommender, and a
+composite measure.
+1 Introduction
+Recommendation Systems, a field of Machine
+Learning, have seen significant development in re-
+cent years, driven by the rapid expansion of the
+internet. Unlike conventional classification or re-
+gression tasks, Recommendation Systems focus on
+predicting users’ preferences and have been widely
+used in fields like e-commerce, movie, and music
+recommendation to help people overcome informa-
+tion overload (Thakker et al., 2021; Singh, 2020).
+The main entities in Recommendation Systems are
+users and items. Users represent individuals, while
+items can represent various entities such as movies,
+songs, books, videos, or even other users in social
+networks. Recommendation Systems aim to predict
+user interest in items by analyzing data, applying
+algorithms, and generating personalized sugges-
+tions. As a result, it saves a significant amount of
+time, costs, and energy expended in making spe-
+cific actions.
+Given the increasing interest in healthy eating
+habits and the widespread use of recommendation
+systems in various domains, food recommendation
+systems have gained significant traction globally.
+Studies have highlighted the potential health risks
+associated with unhealthy and imbalanced diets,
+including the development of chronic conditions
+such as cancer, diabetes, and obesity (Elsweiler
+and Harvey, 2015). Therefore, there is an urgent
+need to utilize recommendation methodologies to
+assist individuals in creating personalized yet sci-
+entifically grounded dietary regimens. However,
+the effectiveness of a food recommendation system
+relies heavily on accurately understanding users’
+food preferences and providing food options tai-
+lored to their tastes. Recent advances in online food
+applications have led to the development of many
+food recommendation systems tailored to individ-
+ual user preferences (Morol et al., 2022; Shaban-
+abegum et al., 2020). However, challenges persist
+in this domain, particularly regarding the diver-
+sity of food datasets from various countries (Wang
+et al., 2015; Li et al., 2022), but the lack of compre-
+hensive and high-quality datasets on Vietnamese
+cuisine, thereby impeding the development of pre-
+cise recommendation systems for users in Vietnam.
+To address this issue, we have undertaken the cre-
+ation of a Vietnamese food dataset. Here are our
+key contributions:
+• Introducing ViFoodRec, a new dataset for
+--- PAGE 2 ---
+food recommendation research, which is of
+high quality and the first dataset on Viet-
+namese cuisine. Our dataset includes two sub-
+sets: "foods", which gathers information about
+popular dishes, traditional and modern cook-
+ing recipes, and "ratings", which gathers the
+culinary preferences of users in Vietnam. The
+dataset is publicly available for free access by
+the research community ( 1).
+• We effectively employed Collaborative Fil-
+tering and Content-based Filtering on our
+dataset. Specifically, under Collaborative
+Filtering, we’ve implemented four memory-
+based models: User-user Cosine, User-user
+Pearson, Item-item Cosine, and Item-item
+Pearson, utilizing Cosine and Pearson sim-
+ilarity measures. In Content-based Filtering,
+we used Cosine, Pearson, Jaccard, BM25, and
+TfIdf measures. Additionally, we developed a
+composite measure integrating various indi-
+vidual measures for robust recommendations.
+• The visualization of the Vietnamese food rec-
+ommendation system enables users to request
+personalized food recommendations based on
+various dataset factors like dish type, calorie
+count, cooking duration, and more. This in-
+teractive functionality empowers users to ex-
+plore tailored culinary options that suit their
+dietary preferences and lifestyle, enhancing
+their overall experience with the system.
+The rest of this paper is organized as follows.
+Section 2 focuses on introducing related works.
+Next, in Section 3, we present the process of col-
+lecting and creating the dataset for use in the Viet-
+namese Food Recommendation System problem.
+In Section 4, the approaches to the problem are de-
+scribed in detail. Section 5 report the experimental
+process, analyze the results of the recommendation
+methods, and we visualize the system. Finally, in
+Section 6, we draw conclusions and future work.
+2 Related Works
+With the explosive growth of data on the Inter-
+net, Recommendation Systems have been proven
+to be effective in reducing information overload.
+Due to the importance of food for human life and
+health, extensive research efforts have been de-
+voted to food-related studies (Wang et al., 2021b,
+1https://github.com/QuocAn55/DS300
+2019). According to the latest food survey (Min
+et al., 2019), food-related research falls into five
+main tasks, including perception (Ofli et al., 2017),
+recognition (An et al., 2017), retrieval (Chen et al.,
+2018), recommendation (Trattner and Elsweiler,
+2017b), and monitoring (Farseev and Chua, 2017).
+Among these, many studies have successfully uti-
+lized multidimensional information for food rec-
+ommendation to introduce delicious and healthy
+dishes to users, achieving high effectiveness (Song
+et al., 2023)Food recommendation studies can be
+divided into five categories (Trattner and Elsweiler,
+2017a), specifically Content-based recommenda-
+tion, Collaborative Filtering-based recommenda-
+tion, Context-aware recommendation, Hybrid rec-
+ommendation, and Health-aware recommendation.
+In this study, we apply two methods: Collaborative
+Filtering and Content-based Filtering.
+Content-based Filtering, a widely used recom-
+mendation technique (Son and Kim, 2017), relies
+on item attributes to suggest similar items based
+on user interactions, commonly applied in mu-
+sic, movies, and e-commerce. It utilizes Semantic
+Analysis, TF-IDF, and Neural Networks to dis-
+cern user preferences, offering personalized rec-
+ommendations independently of other users’ data.
+However, its limitation lies in recommending items
+with known attributes, risking overspecialization.
+Conversely, Collaborative Filtering (Schafer et al.,
+2007) focuses on user-item interactions, catego-
+rizing into Memory-based and Model-based ap-
+proaches. Memory-based filtering utilizes tech-
+niques like Pearson Correlation, Cosine Correla-
+tion, or KNN, while Collaborative Filtering adapts
+with more user interaction data, despite facing is-
+sues like sparsity or cold start when data is insuf-
+ficient. Our study encompasses experimentation
+with both methods to comprehensively understand
+each and determine the most suitable approach for
+recommendation tasks.
+With advancements in recommendation tech-
+niques and the availability of large-scale food
+datasets, Food Recommendation Systems have
+emerged as powerful tools to address pressing so-
+cietal issues (Mouritsen et al., 2017; Tian et al.,
+2021). By leveraging rich knowledge about food,
+these systems aid users in navigating vast online
+recipe databases, suggesting recipes tailored to
+their preferences and past behaviors (Khan et al.,
+2019). Current recipe recommendation methods
+mainly rely on similarities between recipes (Chen
+et al., 2020). Some methods have attempted to take
+--- PAGE 3 ---
+user information into account (Khan et al., 2019;
+Gao et al., 2019), but they only identify similar
+users based on duplicate-rated recipes among users,
+while ignoring relevant information between users
+and recipes, ingredients. Additionally, evolution-
+ary methods have also been introduced (Alcaraz-
+Herrera and Palomares, 2019) personalized prefer-
+ences. However, user preferences for food are very
+complex. Users may decide to try a new recipe
+because of ingredients, flavors, or recommenda-
+tions from friends. Thus, recipe suggestions must
+consider these elements, necessitating a thorough
+understanding of the connections between users,
+recipes, and ingredients. Recent research stud-
+ies like (Li et al., 2022) and (Wang et al., 2021a)
+have compiled datasets on user-recipe interactions,
+setting a benchmark for food recommendation re-
+search. However, to the best of our knowledge, we
+find that current food recommendation research on
+Vietnamese food datasets is still lacking to facilitate
+research on food recommendation, we constructed
+a Vietnamese food recommendation dataset and
+made it open source. In the next section, we elu-
+cidate its construction process and perform data
+analysis on it.
+3 ViFoodRec
+The ViFoodRec corpus is composed of two distinct
+sub-datasets: "foods," which encompasses detailed
+information about various dishes, and "ratings",
+including users’ ratings.
+3.1 Data collection
+Using two powerful online data-scraping libraries,
+Selenium2 and BeautifulSoup3, we gathered infor-
+mation about Vietnamese dishes from two Viet-
+namese websites(monngonmoingay4, cooky5). Ini-
+tially, we used the Selenium library to interact with
+web pages. This tool helped us access web pages
+containing links to food information pages and col-
+lect all these links. The collected links were saved
+into a CSV file. Then, we utilized the features of
+BeautifulSoup to parse the HTML syntax of the
+web pages containing food information and ex-
+tract necessary information about the food, such as
+the name, ingredients, cooking_method, etc. The
+data collected from these two websites was metic-
+ulously merged to create a comprehensive “foods"
+2https://github.com/SeleniumHQ/selenium
+3https://pypi.org/project/beautifulsoup4/
+4monngonmoingay.com
+5cooky.vn
+dataset. This process, illustrated in Figure 1, re-
+sulted in a dataset comprising 16 attributes and
+5509 dishes, representing a diverse range of com-
+mon Vietnamese culinary delights. For a detailed
+description of the columns in the “foods" dataset,
+please refer to the table in Appendix A.
+To further illustrate the characteristics of this
+sub-dataset, several attributes are visualized in Fig-
+ure 2 and 3. We observed that the “serving_size" at-
+tribute mainly ranged from 4 to 8, fitting the typical
+scale of Vietnamese families. The “cooking_time"
+attribute typically falls between 15 and 50 min-
+utes, offering users flexibility in selecting dishes
+according to their available time. Nutritional in-
+formation is provided to meet users’ dietary needs.
+Additionally, the “description," “ingredients," and
+“cooking_method" attributes are detailed and easy
+to understand, facilitating users in cooking conve-
+niently.
+On the other hand, to construct the user rat-
+ings dataset for our study, we aggregated informa-
+tion on every dishes from the "foods" sub-dataset
+and collected evaluations from up to 100 users.
+Each participants was tasked with providing rat-
+ings for approximately 500 dishes from a total pool
+of 4,000, generating "ratings" dataset comprising
+50,000 ratings. This sub-dataset is organized into
+three primary columns: user_id, food_id, and rat-
+ing - where ratings span from 0.0, indicating strong
+dislike, to 5.0, representing extreme preference,
+with increments of 0.5. The frequency of ratings
+per dish varied between 2 and 26, while the num-
+ber of dishes rated by each user ranged from 436 to
+566, providing a comprehensive dataset to analyze
+user preferences and dish popularity.
+3.2 Data preparation
+Data preparation for Content-based Filtering:
+The initial “foods" dataset presented numerous is-
+sues, therefore, essential preprocessing methods
+were applied, including removing rows with null
+values and eliminating rows where all three at-
+tributes were identical, including “dish_name", “in-
+gredients", and “cooking_method". To explain this,
+we observed that many dishes, despite having the
+same name, differed in ingredients and cooking
+methods, resulting in variations in taste. In other
+words, they were completely different dishes. After
+broadly removing noisy values, we proceeded to
+handle text values, which involved unicode normal-
+ization, removing emojis, trimming excess whites-
+paces, and replacing abbreviations.
+--- PAGE 4 ---
+Web page
+1. Requests
+2. Get data
+6. Get data
+5. Requests
+3. Save data
+7. Save data
+Save file
+4. Read data
+Figure 1: Data collection process for Content-based Filtering.
+Figure 2: A visual analysis of some textual attributes.
+Figure 3: A visual analysis of some numerical attributes.
+--- PAGE 5 ---
+0 1 2 3 4 5
+Rating
+0
+5000
+10000
+15000
+20000
+25000Number of Ratings
+After
+Before
+Figure 4: Statistics of the number of ratings before and
+after filling missing values.
+Data preparation for Collaborative Filtering:
+In analyzing the "ratings" dataset, we found that
+some users had reviewed the same dish multiple
+times. To maintain data accuracy, we kept only
+the most recent review per user for each dish and
+removed older ratings. The dataset also had numer-
+ous missing data points that could affect system
+accuracy and performance. We addressed this by
+filling 40% of these gaps with the median value, a
+decision driven by computational limitations. This
+approach helped preserve the data’s statistical in-
+tegrity without significantly impacting the recom-
+mendation process. After these adjustments, the
+updated dataset contained around 180,000 ratings,
+with each dish receiving between 1641 and 1989
+ratings and varying from 27 to 68 ratings per dish,
+maintaining a representative sample of user opin-
+ions. Figure 4 statistics of the number of ratings
+before and after filling missing values.
+4 Methodology
+4.1 Correlation measures
+Correlation measures for Content-based Filter-
+ing: This study employs Cosine and Pearson corre-
+lation measures to enhance result accuracy in both
+Content-based and Collaborative Filtering. In ad-
+dition, Content-based Filtering also incorporates
+TfidfRecommender, Jaccard, BM25, and a com-
+posite measure. Specifically, we employs TF-IDF
+vectorization paired with Cosine similarity for pre-
+cise matching. Jaccard is calculated by the ratio
+of the intersection to the union of two sets, effec-
+tively comparing element similarity. BM25, on the
+other hand, uses IDF weights with term frequency
+TF to assess document-query relevance. Finally,
+the composite measure aggregates results from all
+individual metrics, applying a uniform weight of
+0.2 to each correlation score. Foods achieving the
+highest composite scores are recommended to the
+user.
+Correlation measures for Collaborative Fil-
+tering: Although Pearson and Cosine measures are
+used mutually, their definitions have been slightly
+modified to suit the Collaborative Filtering task.
+Instead of using attributes, both Pearson and Co-
+sine use ratings from the users that are given to the
+items to calculate the similarity between users or
+items.
+4.2 Our Approach
+Our approach to Content-based Filtering: To
+begin with, we created a derivative of “foods"
+named “foods_modeling", containing a selection
+of just few essential attributes for Content-based
+Filtering, namely “dish_name", “ingredients", “de-
+scription", “dish_tags", and “nutrient_content".
+These attributes were chosen for their ability to
+capture the unique characteristics of each dish and
+their potential to exhibit correlations with others in
+the dataset. The “foods_modeling" dataset under-
+went then vectorization using CountVectorizer or
+TF-IDF methods, excluding dish names, to facili-
+tate the application of correlation metrics.
+Operationally, our Content-based recommenda-
+tion system suggests foods to users based on the
+attributes of dishes they have previously enjoyed.
+In more detail, when a user selects a favorite food
+item and specifies a correlation measure, the sys-
+tem calculates the similarity scores between the
+selected dish’s attributes and those of other dishes
+in the dataset using the chosen correlation mea-
+sure. The system then aggregates these scores to
+generate a list of recommended dishes. This aggre-
+gation process employs a weighted multiplication
+approach, with the weight list determined through
+extensive testing. Specifically, we varied weights
+from 0.1 to 0.9, increasing by increments of 0.05,
+and after conducting 80 trials for each configura-
+tion, we identified the most effective combinations,
+presented in Table 1.
+Therefore, we observed that the “ingredients”
+attribute has the strongest capability to represent
+the characteristics of food items, while “nutri-
+ent_content” has the opposite effect. Figure 5 il-
+lustrates the entire food recommendation process
+using the Content-based Filtering method.
+Our approach to Collaborative Filtering: Col-
+laborative Filtering is widely used for recommenda-
+tion systems, enhancing user experiences on online
+platforms like e-commerce websites and content
+recommendation systems. It doesn’t require de-
+tailed product descriptions and is relatively reliable.
+--- PAGE 6 ---
+Table 1: Weight of attributes
+Attribute description ingredients nutrient_content dish_tags
+Weight 0.25 0.6 0.05 0.1
+Selected foods
+Description
+(0.25)
+Ingredients
+(0.6)
+Nutrition
+(0.05)
+Dish Tags
+(0.1)
+Composite Metric
+(Combine all recommendations)
+Recommendation
+by composite metric
+Normal similarity metric
+(Exclude composite)
+Recommendation
+by conventional metric
+(3) Calculate similarity & export related food list
+(for all of conventional similarity metric)
+(2) Extract attributes
+& assign weights
+(4) Aggregate recommendations, assign weights
+& export final related food list (for composite metric option only)
+(1) Input Data
+Figure 5: Recommendation process using Content-based Filtering method.
+However, sparse data and the "cold start" problem
+pose challenges. In this study, we use Cosine and
+Pearson measures to compute similarity and focus
+on the memory-based approach for collaborative
+filtering.
+User-user Collaborative Filtering focuses on
+the similarity between users, allowing us to pro-
+vide product recommendations for a user based on
+the ratings of similar users. The basic idea is to
+identify users who are similar to the target user A
+and suggest products by calculating the similarity
+between user A and other users. For example, if
+user A and user B both rate a list of food items and
+user B has rated food item X while user A hasn’t,
+we can use the ratings of user B on food item X to
+predict the rating of user A for this item. The simi-
+larity between users is calculated using either the
+cosine similarity formula or the Pearson similarity
+formula.
+Item-item Collaborative Filtering, instead of
+relying on user information, uses product similarity
+to predict for users based on their ratings of related
+products. For example, to predict user A ’s rating
+for food item X, the process starts with identifying
+a set S of food items that are similar to item X.
+Next, it will be possible to forecast whether or not
+user A will enjoy food item X based on the ratings
+she gave the food items in set S. Similarly, user A ’s
+ratings of similar food items, such as Y and Z, can
+be used to predict user B’s rating of item T. The
+similarity measure used here is comparable to the
+User-user collaborative Filtering method, which is
+Cosine similarity or Pearson similarity.
+4.3 Evaluation measure
+Content-based Filtering: In addressing the com-
+mon challenge of lacking specific ground truth data
+in Content-based Filtering for food recommenda-
+tions, our team labeled approximately 200 food
+items, about 5% of our dataset. We then identified
+the most relevant items, labeled them as “recom-
+mend”. To measure the system’s effectiveness,
+we employed evaluation metrics such as Preci-
+sion@K and Mean Reciprocal Rank (MRR). Pre-
+cision@K calculates the proportion of accurately
+recommended items within the top K suggestions,
+while MRR assesses the rank of the first correctly
+recommended item, ignoring the order of subse-
+quent ones.
+Collaborative Filtering: To evaluate the Col-
+laborative Filtering method, we compared pre-
+dicted and actual rating scores for 200 food items
+from a test set derived at a ratio of 1:900 from
+the original dataset. This ensured a low likeli-
+hood of users or items appearing only in the test
+set. We used Mean Squared Error (MSE), Root
+Mean Squared Error (RMSE), Mean Absolute Er-
+ror (MAE), and Normalized Mean Absolute Error
+(NMAE) to measure performance, given the dispar-
+ity between recommended and actual liked ratings.
+These metrics provided a comprehensive assess-
+ment of the recommendation system’s accuracy.
+5 Experimental Results
+5.1 Content-based Filtering
+To optimize computational efficiency and reduce
+processing time, we limited the number of neigh-
+--- PAGE 7 ---
+Table 2: Evaluating the methods with Precision@K
+K Composite Cosine Pearson BM25 Jaccard TfidfRecommender
+K = 5 0.49 0.47 0.47 0.26 0.26 0.24
+K = 10 0.33 0.29 0.29 0.15 0.19 0.15
+K = 15 0.24 0.23 0.22 0.13 0.17 0.14
+K = 20 0.20 0.18 0.18 0.12 0.13 0.13
+K = 25 0.19 0.18 0.18 0.12 0.13 0.14
+K = 30 0.16 0.15 0.15 0.11 0.12 0.13
+K = 35 0.15 0.15 0.15 0.11 0.12 0.12
+K = 40 0.14 0.12 0.11 0.09 0.08 0.11
+K = 45 0.10 0.10 0.10 0.02 0.02 0.04
+K = 50 0.11 0.11 0.11 0.04 0.04 0.06
+Table 3: Evaluating the methods with Mean Reciprocal Rank
+Neighbors Composite Cosine Pearson BM25 Jaccard TfidfRecommender
+n = 5 0.69 0.58 0.55 0.43 0.46 0.36
+n = 10 0.66 0.57 0.53 0.43 0.44 0.35
+n = 15 0.71 0.62 0.56 0.46 0.48 0.37
+n = 20 0.70 0.60 0.55 0.45 0.45 0.37
+n = 25 0.70 0.60 0.55 0.45 0.46 0.37
+n = 30 0.72 0.61 0.57 0.46 0.47 0.38
+n = 35 0.72 0.61 0.57 0.46 0.47 0.38
+n = 40 0.73 0.62 0.58 0.47 0.48 0.39
+n = 45 0.70 0.59 0.53 0.43 0.44 0.35
+n = 50 0.71 0.60 0.54 0.44 0.45 0.37
+bors from 5 to 50 in steps of 5 during our experi-
+ments, with evaluation results presented in Table
+2 and Table 3. The content-based recommenda-
+tion system showed modest success, achieving only
+average Precision@K values and MRR values rang-
+ing from 0.35 to 0.7. The composite metric, how-
+ever, performed exceptionally well, leading in both
+MRR and Precision@K assessments. In contrast,
+the combination of Cosine similarity and TF-IDF
+scored the lowest, indicating its inefficacy. Other
+metrics yielded acceptable but unremarkable re-
+sults within expected ranges. The optimal number
+of neighbors, identified as 15 based on our evalua-
+tions, was used for both system visualization and
+application deployment. Detailed outcomes of the
+best-performing correlation metrics are also docu-
+mented in Table 4.
+In discussing these results, we attribute the sub-
+optimal performance of the methods to two main
+factors:
+• We predict that there are still many noisy val-
+ues in the dataset, which cannot adequately
+represent individual dishes, leading to inef-
+fective extraction of attribute features.
+• Evaluation results may somewhat depend on
+the ground truth labeling process. Once again,
+we believe that labeling based on human judg-
+ment, or, in other words, subjective factors,
+has influenced the evaluation results of the
+methods.
+5.2 Collaborative Filtering
+In the experimental process for Collaborative Fil-
+tering recommendation, we used the nearest neigh-
+bor count of 10 for all models, combined with two
+methods: User-user Collaborative Filtering, Item-
+item Collaborative Filtering and used two similarity
+measures: Cosine similarity and Pearson similarity.
+After conducting experiments and comparing them
+with 200 data points from the test set, we obtained
+the results in Table 5.
+From Table 5, we find that the User-user Cosine
+method achieves the best results, with results on the
+MSE measure of 4.2581 and the RMSE measure of
+2.0635. In contrast, the Item-item Cosine yielded
+the best results, with results on the MAE measure
+--- PAGE 8 ---
+Table 4: Best evaluation results of Correlation Metrics
+Measure
+Result Composite Cosine Pearson BM25 Jaccard TfidfRecommender
+MRR 73.03% 62.12% 58.2% 47.1% 47.5% 39.1%
+Precision@K 49.12% 47.2% 47.1% 26.4% 26.3% 24.4%
+Table 5: Results of the models based on each similarity measure
+Measure MSE RMSE MAE NMAE
+User-user Cosine 4.2581 2.0635 1.7228 0.3445
+User-user Pearson 5.4402 2.3324 1.9130 0.3826
+Item-item Cosine 4.6168 2.1486 1.6902 0.3380
+Item-item Pearson 6.5245 2.5543 2.1250 0.4250
+of 1.6902 and the NMAE measure of 0.338. Mean-
+while, the Item-item Pearson method performed the
+worst of all four indices, with results on the MSE
+measure of 6.5245, the RMSE measure of 2.5543,
+the MAE measure of 2.1250, and the NMAE mea-
+sure of 0.4250.
+6 Conclusion
+In this study, we collected, constructed, and pre-
+sented the Vietnamese Food Dataset, a novel
+dataset tailored for the food recommendation prob-
+lem in Vietnam. The dataset encompasses a food
+set with over 5000 rows and 16 attributes, and a
+ratings set with over 180,000 ratings. Currently,
+with Collaborative Filtering methods, we have suc-
+cessfully implemented four memory-based models:
+User-user Cosine, User-user Pearson, Item-item
+Cosine, and Item-item Pearson. The best results we
+have achieved are 4.2581 MSE, 2.0635 RMSE for
+User-user cosine, 1.6902 MAE, and 0.3380 NMAE
+for Item-item cosine in the Collaborative Filter-
+ing method, and 49.12% Precision@k and 73.03%
+MRR for the Content-based Filtering method. Ad-
+ditionally, for the Content-based Filtering method,
+we have also successfully implemented the content-
+based model. Beside that, through this combination
+of a user-centric approach and a powerful devel-
+opment framework, we successfully transformed
+our complex system into a locally accessible and
+intuitive web application.
+In the future, we will expand our Vietnamese
+food information dataset by collecting data from
+various websites and including new attributes such
+as user comments, ratings on different aspects,
+prices, search history, and more. Additionally,
+we will implement various recommendation meth-
+ods and techniques, such as Collaborative Filter-
+ing using model-based approaches, Knowledge-
+Based Recommender Systems, Demographic Rec-
+ommender Systems, Hybrid and Ensemble-Based
+Recommender Systems, to enhance prediction ac-
+curacy. We also plan to develop a feature in our
+food recommendation system that suggests dishes
+suitable for users’ health. This feature will analyze
+individual health data to recommend appropriate
+food choices.
+Acknowledgements
+This research is funded by the University of Infor-
+mation Technology-Vietnam National University
+HoChiMinh City under grant number D1-2024-54.
+References
+Hugo Alcaraz-Herrera and Iván Palomares. 2019. Evo-
+lutionary approach for’healthy bundle’wellbeing rec-
+ommendations. In HealthRecSys@ RecSys, pages
+18–23.
+Y ongsheng An, Yu Cao, Jingjing Chen, Chong-Wah
+Ngo, Jia Jia, Huanbo Luan, and Tat-Seng Chua. 2017.
+Pic2dish: A customized cooking assistant system. In
+Proceedings of the 25th ACM international confer-
+ence on Multimedia , pages 1269–1273.
+Jing-Jing Chen, Chong-Wah Ngo, Fu-Li Feng, and Tat-
+Seng Chua. 2018. Deep understanding of cooking
+procedure for cross-modal recipe retrieval. In Pro-
+ceedings of the 26th ACM international conference
+on Multimedia, pages 1020–1028.
+Meng Chen, Xiaoyi Jia, Elizabeth Gorbonos, Chinh T
+Hoang, Xiaohui Yu, and Y ang Liu. 2020. Eating
+healthier: Exploring nutrition information for health-
+ier recipe recommendation. Information Processing
+& Management, 57(6):102051.
+--- PAGE 9 ---
+David Elsweiler and Morgan Harvey. 2015. Towards
+automatic meal plan recommendations for balanced
+nutrition. In Proceedings of the 9th ACM Conference
+on Recommender Systems, pages 313–316.
+Aleksandr Farseev and Tat-Seng Chua. 2017. T weet can
+be fit: Integrating data from wearable sensors and
+multiple social networks for wellness profile learning.
+ACM Transactions on Information Systems (TOIS) ,
+35(4):1–34.
+Xiaoyan Gao, Fuli Feng, Xiangnan He, Heyan Huang,
+Xinyu Guan, Chong Feng, Zhaoyan Ming, and Tat-
+Seng Chua. 2019. Hierarchical attention network for
+visually-aware food recommendation. IEEE Trans-
+actions on Multimedia , 22(6):1647–1659.
+Mansura A Khan, Ellen Rushe, Barry Smyth, and David
+Coyle. 2019. Personalized, health-aware recipe rec-
+ommendation: an ensemble topic modeling based
+approach. arXiv preprint arXiv:1908.00148.
+Ming Li, Lin Li, Qing Xie, Jingling Yuan, and Xiaohui
+Tao. 2022. Mealrec: a meal recommendation dataset.
+arXiv preprint arXiv:2205.12133.
+Weiqing Min, Shuqiang Jiang, Linhu Liu, Y ong Rui, and
+Ramesh Jain. 2019. A survey on food computing.
+ACM Computing Surveys (CSUR), 52(5):1–36.
+Md Kishor Morol, Md Shafaat Jamil Rokon, Ishra Binte
+Hasan, AM Saif, Rafid Hussain Khan, and Shu-
+vra Smaran Das. 2022. Food recipe recommendation
+based on ingredients detection using deep learning.
+In Proceedings of the 2nd International Conference
+on Computing Advancements, pages 191–198.
+Ole G Mouritsen, Rachel Edwards-Stuart, Y ong- Y eol
+Ahn, and Sebastian E Ahnert. 2017. Data-driven
+methods for the study of food perception, preparation,
+consumption, and culture. Frontiers in ICT, 4:15.
+Ferda Ofli, Yusuf Aytar, Ingmar Weber, Raggi Al Ham-
+mouri, and Antonio Torralba. 2017. Is saki# deli-
+cious? the food perception gap on instagram and its
+relation to health. In Proceedings of the 26th In-
+ternational Conference on World Wide Web , pages
+509–518.
+J Ben Schafer, Dan Frankowski, Jon Herlocker, and
+Shilad Sen. 2007. Collaborative filtering recom-
+mender systems. In The adaptive web: methods and
+strategies of web personalization , pages 291–324.
+Springer.
+SK Shabanabegum, P Anusha, E Seethalakshmi,
+Meenakshi Shunmugam, K Vadivukkarasi, and P Vi-
+jayakumar. 2020. Withdrawn: Iot enabled food rec-
+ommender with nir system.
+Jagendra Singh. 2020. Collaborative filtering based
+hybrid music recommendation system. In 2020 3rd
+International Conference on Intelligent Sustainable
+Systems (ICISS), pages 186–190. IEEE.
+Jieun Son and Seoung Bum Kim. 2017. Content-based
+filtering for recommendation systems using multiat-
+tribute networks. Expert Systems with Applications ,
+89:404–412.
+Y aguang Song, Xiaoshan Y ang, and Changsheng Xu.
+2023. Self-supervised calorie-aware heterogeneous
+graph networks for food recommendation. ACM
+Transactions on Multimedia Computing, Commu-
+nications and Applications , 19(1s):1–23.
+Urvish Thakker, Ruhi Patel, and Manan Shah. 2021. A
+comprehensive analysis on movie recommendation
+system employing collaborative filtering. Multimedia
+Tools and Applications, 80(19):28647–28672.
+Yijun Tian, Chuxu Zhang, Ronald Metoyer, and
+Nitesh V Chawla. 2021. Recipe representation learn-
+ing with networks. In Proceedings of the 30th ACM
+International Conference on Information & Knowl-
+edge Management, pages 1824–1833.
+Christoph Trattner and David Elsweiler. 2017a. Food
+recommender systems: important contributions, chal-
+lenges and future research directions. arXiv preprint
+arXiv:1711.02760.
+Christoph Trattner and David Elsweiler. 2017b. Inves-
+tigating the healthiness of internet-sourced recipes:
+implications for meal planning and recommender
+systems. In Proceedings of the 26th international
+conference on world wide web, pages 489–498.
+Wenjie Wang, Ling- Yu Duan, Hao Jiang, Peiguang
+Jing, Xuemeng Song, and Liqiang Nie. 2021a. Mar-
+ket2dish: health-aware food recommendation. ACM
+Transactions on Multimedia Computing, Communi-
+cations, and Applications (TOMM) , 17(1):1–19.
+Wenjie Wang, Fuli Feng, Xiangnan He, Liqiang Nie,
+and Tat-Seng Chua. 2021b. Denoising implicit feed-
+back for recommendation. In Proceedings of the
+14th ACM international conference on web search
+and data mining , pages 373–381.
+Xiang Wang, Xiangnan He, Meng Wang, Fuli Feng, and
+Tat-Seng Chua. 2019. Neural graph collaborative
+filtering. In Proceedings of the 42nd international
+ACM SIGIR conference on Research and development
+in Information Retrieval, pages 165–174.
+Xin Wang, Devinder Kumar, Nicolas Thome, Matthieu
+Cord, and Frederic Precioso. 2015. Recipe recogni-
+tion with large multimodal food dataset. In 2015
+IEEE International Conference on Multimedia &
+Expo Workshops (ICMEW), pages 1–6. IEEE.
+A Data Description
+More information about attributes in the proposed
+datasets is provided in Table 6. The attributes
+cover various aspects of Vietnamese dishes, such
+as ingredients, cooking methods, or nutrition
+amounts, providing a comprehensive overview of
+--- PAGE 10 ---
+RECOMMEND
+FOOD SYSTEM
+CONTENT & ITEM
+BASED FOOD SELECTION
+SYSTEM OPTION
+UNIT OF
+MESUREMENT
+BASIS OF
+RECOMMENDATION
+REQUIREMENTS SELECTION
+FOOD TYPE SERVINGSIZE COOKINGTIME CALORIES
+FOOD SELECTION
+(MORE THAN ONE)
+UNIT OF
+MESUREMENT
+REQUIREMENTS SELECTION
+FOOD TYPE SERVINGSIZE COOKINGTIME CALORIES
+USER BASED RELATED FOOD LIST
+RELATED FOOD LIST
+Input Output
+OutputInput
+Figure 6: Food Recommendation System.
+Vietnamese cuisine. This detailed dataset aims to
+support further research in culinary arts, cultural
+studies, and nutritional analysis by offering a struc-
+tured and extensive collection of data on traditional
+and contemporary Vietnamese dishes.
+B Visualization
+We utilized Streamlit, a popular framework known
+for its powerful capabilities and ease of convert-
+ing projects into web applications, to optimize our
+system development process. The application fea-
+tures two separate pages for the Content-based and
+Item-based Collaborative Filtering methods, dis-
+tinct from the User-user Collaborative Filtering
+approach, allowing for tailored user interactions.
+For Content-based and Item-based methods, users
+input their preferred food item; the system then
+assesses similarity with other items using six dif-
+ferent metrics and filters results based on serving
+size, cooking time, calorie content, and food type.
+For User-based recommendations, users select any
+number of liked food items; the system calculates
+and visualizes ratings between 4 to 5 points to fa-
+cilitate ease of use and maintain a clean interface.
+Further details and system interface specifics are
+available on our Github page ( 6). More specific
+details about the system distribution are presented
+in Figure 6.
+6https://github.com/QuocAn55/DS300
+--- PAGE 11 ---
+Table 6: Description of the data
+File name Attribute Description Example
+foods.csv
+food_id dish identifier 1839
+dish_name the name of the dish Khoai lang chiên (Fried sweet potatoes)
+description brief information
+describing
+Khoai lang chiên ăn kèm tương ớt. (Fried sweet
+potatoes served with chili sauce.)
+dish_type non-vegetarian or
+vegetarian dish
+Món mặn (Non-vegetarian dish)
+serving_size the number of peo-
+ple the dish serves
+4 người (4 people)
+cooking_time the time needed to
+prepare (minutes)
+45
+ingredients the necessary ingre-
+dients to cook the
+dish
+500g khoai lang, 100 muỗngl sữa tươi có đường,
+50g đường, 100g bột mì (500g sweet potatoes,
+100ml sweetened milk, 50g sugar, 100g flour.)
+cooking_method Detailed instruc-
+tions on how to
+cook the dish
+500 khoai lang đem luộc chín, bỏ vỏ nghiền
+nhuyễn, Cho 50g đường, 100 bột mì, Tạo hình
+theo ý muốn rồi chiên vàng giòn đều. (Boil 500g of
+sweet potatoes until cooked, peel and mash them.
+Add 50g of sugar and 100g of flour. Shape as
+desired, then fry until golden and crispy.)
+dish_tags keywords related to
+the dish
+khoai lang chiên (Fried sweet potatoes)
+calories the amount of calo-
+ries (kcal)
+369
+fat the amount of fat
+(grams)
+11
+fiber the amount of fiber
+(grams)
+8
+sugar the amount of sugar
+(grams)
+26
+protein the amount of pro-
+tein (grams)
+38
+image_link link leading to the
+image
+https://image.cooky.vn/
+recipe/g6/53055/s640/
+4434382e-8a0b-435d-8fa1-963ebe8bd70c.jpeg
+nutrient_content aggregate content
+of nutrients
+369, 11, 8, 26, 38
+ratings.csv
+user_id user identifier 76
+food_id dish identifier 168
+rating user ratings for the
+dish
+4

@@ -1,0 +1,9 @@
+dataset,model,RMSE,MAE,Precision@10,Recall@10,coverage
+food_com,Global Mean,0.6266,0.4468,0.0,0.0,100.0
+food_com,Smoothed Item Mean,0.6177,0.4214,0.00048,0.0013,100.0
+food_com,Top-N Popular,0.6568,0.412,0.00534,0.0217,100.0
+food_vietnam,Global Mean,1.2866,1.1073,0.0,0.0,100.0
+food_vietnam,Smoothed Item Mean,1.3033,1.1261,0.01584,0.00308,100.0
+food_vietnam,Top-N Popular,1.3094,1.1299,0.01584,0.00331,100.0
+food_vietnam,ALS Matrix Factorization,1.3832,1.1752,0.01386,0.00286,100.0
+food_com,ALS Matrix Factorization,0.6747,0.5094,0.00017,0.00096,100.0

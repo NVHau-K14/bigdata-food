@@ -1,0 +1,15 @@
+﻿experiment,dataset,format,size_mb,avg_time_sec,std_time_sec,notes
+Experiment_A_Raw_Full,Food.com RAW_interactions,CSV,333.25,,,"100% cột thô (gồm review), 1,132,367 dòng"
+Experiment_A_Raw_Full,Food.com RAW_interactions,Parquet,189.79,,,Nén Parquet Snappy thuần túy: giảm 1.76x so với CSV
+Experiment_A_Raw_Full,Food.com RAW_recipes,CSV,280.88,,,"100% cột thô (gồm steps, description), 231,637 dòng"
+Experiment_A_Raw_Full,Food.com RAW_recipes,Parquet,120.25,,,Nén Parquet Snappy thuần túy: giảm 2.34x so với CSV
+Experiment_B_Clean_Data,Food.com interactions_clean,CSV,19.11,,,"706,514 dòng sạch, 4 cột"
+Experiment_B_Clean_Data,Food.com interactions_clean,Parquet,4.56,,,Nén Parquet Snappy: giảm 4.19x so với CSV sạch
+Experiment_B_Clean_Data,Food.com recipes_clean,CSV,124.92,,,"231,636 dòng sạch, 18 cột"
+Experiment_B_Clean_Data,Food.com recipes_clean,Parquet,17.78,,,Nén Parquet Snappy: giảm 7.03x so với CSV sạch
+Experiment_C_Query_Latency,Food.com Q1_Row_Count,CSV,19.11,0.508,0.104,Truy vấn: Đếm dòng toàn bảng (Full Scan)
+Experiment_C_Query_Latency,Food.com Q1_Row_Count,Parquet,4.56,0.296,0.043,Parquet nhanh gấp 1.71x so với CSV
+Experiment_C_Query_Latency,Food.com Q2_Avg_Rating_By_Recipe,CSV,19.11,0.697,0.099,Truy vấn: Tính trung bình rating theo món (Aggregation GroupBy)
+Experiment_C_Query_Latency,Food.com Q2_Avg_Rating_By_Recipe,Parquet,4.56,0.338,0.005,Parquet nhanh gấp 2.06x so với CSV
+Experiment_C_Query_Latency,Food.com Q3_Projection_Filter_3_Cols,CSV,19.11,0.507,0.102,Truy vấn: Chỉ đọc 3 cột & lọc rating >= 4.0 (Column Pruning Pushdown)
+Experiment_C_Query_Latency,Food.com Q3_Projection_Filter_3_Cols,Parquet,4.56,0.281,0.012,Parquet nhanh gấp 1.8x so với CSV

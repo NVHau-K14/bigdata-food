@@ -1,0 +1,173 @@
+services:
+  # ==========================================================
+  # HDFS NAMENODE
+  # ==========================================================
+  namenode:
+    image: apache/hadoop:3.3.6
+    container_name: namenode
+    hostname: namenode
+    user: root
+    environment:
+      CORE-SITE_XML_fs.defaultFS: "hdfs://namenode:9000"
+      HDFS-SITE_XML_dfs.replication: "2"
+      HDFS-SITE_XML_dfs.namenode.name.dir: "/data/dfs/name"
+      HDFS-SITE_XML_dfs.namenode.rpc-bind-host: "0.0.0.0"
+      HDFS-SITE_XML_dfs.namenode.servicerpc-bind-host: "0.0.0.0"
+      HDFS-SITE_XML_dfs.namenode.http-bind-host: "0.0.0.0"
+      ENSURE_NAMENODE_DIR: "/data/dfs/name/current"
+    command: ["/opt/hadoop/bin/hdfs", "namenode"]
+    ports:
+      - "9870:9870" # HDFS NameNode Web UI
+      - "9000:9000" # HDFS IPC Port
+    volumes:
+      - namenode_data:/data/dfs/name
+      - ./data/raw:/data/raw_host:ro
+    networks:
+      - bigdata-net
+
+  # ==========================================================
+  # HDFS DATANODE 1
+  # ==========================================================
+  datanode1:
+    image: apache/hadoop:3.3.6
+    container_name: datanode1
+    hostname: datanode1
+    user: root
+    environment:
+      CORE-SITE_XML_fs.defaultFS: "hdfs://namenode:9000"
+      HDFS-SITE_XML_dfs.replication: "2"
+      HDFS-SITE_XML_dfs.datanode.data.dir: "/data/dfs/data"
+      HDFS-SITE_XML_dfs.datanode.http.address: "0.0.0.0:9864"
+      HDFS-SITE_XML_dfs.datanode.address: "0.0.0.0:9866"
+      HDFS-SITE_XML_dfs.datanode.ipc.address: "0.0.0.0:9867"
+      WAITFOR: "namenode:9000"
+    command: ["/opt/hadoop/bin/hdfs", "datanode"]
+    ports:
+      - "9864:9864" # DataNode 1 Web UI
+    volumes:
+      - datanode1_data:/data/dfs/data
+    depends_on:
+      - namenode
+    networks:
+      - bigdata-net
+
+  # ==========================================================
+  # HDFS DATANODE 2
+  # ==========================================================
+  datanode2:
+    image: apache/hadoop:3.3.6
+    container_name: datanode2
+    hostname: datanode2
+    user: root
+    environment:
+      CORE-SITE_XML_fs.defaultFS: "hdfs://namenode:9000"
+      HDFS-SITE_XML_dfs.replication: "2"
+      HDFS-SITE_XML_dfs.datanode.data.dir: "/data/dfs/data"
+      HDFS-SITE_XML_dfs.datanode.http.address: "0.0.0.0:9864"
+      HDFS-SITE_XML_dfs.datanode.address: "0.0.0.0:9866"
+      HDFS-SITE_XML_dfs.datanode.ipc.address: "0.0.0.0:9867"
+      WAITFOR: "namenode:9000"
+    command: ["/opt/hadoop/bin/hdfs", "datanode"]
+    ports:
+      - "9865:9864" # DataNode 2 Web UI
+    volumes:
+      - datanode2_data:/data/dfs/data
+    depends_on:
+      - namenode
+    networks:
+      - bigdata-net
+
+  # ==========================================================
+  # SPARK MASTER
+  # ==========================================================
+  spark-master:
+    image: quay.io/jupyter/pyspark-notebook:spark-4.2.0
+    container_name: spark-master
+    hostname: spark-master
+    command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.master.Master", "-h", "spark-master", "-p", "7077", "--webui-port", "8080"]
+    ports:
+      - "8080:8080" # Spark Master Web UI
+      - "7077:7077" # Spark Master Port
+      - "6066:6066" # Spark REST Server
+    networks:
+      - bigdata-net
+
+  # ==========================================================
+  # SPARK WORKER 1 (2 Cores, 4GB RAM)
+  # ==========================================================
+  spark-worker-1:
+    image: quay.io/jupyter/pyspark-notebook:spark-4.2.0
+    container_name: spark-worker-1
+    hostname: spark-worker-1
+    environment:
+      SPARK_WORKER_CORES: "2"
+      SPARK_WORKER_MEMORY: "3500M"
+      SPARK_WORKER_DIR: "/tmp/spark-work"
+      PYSPARK_PYTHON: "/opt/conda/bin/python"
+    command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077", "-c", "2", "-m", "3500M", "--webui-port", "8081"]
+    ports:
+      - "8081:8081" # Spark Worker 1 Web UI
+    depends_on:
+      - spark-master
+    networks:
+      - bigdata-net
+
+  # ==========================================================
+  # SPARK WORKER 2 (2 Cores, 4GB RAM)
+  # ==========================================================
+  spark-worker-2:
+    image: quay.io/jupyter/pyspark-notebook:spark-4.2.0
+    container_name: spark-worker-2
+    hostname: spark-worker-2
+    environment:
+      SPARK_WORKER_CORES: "2"
+      SPARK_WORKER_MEMORY: "3500M"
+      SPARK_WORKER_DIR: "/tmp/spark-work"
+      PYSPARK_PYTHON: "/opt/conda/bin/python"
+    command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077", "-c", "2", "-m", "3500M", "--webui-port", "8081"]
+    ports:
+      - "8082:8081" # Spark Worker 2 Web UI
+    depends_on:
+      - spark-master
+    networks:
+      - bigdata-net
+
+  # ==========================================================
+  # CLIENT CONTAINER (Jupyter / PySpark Client & Driver)
+  # ==========================================================
+  spark-client:
+    image: quay.io/jupyter/pyspark-notebook:spark-4.2.0
+    container_name: bigdata_spark_env
+    hostname: spark-client
+    user: root
+    environment:
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-bigdata2026}
+      GRANT_SUDO: "yes"
+      SPARK_HOME: /usr/local/spark
+      PYTHONPATH: /usr/local/spark/python:/usr/local/spark/python/lib/py4j-0.10.9.9-src.zip
+      PYSPARK_PYTHON: /opt/conda/bin/python
+      PYSPARK_DRIVER_PYTHON: /opt/conda/bin/python
+      STORAGE_MODE: ${STORAGE_MODE:-hdfs}
+      HDFS_NAMENODE_URL: ${HDFS_NAMENODE_URL:-hdfs://namenode:9000}
+      SPARK_MASTER_URL: ${SPARK_MASTER_URL:-spark://spark-master:7077}
+    ports:
+      - "8888:8888" # Jupyter Notebook
+      - "4040:4040" # Spark Driver UI
+      - "8501:8501" # Streamlit Dashboard
+    volumes:
+      - ./:/home/jovyan/work
+    working_dir: /home/jovyan/work
+    depends_on:
+      - namenode
+      - spark-master
+    networks:
+      - bigdata-net
+
+volumes:
+  namenode_data:
+  datanode1_data:
+  datanode2_data:
+
+networks:
+  bigdata-net:
+    driver: bridge

@@ -1,0 +1,33 @@
+sample_ratio,num_rows,resource,step,time_run_1,time_run_2,avg_time,rmse
+10%,71148,2 Workers (4 Cores),Step 1: Đọc & Thống kê,0.79,0.201,0.496,
+10%,71148,2 Workers (4 Cores),Step 2: Huấn luyện ALS,7.724,3.935,5.83,1.1785
+10%,71148,2 Workers (4 Cores),Step 3: Phân cụm K-means,6.666,4.656,5.661,
+10%,71148,2 Workers (4 Cores),Tổng cộng Pipeline,15.179,8.793,11.986,1.1785
+25%,176704,2 Workers (4 Cores),Step 1: Đọc & Thống kê,0.197,0.135,0.166,
+25%,176704,2 Workers (4 Cores),Step 2: Huấn luyện ALS,3.489,2.763,3.126,0.8884
+25%,176704,2 Workers (4 Cores),Step 3: Phân cụm K-means,3.853,6.349,5.101,
+25%,176704,2 Workers (4 Cores),Tổng cộng Pipeline,7.539,9.248,8.393,0.8884
+50%,358296,2 Workers (4 Cores),Step 1: Đọc & Thống kê,0.209,0.1,0.155,
+50%,358296,2 Workers (4 Cores),Step 2: Huấn luyện ALS,4.111,3.283,3.697,0.7482
+50%,358296,2 Workers (4 Cores),Step 3: Phân cụm K-means,3.314,3.315,3.315,
+50%,358296,2 Workers (4 Cores),Tổng cộng Pipeline,7.634,6.698,7.166,0.7482
+100%,706514,2 Workers (4 Cores),Step 1: Đọc & Thống kê,0.112,0.118,0.115,
+100%,706514,2 Workers (4 Cores),Step 2: Huấn luyện ALS,3.805,3.847,3.826,0.6745
+100%,706514,2 Workers (4 Cores),Step 3: Phân cụm K-means,3.287,4.698,3.992,
+100%,706514,2 Workers (4 Cores),Tổng cộng Pipeline,7.203,8.663,7.933,0.6745
+10%,71148,1 Worker (2 Cores),Step 1: Đọc & Thống kê,0.579,0.173,0.376,
+10%,71148,1 Worker (2 Cores),Step 2: Huấn luyện ALS,6.377,2.981,4.679,1.1785
+10%,71148,1 Worker (2 Cores),Step 3: Phân cụm K-means,6.601,4.456,5.529,
+10%,71148,1 Worker (2 Cores),Tổng cộng Pipeline,13.557,7.61,10.583,1.1785
+25%,176704,1 Worker (2 Cores),Step 1: Đọc & Thống kê,0.147,0.111,0.129,
+25%,176704,1 Worker (2 Cores),Step 2: Huấn luyện ALS,3.171,3.009,3.09,0.8884
+25%,176704,1 Worker (2 Cores),Step 3: Phân cụm K-means,4.226,3.909,4.067,
+25%,176704,1 Worker (2 Cores),Tổng cộng Pipeline,7.544,7.029,7.287,0.8884
+50%,358296,1 Worker (2 Cores),Step 1: Đọc & Thống kê,0.106,0.106,0.106,
+50%,358296,1 Worker (2 Cores),Step 2: Huấn luyện ALS,4.447,3.838,4.142,0.7482
+50%,358296,1 Worker (2 Cores),Step 3: Phân cụm K-means,4.455,3.524,3.99,
+50%,358296,1 Worker (2 Cores),Tổng cộng Pipeline,9.008,7.467,8.238,0.7482
+100%,706514,1 Worker (2 Cores),Step 1: Đọc & Thống kê,0.105,0.12,0.112,
+100%,706514,1 Worker (2 Cores),Step 2: Huấn luyện ALS,4.908,4.907,4.908,0.6745
+100%,706514,1 Worker (2 Cores),Step 3: Phân cụm K-means,5.389,4.353,4.871,
+100%,706514,1 Worker (2 Cores),Tổng cộng Pipeline,10.402,9.38,9.891,0.6745

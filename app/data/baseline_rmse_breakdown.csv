@@ -1,0 +1,43 @@
+dataset,model,rating_level,rmse
+food_com,Global Mean,1.0,3.7146
+food_com,Global Mean,2.0,2.7146
+food_com,Global Mean,3.0,1.7146
+food_com,Global Mean,4.0,0.7146
+food_com,Global Mean,5.0,0.2854
+food_com,Smoothed Item Mean,1.0,3.6135
+food_com,Smoothed Item Mean,2.0,2.6396
+food_com,Smoothed Item Mean,3.0,1.6582
+food_com,Smoothed Item Mean,4.0,0.6936
+food_com,Smoothed Item Mean,5.0,0.303
+food_com,Top-N Popular,1.0,3.5519
+food_com,Top-N Popular,2.0,2.5959
+food_com,Top-N Popular,3.0,1.6354
+food_com,Top-N Popular,4.0,0.7256
+food_com,Top-N Popular,5.0,0.3934
+food_vietnam,Global Mean,1.0,1.9981
+food_vietnam,Global Mean,1.5,1.4981
+food_vietnam,Global Mean,2.0,0.9981
+food_vietnam,Global Mean,2.5,0.4981
+food_vietnam,Global Mean,3.0,0.0019
+food_vietnam,Global Mean,3.5,0.5019
+food_vietnam,Global Mean,4.0,1.0019
+food_vietnam,Global Mean,4.5,1.5019
+food_vietnam,Global Mean,5.0,2.0019
+food_vietnam,Smoothed Item Mean,1.0,2.0118
+food_vietnam,Smoothed Item Mean,1.5,1.5219
+food_vietnam,Smoothed Item Mean,2.0,1.0167
+food_vietnam,Smoothed Item Mean,2.5,0.5419
+food_vietnam,Smoothed Item Mean,3.0,0.2027
+food_vietnam,Smoothed Item Mean,3.5,0.5312
+food_vietnam,Smoothed Item Mean,4.0,1.0207
+food_vietnam,Smoothed Item Mean,4.5,1.5184
+food_vietnam,Smoothed Item Mean,5.0,2.0067
+food_vietnam,Top-N Popular,1.0,2.0164
+food_vietnam,Top-N Popular,1.5,1.529
+food_vietnam,Top-N Popular,2.0,1.0243
+food_vietnam,Top-N Popular,2.5,0.5569
+food_vietnam,Top-N Popular,3.0,0.2384
+food_vietnam,Top-N Popular,3.5,0.5434
+food_vietnam,Top-N Popular,4.0,1.0279
+food_vietnam,Top-N Popular,4.5,1.524
+food_vietnam,Top-N Popular,5.0,2.0095
