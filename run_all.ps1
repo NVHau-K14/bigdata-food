@@ -18,6 +18,9 @@
     hdfs (mặc định) hoặc local. Chế độ local chỉ chạy phần ViFoodRec (làm sạch, chia, cơ sở, ALS, K-means) bằng Spark local[*].
 .PARAMETER Fast
     Bỏ qua các bước nặng: benchmark lưu trữ, thực nghiệm mở rộng, ALS ngầm định. Bảng ALS ngầm định trên web sẽ không được làm mới.
+.PARAMETER StartAt
+    Tên một bước (phần sau số thứ tự trong tên log, ví dụ mo_rong_2_worker): bỏ qua mọi bước đứng trước nó, giữ nguyên số thứ tự
+    của log. Dùng để chạy tiếp sau khi một bước giữa chừng lỗi và đã được sửa.
 .PARAMETER WebOnly
     Chỉ xuất dữ liệu web từ app/data, kiểm thử web và (nếu có -ServeWeb) mở web. Không cần Spark.
 .EXAMPLE
@@ -34,6 +37,7 @@ param (
     [ValidateSet("hdfs", "local")][string]$StorageMode = "hdfs",
     [string]$ClientContainer = "",
     [string]$LogPrefix = "run_",
+    [string]$StartAt = "",
     [switch]$SkipCluster,
     [switch]$SkipLoad,
     [switch]$SkipSmoke,
@@ -69,6 +73,7 @@ $LocalMode = ($StorageMode -eq "local")
 $logDir = Join-Path $root "reports\evidence\logs"
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 $script:stepNo = 0
+$script:skipping = [bool]$StartAt
 $script:summary = New-Object System.Collections.ArrayList
 $script:runWatch = [System.Diagnostics.Stopwatch]::StartNew()
 
@@ -76,6 +81,9 @@ function Invoke-Step {
     # Chạy một dòng lệnh, ghi log UTF-8 nguyên văn (gộp stdout và stderr) và dừng khi mã thoát khác 0.
     param([string]$Name, [string]$CommandLine, [switch]$AllowFail)
     $script:stepNo++
+    if ($script:skipping) {
+        if ($Name -eq $StartAt) { $script:skipping = $false } else { return 0 }
+    }
     $logName = "{0}{1:D2}_{2}.log" -f $LogPrefix, $script:stepNo, $Name
     $logPath = Join-Path $logDir $logName
     Write-Host ""
@@ -104,7 +112,9 @@ function Invoke-Step {
 }
 
 function Write-Summary {
-    $path = Join-Path $logDir ("{0}tong_ket.log" -f $LogPrefix)
+    $suffix = ""
+    if ($StartAt) { $suffix = "_tiep_tu_" + $StartAt }
+    $path = Join-Path $logDir ("{0}tong_ket{1}.log" -f $LogPrefix, $suffix)
     $lines = @("Tổng kết lần chạy run_all.ps1 (tham số: HdfsRoot='$HdfsRoot', StorageMode=$StorageMode, container=$ClientContainer)", "")
     $lines += $script:summary
     $lines += ""
