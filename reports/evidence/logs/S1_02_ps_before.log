@@ -1,0 +1,8 @@
+NAMES               STATUS
+spark-worker-1      Up 40 seconds (unhealthy)
+bigdata_spark_env   Up 41 seconds (healthy)
+spark-worker-2      Up 40 seconds (unhealthy)
+datanode1           Up 41 seconds
+datanode2           Up 41 seconds
+spark-master        Up 42 seconds (unhealthy)
+namenode            Up 42 seconds

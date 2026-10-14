@@ -1,0 +1,80 @@
+          35          115         1165516762 /data
+          11           48            5002869 /models
+ Container bigdata_spark_env Stopping 
+ Container spark-worker-1 Stopping 
+ Container spark-worker-2 Stopping 
+ Container datanode2 Stopping 
+ Container datanode1 Stopping 
+ Container datanode1 Stopped 
+ Container datanode1 Removing 
+ Container datanode1 Removed 
+ Container datanode2 Stopped 
+ Container datanode2 Removing 
+ Container datanode2 Removed 
+ Container bigdata_spark_env Stopped 
+ Container bigdata_spark_env Removing 
+ Container spark-worker-1 Stopped 
+ Container spark-worker-1 Removing 
+ Container spark-worker-2 Stopped 
+ Container spark-worker-2 Removing 
+ Container bigdata_spark_env Removed 
+ Container namenode Stopping 
+ Container spark-worker-1 Removed 
+ Container spark-worker-2 Removed 
+ Container spark-master Stopping 
+ Container namenode Stopped 
+ Container namenode Removing 
+ Container namenode Removed 
+ Container spark-master Stopped 
+ Container spark-master Removing 
+ Container spark-master Removed 
+ Network bigdata-food_bigdata-net Removing 
+ Network bigdata-food_bigdata-net Removed 
+ Network bigdata-food_bigdata-net Creating 
+ Network bigdata-food_bigdata-net Creating 
+ Network bigdata-food_bigdata-net Created 
+ Network bigdata-food_bigdata-net Created 
+ Container spark-master Creating 
+ Container namenode Creating 
+ Container namenode Created 
+ Container datanode1 Creating 
+ Container datanode2 Creating 
+ Container spark-master Created 
+ Container spark-worker-2 Creating 
+ Container bigdata_spark_env Creating 
+ Container spark-worker-1 Creating 
+ Container datanode2 Created 
+ Container datanode1 Created 
+ Container spark-worker-2 Created 
+ Container bigdata_spark_env Created 
+ Container spark-worker-1 Created 
+ Container spark-master Starting 
+ Container namenode Starting 
+ Container spark-master Started 
+ Container spark-worker-2 Starting 
+ Container spark-worker-1 Starting 
+ Container namenode Started 
+ Container datanode2 Starting 
+ Container bigdata_spark_env Starting 
+ Container datanode1 Starting 
+ Container datanode2 Started 
+ Container spark-worker-2 Started 
+ Container spark-worker-1 Started 
+ Container bigdata_spark_env Started 
+ Container datanode1 Started 
+NAMES               STATUS
+spark-worker-1      Up About a minute (healthy)
+bigdata_spark_env   Up About a minute (healthy)
+spark-worker-2      Up About a minute (healthy)
+datanode2           Up About a minute
+datanode1           Up About a minute
+spark-master        Up About a minute (healthy)
+namenode            Up About a minute
+Safe mode is OFF
+          35          115         1165516762 /data
+          11           48            5002869 /models
+	Under replicated blocks: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+Live datanodes (2):
+ALIVE ['ALIVE', 'ALIVE']

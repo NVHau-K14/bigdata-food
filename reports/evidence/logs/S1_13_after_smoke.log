@@ -1,0 +1,6 @@
+	Under replicated blocks: 0
+stat: `/data/smoke_test/_SUCCESS': No such file or directory
+2 _SUCCESS
+Status: HEALTHY
+ Average block replication:	2.0
+The filesystem under path '/' is HEALTHY

@@ -1,0 +1,87 @@
+drwxr-xr-x   - root supergroup          0 2026-10-13 14:00 /data/benchmark
+drwxr-xr-x   - root supergroup          0 2026-10-13 14:00 /data/benchmark/interactions_clean.csv
+-rw-r--r--   3 root supergroup          0 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/_SUCCESS
+-rw-r--r--   3 root supergroup    2599314 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/part-00000-23440179-c906-4ffa-834a-8662a820cac5-c000.csv
+-rw-r--r--   3 root supergroup    2538683 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/part-00001-23440179-c906-4ffa-834a-8662a820cac5-c000.csv
+-rw-r--r--   3 root supergroup    2534528 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/part-00002-23440179-c906-4ffa-834a-8662a820cac5-c000.csv
+-rw-r--r--   3 root supergroup    2520687 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/part-00003-23440179-c906-4ffa-834a-8662a820cac5-c000.csv
+-rw-r--r--   3 root supergroup    2508557 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/part-00004-23440179-c906-4ffa-834a-8662a820cac5-c000.csv
+-rw-r--r--   3 root supergroup    2488513 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/part-00005-23440179-c906-4ffa-834a-8662a820cac5-c000.csv
+-rw-r--r--   3 root supergroup    2465117 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/part-00006-23440179-c906-4ffa-834a-8662a820cac5-c000.csv
+-rw-r--r--   3 root supergroup    2379187 2026-10-13 14:00 /data/benchmark/interactions_clean.csv/part-00007-23440179-c906-4ffa-834a-8662a820cac5-c000.csv
+drwxr-xr-x   - root supergroup          0 2026-10-13 14:00 /data/benchmark/raw_interactions_full.parquet
+-rw-r--r--   3 root supergroup          0 2026-10-13 14:00 /data/benchmark/raw_interactions_full.parquet/_SUCCESS
+-rw-r--r--   3 root supergroup  199011269 2026-10-13 14:00 /data/benchmark/raw_interactions_full.parquet/part-00000-f3e6ec25-150f-465b-852e-4543c1fc586d-c000.snappy.parquet
+drwxr-xr-x   - root supergroup          0 2026-10-13 14:00 /data/benchmark/raw_recipes_full.parquet
+-rw-r--r--   3 root supergroup          0 2026-10-13 14:00 /data/benchmark/raw_recipes_full.parquet/_SUCCESS
+-rw-r--r--   3 root supergroup  126095324 2026-10-13 14:00 /data/benchmark/raw_recipes_full.parquet/part-00000-631953dc-d3cf-48b6-b532-0be52c24d434-c000.snappy.parquet
+drwxr-xr-x   - root supergroup          0 2026-10-13 14:00 /data/benchmark/recipes_clean.csv
+-rw-r--r--   3 root supergroup          0 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/_SUCCESS
+-rw-r--r--   3 root supergroup   16359745 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/part-00000-40b82912-2448-4d76-9856-c1bbe2fa3b81-c000.csv
+-rw-r--r--   3 root supergroup   16417707 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/part-00001-40b82912-2448-4d76-9856-c1bbe2fa3b81-c000.csv
+-rw-r--r--   3 root supergroup   16374757 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/part-00002-40b82912-2448-4d76-9856-c1bbe2fa3b81-c000.csv
+-rw-r--r--   3 root supergroup   16407745 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/part-00003-40b82912-2448-4d76-9856-c1bbe2fa3b81-c000.csv
+-rw-r--r--   3 root supergroup   16380627 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/part-00004-40b82912-2448-4d76-9856-c1bbe2fa3b81-c000.csv
+-rw-r--r--   3 root supergroup   16360962 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/part-00005-40b82912-2448-4d76-9856-c1bbe2fa3b81-c000.csv
+-rw-r--r--   3 root supergroup   16338800 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/part-00006-40b82912-2448-4d76-9856-c1bbe2fa3b81-c000.csv
+-rw-r--r--   3 root supergroup   16343049 2026-10-13 14:00 /data/benchmark/recipes_clean.csv/part-00007-40b82912-2448-4d76-9856-c1bbe2fa3b81-c000.csv
+drwxrwxrwx   - root supergroup          0 2026-10-13 13:51 /data/clean
+drwxr-xr-x   - root supergroup          0 2026-10-13 13:51 /data/clean/food_com
+drwxr-xr-x   - root supergroup          0 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet
+-rw-r--r--   3 root supergroup          0 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/_SUCCESS
+-rw-r--r--   3 root supergroup     603501 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/part-00000-8f20283a-fb3c-45eb-88f1-0ff5569a6d05-c000.snappy.parquet
+-rw-r--r--   3 root supergroup     575734 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/part-00001-8f20283a-fb3c-45eb-88f1-0ff5569a6d05-c000.snappy.parquet
+-rw-r--r--   3 root supergroup     596571 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/part-00002-8f20283a-fb3c-45eb-88f1-0ff5569a6d05-c000.snappy.parquet
+-rw-r--r--   3 root supergroup     615340 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/part-00003-8f20283a-fb3c-45eb-88f1-0ff5569a6d05-c000.snappy.parquet
+-rw-r--r--   3 root supergroup     590430 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/part-00004-8f20283a-fb3c-45eb-88f1-0ff5569a6d05-c000.snappy.parquet
+-rw-r--r--   3 root supergroup     605584 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/part-00005-8f20283a-fb3c-45eb-88f1-0ff5569a6d05-c000.snappy.parquet
+-rw-r--r--   3 root supergroup     601853 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/part-00006-8f20283a-fb3c-45eb-88f1-0ff5569a6d05-c000.snappy.parquet
+-rw-r--r--   3 root supergroup     597717 2026-10-13 13:51 /data/clean/food_com/interactions_clean.parquet/part-00007-8f20283a-fb3c-45eb-88f1-0ff5569a6d05-c000.snappy.parquet
+drwxr-xr-x   - root supergroup          0 2026-10-13 13:51 /data/clean/food_com/recipes_clean.parquet
+write /dev/stdout: The pipe is being closed.
+
+Connecting to namenode via http://namenode:9870/fsck?ugi=root&path=%2F
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	2.0
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		144 (32.142857 %)
+ Blocks queued for replication:	0
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+ Blocks queued for replication:	0
+FSCK ended at Wed Oct 14 13:31:05 UTC 2026 in 45 milliseconds
+
+
+The filesystem under path '/' is HEALTHY
+
+2
+/usr/bin/curl
+Bo_prompt_Claude_Code.md
+Bo_prompt_giao_viec_cho_Gemini.md
+Prompt_web_rieng_dashboard.md
+README.md
+app
+data
+docker-compose.yml
+docs
+notebooks
+reports
+results
+run_all.ps1
+scratch
+src
+structure.md
+web

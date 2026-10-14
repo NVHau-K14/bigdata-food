@@ -1,0 +1,4 @@
+27M	/tmp/bk/clean
+5.0M	/tmp/bk/models
+invalid output path: directory "D:\\d\\Documents\\BaiTap\\BigData" does not exist
+du: cannot access '/d/Documents/BaiTap/BigData/backup_hdfs_S1/*': No such file or directory

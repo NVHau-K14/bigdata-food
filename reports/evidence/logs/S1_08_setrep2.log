@@ -1,0 +1,15 @@
+Waiting for /models/food_vietnam/als_best_model/userFactors/part-00007-6ba87f7f-79d4-47ea-a442-cbed1840af35-c000.snappy.parquet ... done
+Waiting for /models/food_vietnam/als_best_model/userFactors/part-00008-6ba87f7f-79d4-47ea-a442-cbed1840af35-c000.snappy.parquet ... done
+Waiting for /models/food_vietnam/als_best_model/userFactors/part-00009-6ba87f7f-79d4-47ea-a442-cbed1840af35-c000.snappy.parquet ... done
+Found 3 items
+drwxrwxrwx   - root supergroup          0 2026-10-13 14:00 /data
+drwxr-xr-x   - root supergroup          0 2026-10-13 15:13 /home
+drwxrwxrwx   - root supergroup          0 2026-10-13 15:15 /models
+	Under replicated blocks: 13
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+Connecting to namenode via http://namenode:9870/fsck?ugi=root&path=%2F
+Status: HEALTHY
+ Average block replication:	2.0
+ Missing replicas:		13 (4.1009464 %)
+The filesystem under path '/' is HEALTHY

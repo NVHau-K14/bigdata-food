@@ -1,0 +1,8 @@
+== fsck
+	Under replicated blocks: 144
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+Live datanodes (2):
+ls: No FileSystem for scheme "C"
+ls: No FileSystem for scheme "C"
+ls: No FileSystem for scheme "C"

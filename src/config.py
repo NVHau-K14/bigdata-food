@@ -17,6 +17,9 @@ STORAGE_MODE = os.environ.get("STORAGE_MODE", "hdfs").lower()
 HDFS_NAMENODE_URL = os.environ.get("HDFS_NAMENODE_URL", "hdfs://namenode:9000")
 SPARK_MASTER_URL = os.environ.get("SPARK_MASTER_URL", "spark://spark-master:7077")
 
+# Hệ số nhân bản HDFS, phải khớp dfs.replication trong docker-compose.yml
+HDFS_REPLICATION = int(os.environ.get("HDFS_REPLICATION", 2))
+
 # Thư mục gốc local khi chạy chế độ local
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 LOCAL_DATA_DIR = PROJECT_ROOT / "data"
@@ -125,7 +128,10 @@ def get_spark_session(
         .config("spark.driver.maxResultSize", "1g")
         
     if STORAGE_MODE == "hdfs":
-        builder = builder.config("spark.hadoop.fs.defaultFS", HDFS_NAMENODE_URL)
+        # Client Spark không đọc hdfs-site.xml của cụm nên mặc định ghi với replication 3,
+        # vượt số DataNode (2) và gây Under replicated blocks. Ép về 2 cho mọi file Spark ghi.
+        builder = builder.config("spark.hadoop.fs.defaultFS", HDFS_NAMENODE_URL) \
+            .config("spark.hadoop.dfs.replication", str(HDFS_REPLICATION))
         
     spark = builder.getOrCreate()
     

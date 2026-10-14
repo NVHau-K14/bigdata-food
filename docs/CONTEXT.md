@@ -40,3 +40,14 @@ Sau mỗi tác vụ, tạo reports/evidence/stage_<mã>.md gồm:
 - Cấm sửa data/raw. Cấm xóa file ngoài phạm vi tác vụ. Cấm commit dữ liệu nặng.
 - Cấm viết báo cáo Word, slide (chưa làm giai đoạn này).
 - Cấm thay đổi quyết định đã chốt (hai bộ dữ liệu, K-core=3, ALS, K-means, Streamlit) khi chưa hỏi người dùng.
+
+## 7. Cập nhật ngày 14/10/2026 (người dùng đã xác nhận)
+1. ViFoodRec: giữ toàn bộ thang điểm 0,0 đến 5,0 (11 mức, bước 0,5). Chỉ loại NULL, trùng cặp (user, món) và dòng có food_id không có trong danh mục món. Lý do: 0,0 và 0,5 có số dòng ngang các mức khác, không có bằng chứng đó là "chưa chấm".
+2. ALS không tốt hơn baseline trên cả hai bộ: đã biết và được chấp nhận, báo cáo trung thực. Quy tắc §3.4 không buộc dừng vì lý do này nữa. Vẫn dừng nếu kết quả tốt bất thường hoặc có rò rỉ dữ liệu.
+3. Dashboard chính là web/ (HTML/CSS/JS tĩnh). app/ (Streamlit) giữ làm bản lưu và nguồn dữ liệu, không xóa.
+4. Cụm người dùng ViFoodRec: nếu chênh lệch tương đối giữa các cụm ở mọi đặc trưng nhỏ hơn 10% thì gọi "Cụm 1, 2, 3", không đặt tên diễn giải.
+5. Mọi lệnh chạy thật phải ghi log nguyên văn vào reports/evidence/logs/ (dùng Tee-Object hoặc tee). Biên bản chỉ trích từ log.
+6. Chỉ viết nguyên nhân của một kết quả khi đã kiểm chứng. Nếu chưa, ghi "giả thuyết chưa kiểm chứng".
+7. Không xóa hay ghi đè file ngoài phạm vi stage. Sao lưu trước khi ghi đè kết quả. Không đụng data/raw.
+8. Trình bày: tiếng Việt viết hoa kiểu câu, không icon, không chú thích tiếng Anh trong ngoặc.
+9. Điều kiện dừng và hỏi người dùng: mất hơn 10% dòng ngoài dự kiến; rò rỉ train/test khác 0; kết quả mô hình tốt bất thường; lỗi hạ tầng quá 1 giờ chưa xử lý được; cần xóa dữ liệu không khôi phục được.

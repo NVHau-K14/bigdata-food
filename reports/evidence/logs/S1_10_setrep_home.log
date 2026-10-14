@@ -1,0 +1,11 @@
+Waiting for /home/jovyan/work/data/results/recommendations_food_vietnam.parquet/part-00000-07996785-12a2-4e91-9154-43e4c6f736f7-c000.snappy.parquet ... done
+	Under replicated blocks: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+Live datanodes (2):
+Connecting to namenode via http://namenode:9870/fsck?ugi=root&path=%2F
+Status: HEALTHY
+ Total blocks (validated):	152 (avg. block size 7719136 B)
+ Average block replication:	2.0
+ Missing replicas:		0 (0.0 %)
+The filesystem under path '/' is HEALTHY

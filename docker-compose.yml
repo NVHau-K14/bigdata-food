@@ -85,6 +85,13 @@ services:
     container_name: spark-master
     hostname: spark-master
     command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.master.Master", "-h", "spark-master", "-p", "7077", "--webui-port", "8080"]
+    # Healthcheck mặc định của image kiểm tra máy chủ Jupyter nên luôn báo unhealthy ở dịch vụ Spark; thay bằng kiểm tra giao diện Spark
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/json/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
     ports:
       - "8080:8080" # Spark Master Web UI
       - "7077:7077" # Spark Master Port
@@ -105,6 +112,13 @@ services:
       SPARK_WORKER_DIR: "/tmp/spark-work"
       PYSPARK_PYTHON: "/opt/conda/bin/python"
     command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077", "-c", "2", "-m", "3500M", "--webui-port", "8081"]
+    # Healthcheck mặc định của image kiểm tra máy chủ Jupyter nên luôn báo unhealthy ở dịch vụ Spark; thay bằng kiểm tra giao diện Spark
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8081/json/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
     ports:
       - "8081:8081" # Spark Worker 1 Web UI
     depends_on:
@@ -125,6 +139,13 @@ services:
       SPARK_WORKER_DIR: "/tmp/spark-work"
       PYSPARK_PYTHON: "/opt/conda/bin/python"
     command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077", "-c", "2", "-m", "3500M", "--webui-port", "8081"]
+    # Healthcheck mặc định của image kiểm tra máy chủ Jupyter nên luôn báo unhealthy ở dịch vụ Spark; thay bằng kiểm tra giao diện Spark
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8081/json/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
     ports:
       - "8082:8081" # Spark Worker 2 Web UI
     depends_on:
