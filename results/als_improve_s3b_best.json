@@ -1,0 +1,44 @@
+[
+  {
+    "dataset": "food_com",
+    "variant": "explicit_luoi_mo_rong",
+    "best": {
+      "rank": 10,
+      "regParam": 0.2,
+      "maxIter": 10,
+      "val_rmse": 0.6754,
+      "source": "cu"
+    },
+    "improved_over_old_grid": false
+  },
+  {
+    "dataset": "food_vietnam",
+    "variant": "implicit",
+    "best": {
+      "rank": 20,
+      "regParam": 0.01,
+      "alpha": 1.0,
+      "maxIter": 10,
+      "val_p10": 0.02277227722772277,
+      "val_r10": 0.004645253133557205
+    },
+    "test_p10": 0.019801980198019802,
+    "test_r10": 0.0042827351196265745,
+    "short_list_fraction": 0.0
+  },
+  {
+    "dataset": "food_com",
+    "variant": "implicit",
+    "best": {
+      "rank": 10,
+      "regParam": 0.01,
+      "alpha": 10.0,
+      "maxIter": 10,
+      "val_p10": 0.006041770263550461,
+      "val_r10": 0.022845854664457713
+    },
+    "test_p10": 0.0056973965538925815,
+    "test_r10": 0.021175551142294947,
+    "short_list_fraction": 0.0
+  }
+]
