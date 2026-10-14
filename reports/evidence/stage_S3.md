@@ -113,7 +113,7 @@ Chênh lệch tương đối giữa 3 cụm (lớn nhất trừ nhỏ nhất, ch
 | avg_calo_high | 1,15% |
 | avg_time_high | 1,71% |
 
-Quy tắc CONTEXT mục 7.4 yêu cầu mọi đặc trưng dưới 10%. Sáu đặc trưng thỏa, riêng `pct_chay_high` là 17,52% (chia cho giá trị nhỏ nhất: 19,01%; chia cho giá trị lớn nhất: 15,97%; cả ba cách chia đều trên 10%). Chênh lệch tuyệt đối là 0,0120 so với 0,0142 (tỷ lệ món chay được chấm cao trên toàn bộ đánh giá của người dùng, giá trị rất nhỏ). Vì điều kiện không thỏa trọn vẹn, tên "Cụm 1, 2, 3" đang là tạm thời, để tránh đặt tên diễn giải dựa trên chênh lệch rất nhỏ. Mã in cảnh báo "VƯỢT NGƯỠNG" trong log. Cần người dùng quyết định (mục 7).
+Quy tắc CONTEXT mục 7.4 yêu cầu mọi đặc trưng dưới 10%. Sáu đặc trưng thỏa, riêng `pct_chay_high` là 17,52% (chia cho giá trị nhỏ nhất: 19,01%; chia cho giá trị lớn nhất: 15,97%; cả ba cách chia đều trên 10%). Chênh lệch tuyệt đối là 0,0120 so với 0,0142 (tỷ lệ món chay được chấm cao trên toàn bộ đánh giá của người dùng, giá trị rất nhỏ). Vì điều kiện không thỏa trọn vẹn nên mã in cảnh báo "VƯỢT NGƯỠNG" trong log. Người dùng đã quyết định (14/10/2026) giữ tên "Cụm 1, 2, 3", không đặt tên diễn giải.
 
 Hồ sơ 3 cụm (train): Cụm 1 có 33 người (32,67%), Cụm 2 có 31 người (30,69%), Cụm 3 có 37 người (36,63%); điểm trung bình 2,5381; 2,4996; 2,4691. Nhãn nằm trong `cluster_profiles_food_vietnam.csv` và `user_clusters_food_vietnam.parquet`.
 
@@ -158,7 +158,7 @@ Giao thức vẫn khác: bài báo 200 điểm test; nhóm dùng 18.415 điểm 
 | `model_comparison.csv` có 8 dòng (4 mới ViFoodRec, 4 Food.com giữ nguyên) | ĐẠT theo số dòng; xem ghi chú ở mục 3 |
 | `vifoodrec_sensitivity.csv` có 3 biến thể | ĐẠT (9 dòng: 3 biến thể x 3 mô hình) |
 | Rò rỉ bằng 0 | ĐẠT (log `S3_02`, `S3_03`) |
-| Tên cụm ViFoodRec là "Cụm 1, 2, 3" nếu chênh lệch dưới 10% | CHƯA ĐẠT ĐIỀU KIỆN: `pct_chay_high` chênh 17,52%; tên "Cụm 1, 2, 3" đang tạm dùng, chờ quyết định |
+| Tên cụm ViFoodRec là "Cụm 1, 2, 3" nếu chênh lệch dưới 10% | ĐẠT theo quyết định của người dùng ngày 14/10/2026: `pct_chay_high` chênh 17,52% (vượt 10%) nhưng giữ tên "Cụm 1, 2, 3" |
 | Mọi lệnh ghi log | ĐẠT (`S3_01` đến `S3_14`) |
 | Sao lưu trước khi ghi đè | ĐẠT (`backup_v3_truoc_S3/`) |
 
@@ -166,7 +166,7 @@ Giao thức vẫn khác: bài báo 200 điểm test; nhóm dùng 18.415 điểm 
 
 - Lỗi hạ tầng cũ phát hiện: khi `STORAGE_MODE=hdfs`, đường dẫn local không có scheme được hiểu theo HDFS mặc định. Vì vậy `train_als.py` bản cũ không bao giờ ghi bản sao `recommendations_*` và `item_neighbors_*` ra đĩa máy; các file local ở `data/results/` và `results/` còn là bản cũ ngày 13/10, và có bản sao thừa trong HDFS tại `/home/jovyan/work/data/results/`. Đã sửa trong `train_als.py` (hàm `save_local_copies`, ghi bằng pandas) và chạy lại ALS; log lần chạy đầu giữ ở `S3_05a_als_lan1_loi_ghi_local.log`. Kết quả hai lần chạy trùng nhau. Bản sửa cho nhánh Food.com chưa chạy thử (Food.com không chạy lại). Thư mục thừa trong HDFS chưa xóa (ngoài phạm vi, xóa là việc không khôi phục được).
 - `web/data` chưa làm mới, `verify_web.py` còn chuỗi tên bước cũ `filter_rating_range_1_to_5` và hằng số 149.431 (ghi ở S2 mục 6). Làm ở S4.
-- Hình `kmeans_user_clusters_foodcom_pca.png` (Food.com) chưa vẽ lại nên chú giải còn tên tiếng Anh cũ. Muốn vẽ lại cần chạy K-means Food.com (trái nguyên tắc không chạy lại), để người dùng quyết định.
+- Hình `kmeans_user_clusters_foodcom_pca.png` (Food.com) không vẽ lại nên chú giải còn tên tiếng Anh cũ. Người dùng quyết định (14/10/2026) giữ nguyên và không chạy lại K-means Food.com. Không dùng hình này ở web hay báo cáo, hoặc ghi chú rõ tên cụm trên hình là tên cũ.
 - `eda_insights.md` và các biên bản P3, P5, P7, P8, P11 còn câu mô tả cũ (sinh nhân tạo, loại 0,0 và 0,5, nhãn cụm cũ). Đính chính ở S5.
 - `docs/data_contract.md` mục 2 và 3 vẫn mô tả `app/data` ở trạng thái cũ (ví dụ "3 cụm hành vi" có tên diễn giải). Cập nhật ở S4 và S5.
 - Dòng "Toàn bộ hệ thống" thay cho "Toàn bộ hệ thống (Overall)" ở hồ sơ cụm Food.com, và "Toàn bộ món" thay cho "Toàn bộ món (Overall)": đổi cả chuỗi mà web có thể đang so khớp; kiểm tra ở S4.
@@ -178,4 +178,4 @@ Giao thức vẫn khác: bài báo 200 điểm test; nhóm dùng 18.415 điểm 
 3. **Có rò rỉ train và test không?** Không: truy vấn Spark SQL độc lập cho giao cặp (người dùng, món) bằng 0 ở cả ba cặp tập, và tổng ba tập bằng 182.631.
 4. **Vì sao còn dùng biến thể B?** Chỉ để đối chiếu với quy tắc cũ: cùng số dòng 149.431 với bản cũ. Ở cả 3 biến thể, thứ tự RMSE giữa 3 mô hình không đổi, nên kết luận "ALS không hơn baseline" không phụ thuộc vào việc giữ hay bỏ 0,0 và 0,5.
 5. **Vì sao chia ViFoodRec không bị mất dòng cold-start?** Người dùng ít nhất có 1.641 đánh giá và món ít nhất có 27 (S2), nên mọi người dùng và món trong validation và test đều có trong train (0 dòng bị loại).
-6. **Vì sao gọi cụm ViFoodRec là "Cụm 1, 2, 3"?** Sáu trong bảy đặc trưng chênh nhau dưới 7% giữa các cụm và Silhouette chỉ 0,2219 cho k = 3; đặc trưng thứ bảy (tỷ lệ món chay được chấm cao) chênh 17,52% nhưng ở giá trị tuyệt đối rất nhỏ (0,0120 so với 0,0142). Điều kiện 10% của CONTEXT chưa thỏa trọn vẹn, nên đang chờ quyết định.
+6. **Vì sao gọi cụm ViFoodRec là "Cụm 1, 2, 3"?** Sáu trong bảy đặc trưng chênh nhau dưới 7% giữa các cụm và Silhouette chỉ 0,2219 cho k = 3; đặc trưng thứ bảy (tỷ lệ món chay được chấm cao) chênh 17,52% nhưng ở giá trị tuyệt đối rất nhỏ (0,0120 so với 0,0142). Điều kiện 10% của CONTEXT chưa thỏa trọn vẹn, nên người dùng đã quyết định giữ tên "Cụm 1, 2, 3".
