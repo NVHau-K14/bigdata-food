@@ -1,0 +1,83 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=local -e HDFS_ROOT= bigdata_spark_cleanrun /opt/conda/bin/python src/train_als.py --only vietnam
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 18:01:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+netlib-blas: JNI_OnLoad: dlopen(libblas.so.3) failed: libblas.so.3: cannot open shared object file: No such file or directory
+
+[Stage 3564:=======================>                            (46 + 16) / 100]
+
+                                                                                
+======================================================================
+CHƯƠNG TRÌNH HUẤN LUYỆN, TINH CHỈNH VÀ ĐÁNH GIÁ MÔ HÌNH ALS (P7)
+Chế độ lưu trữ: local
+======================================================================
+
+==================================================================
+KHỞI CHẠY PIPELINE HUẤN LUYỆN ALS: FOOD_VIETNAM
+==================================================================
+-> Quy mô tập dữ liệu: Train=146,012 | Val=18,204 | Test=18,415
+
+---> Bắt đầu Grid Search Tuning cho FOOD_VIETNAM...
+[1/24] rank=10, reg=0.01, maxIter=10 | Val RMSE: 1.8162 (Fit: 3.7s)
+[2/24] rank=10, reg=0.01, maxIter=15 | Val RMSE: 1.8298 (Fit: 2.0s)
+[3/24] rank=10, reg=0.05, maxIter=10 | Val RMSE: 1.7322 (Fit: 1.4s)
+[4/24] rank=10, reg=0.05, maxIter=15 | Val RMSE: 1.7364 (Fit: 1.6s)
+[5/24] rank=10, reg=0.10, maxIter=10 | Val RMSE: 1.6712 (Fit: 1.1s)
+[6/24] rank=10, reg=0.10, maxIter=15 | Val RMSE: 1.6752 (Fit: 1.6s)
+[7/24] rank=10, reg=0.50, maxIter=10 | Val RMSE: 1.6576 (Fit: 1.1s)
+[8/24] rank=10, reg=0.50, maxIter=15 | Val RMSE: 1.6576 (Fit: 1.4s)
+[9/24] rank=20, reg=0.01, maxIter=10 | Val RMSE: 2.0208 (Fit: 1.2s)
+[10/24] rank=20, reg=0.01, maxIter=15 | Val RMSE: 2.0594 (Fit: 1.9s)
+[11/24] rank=20, reg=0.05, maxIter=10 | Val RMSE: 1.8151 (Fit: 1.4s)
+[12/24] rank=20, reg=0.05, maxIter=15 | Val RMSE: 1.8160 (Fit: 1.8s)
+[13/24] rank=20, reg=0.10, maxIter=10 | Val RMSE: 1.6916 (Fit: 1.5s)
+[14/24] rank=20, reg=0.10, maxIter=15 | Val RMSE: 1.6936 (Fit: 1.7s)
+[15/24] rank=20, reg=0.50, maxIter=10 | Val RMSE: 1.6576 (Fit: 1.2s)
+[16/24] rank=20, reg=0.50, maxIter=15 | Val RMSE: 1.6576 (Fit: 1.5s)
+[17/24] rank=50, reg=0.01, maxIter=10 | Val RMSE: 2.1363 (Fit: 2.2s)
+[18/24] rank=50, reg=0.01, maxIter=15 | Val RMSE: 2.2138 (Fit: 3.6s)
+[19/24] rank=50, reg=0.05, maxIter=10 | Val RMSE: 1.8145 (Fit: 2.3s)
+[20/24] rank=50, reg=0.05, maxIter=15 | Val RMSE: 1.8144 (Fit: 3.4s)
+[21/24] rank=50, reg=0.10, maxIter=10 | Val RMSE: 1.6764 (Fit: 2.3s)
+[22/24] rank=50, reg=0.10, maxIter=15 | Val RMSE: 1.6774 (Fit: 3.2s)
+[23/24] rank=50, reg=0.50, maxIter=10 | Val RMSE: 1.6576 (Fit: 2.0s)
+[24/24] rank=50, reg=0.50, maxIter=15 | Val RMSE: 1.6576 (Fit: 2.5s)
+---> Tham số tốt nhất cho food_vietnam: {'rank': 10, 'regParam': 0.5, 'maxIter': 10} với Validation RMSE = 1.6576
+-> Đã lưu kết quả tuning vào /home/jovyan/work/results/als_tuning_food_vietnam.csv
+
+---> Đang đánh giá mô hình ALS tốt nhất trên tập TEST...
+-> Đang tính toán Precision@10 và Recall@10 trên tập Test...
+
+============================================================
+KẾT QUẢ TEST SET - ALS (food_vietnam):
+RMSE: 1.6654 | MAE: 1.4185 | Coverage: 100.0%
+Precision@10: 0.01386 | Recall@10: 0.00285
+Thời gian suy luận: 0.68s
+============================================================
+
+-> Đang lưu mô hình tốt nhất vào: /home/jovyan/work/models/food_vietnam/als_best_model
+
+---> Xuất Top-10 gợi ý món ăn kèm metadata...
+Traceback (most recent call last):
+  File "/home/jovyan/work/src/train_als.py", line 509, in <module>
+    main(only=parser.parse_args().only)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jovyan/work/src/train_als.py", line 405, in main
+    vf_als_res, vf_breakdown = run_als_pipeline_for_dataset(
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        spark=spark,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        is_food_com=False
+        ^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/jovyan/work/src/train_als.py", line 347, in run_als_pipeline_for_dataset
+    save_local_copies(exploded, "recommendations_food_vietnam.parquet")
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jovyan/work/src/train_als.py", line 111, in save_local_copies
+    raise RuntimeError(f"{target} là thư mục, cần xử lý thủ công")
+RuntimeError: /home/jovyan/work/data/results/recommendations_food_vietnam.parquet là thư mục, cần xử lý thủ công
+# mã thoát 1, 81.5 giây

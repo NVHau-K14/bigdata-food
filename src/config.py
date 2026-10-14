@@ -73,7 +73,9 @@ def get_path(stage: str, dataset: str = "", filename: str = "") -> str:
         if dataset:
             sub_parts.append(dataset)
     elif stage == "results":
-        sub_parts.append("data/results")
+        # Chế độ local: Spark ghi Parquet dạng thư mục, trùng tên với tệp bản sao pandas ở data/results/ (train_als.py,
+        # export_for_app.py) nên đặt riêng sang data/spark_results/. Chế độ hdfs giữ /data/results như cũ.
+        sub_parts.append("data/results" if STORAGE_MODE == "hdfs" else "data/spark_results")
         if dataset:
             sub_parts.append(dataset)
     elif stage == "models":
