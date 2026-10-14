@@ -1,0 +1,73 @@
+﻿WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:59:06 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 1:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 2:>                                                          (0 + 4) / 8]
+
+                                                                                
+
+[Stage 16:>                                                        (0 + 4) / 16]
+
+[Stage 16:==============>                                          (4 + 4) / 16]
+
+[Stage 16:============================>                            (8 + 4) / 16]
+
+                                                                                
+
+[Stage 54:=============================>                            (4 + 4) / 8]
+
+                                                                                
+
+[Stage 65:=============================>                            (4 + 4) / 8]
+
+                                                                                
+
+[Stage 76:==============>                                           (2 + 4) / 8]
+
+                                                                                
+
+[Stage 160:>                                                        (0 + 4) / 4]
+
+                                                                                
+26/10/14 17:59:42 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+netlib-blas: JNI_OnLoad: dlopen(libblas.so.3) failed: libblas.so.3: cannot open shared object file: No such file or directory
+-> Đang trích xuất đặc trưng người dùng Food.com...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+=== A. Tập train Food.com: bản chính so với bản sao ===
+số dòng bản chính: 565420 | bản sao: 565420
+dòng có ở bản chính mà không có ở bản sao: 0
+dòng có ở bản sao mà không có ở bản chính: 0
+
+=== B. Bảng đặc trưng người dùng: bản chính so với bản sao ===
+số người dùng bản chính: 30772 | bản sao: 30772
+người dùng chỉ có ở một bên: 0
+  lệch tối đa log_n_ratings: 0.0
+  lệch tối đa avg_rating: 0.0
+  lệch tối đa std_rating: 4.440892098500626e-16
+  lệch tối đa pct_high_rating: 0.0
+  lệch tối đa log_avg_minutes: 0.0
+  lệch tối đa log_avg_calories: 0.0
+  lệch tối đa avg_n_ingredients: 0.0
+  lệch tối đa log_activity_span: 0.0
+  lệch tối đa n_ratings: 0
+  lệch tối đa activity_span_days: 0
+
+=== C. K-means k=4, seed 42, maxIter 30, chạy hai lần trên cùng dữ liệu ===
+  bản chính, lần 1: chi phí 144516.3233, kích thước cụm [10940, 7731, 3976, 8125]
+  bản chính, lần 2: chi phí 144516.3233, kích thước cụm [10940, 7731, 3976, 8125]
+  bản sao, lần 1: chi phí 144421.0574, kích thước cụm [8109, 8264, 10401, 3998]
+  bản sao, lần 2: chi phí 144421.0574, kích thước cụm [8109, 8264, 10401, 3998]
+
+=== D. Sắp xếp theo user_id trước khi chạy (đối chứng thứ tự dòng) ===
+  bản chính: chi phí 144420.1944, kích thước cụm [3998, 8148, 8266, 10360]
+  bản sao: chi phí 144420.3216, kích thước cụm [3998, 8138, 8273, 10363]

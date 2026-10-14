@@ -1,0 +1,130 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=hdfs -e HDFS_ROOT=/cleanrun bigdata_spark_cleanrun /opt/conda/bin/python src/storage_benchmark.py
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:20:23 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 1:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 4:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 5:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 6:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 9:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 12:==============>                                           (2 + 4) / 8]
+
+[Stage 12:=============================>                            (4 + 4) / 8]
+
+[Stage 12:===========================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 13:>                                                         (0 + 4) / 8]
+
+[Stage 13:=============================>                            (4 + 4) / 8]
+
+                                                                                
+
+[Stage 47:>                                                         (0 + 4) / 8]
+
+[Stage 47:=====================>                                    (3 + 4) / 8]
+
+[Stage 47:====================================>                     (5 + 3) / 8]
+
+                                                                                
+================================================================================
+   BẮT ĐẦU THỰC NGHIỆM LƯU TRỮ CSV VS PARQUET (P4)
+================================================================================
+
+----------------------------------------------------------------------
+[THÍ NGHIỆM A] So sánh trên DỮ LIỆU THÔ ĐẦY ĐỦ (Giữ nguyên 100% cột & dòng)
+----------------------------------------------------------------------
+1. Đọc dữ liệu thô nguyên bản và chuyển sang Parquet (Snappy)...
+  - RAW_interactions count: 1,132,367
+  -> Ghi xong: hdfs://namenode:9000/cleanrun/data/benchmark/raw_interactions_full.parquet
+  - RAW_recipes count: 231,637
+  -> Ghi xong: hdfs://namenode:9000/cleanrun/data/benchmark/raw_recipes_full.parquet
+
+Kết quả Thí nghiệm A:
+  * RAW_interactions : CSV = 333.25 MB | Parquet = 189.79 MB (Nén 1.76x)
+  * RAW_recipes      : CSV = 280.88 MB | Parquet = 120.25 MB (Nén 2.34x)
+
+----------------------------------------------------------------------
+[THÍ NGHIỆM B] So sánh trên DỮ LIỆU ĐÃ LÀM SẠCH (Cùng nội dung)
+----------------------------------------------------------------------
+1. Ghi bảng sạch ra định dạng CSV để so sánh cùng nội dung...
+  -> Ghi xong: hdfs://namenode:9000/cleanrun/data/benchmark/interactions_clean.csv
+  -> Ghi xong: hdfs://namenode:9000/cleanrun/data/benchmark/recipes_clean.csv
+
+Kết quả Thí nghiệm B:
+  * Clean Interactions: CSV = 19.11 MB | Parquet = 4.56 MB (Nén 4.19x)
+  * Clean Recipes     : CSV = 124.92 MB | Parquet = 17.78 MB (Nén 7.03x)
+  * Phân rã Interactions:
+    - RAW CSV (333 MB) -> Clean CSV (19.11 MB) : Giảm 94.3% do BỎ CỘT REVIEW VÀ BỎ DÒNG
+    - Clean CSV (19.11 MB) -> Clean Parquet (4.56 MB) : Giảm 76.1% do NÉN PARQUET SNAPPY
+    - Tổng cộng RAW CSV -> Clean Parquet: Giảm 73.08x (không phải do Parquet nén 60x!)
+
+----------------------------------------------------------------------
+[THÍ NGHIỆM C] Đo thời gian thực thi truy vấn (4 lần chạy, bỏ lần 1 làm nóng)
+----------------------------------------------------------------------
+
+* Đang đo truy vấn: Q1_Row_Count (Đếm dòng toàn bảng (Full Scan))
+    [CSV] Run 1 (Warmup): 1.0328s (result=706,514)
+    [CSV] Run 2: 0.5980s
+    [CSV] Run 3: 0.6865s
+    [CSV] Run 4: 0.4255s
+    [Parquet] Run 1 (Warmup): 0.3686s (result=706,514)
+    [Parquet] Run 2: 0.3168s
+    [Parquet] Run 3: 0.3313s
+    [Parquet] Run 4: 0.4116s
+  => Q1_Row_Count: CSV = 0.570s ± 0.133s | Parquet = 0.353s ± 0.051s -> Parquet nhanh gấp 1.61x
+
+* Đang đo truy vấn: Q2_Avg_Rating_By_Recipe (Tính trung bình rating theo món (Aggregation GroupBy))
+    [CSV] Run 1 (Warmup): 2.1461s (result=78,171)
+    [CSV] Run 2: 0.9219s
+    [CSV] Run 3: 0.6271s
+    [CSV] Run 4: 0.6229s
+    [Parquet] Run 1 (Warmup): 0.7302s (result=78,171)
+    [Parquet] Run 2: 0.3716s
+    [Parquet] Run 3: 0.3295s
+    [Parquet] Run 4: 0.3378s
+  => Q2_Avg_Rating_By_Recipe: CSV = 0.724s ± 0.171s | Parquet = 0.346s ± 0.022s -> Parquet nhanh gấp 2.09x
+
+* Đang đo truy vấn: Q3_Projection_Filter_3_Cols (Chỉ đọc 3 cột & lọc rating >= 4.0 (Column Pruning Pushdown))
+    [CSV] Run 1 (Warmup): 0.6077s (result=671,982)
+    [CSV] Run 2: 0.4261s
+    [CSV] Run 3: 0.4753s
+    [CSV] Run 4: 0.4728s
+    [Parquet] Run 1 (Warmup): 0.3344s (result=671,982)
+    [Parquet] Run 2: 0.2126s
+    [Parquet] Run 3: 0.2527s
+    [Parquet] Run 4: 0.2432s
+  => Q3_Projection_Filter_3_Cols: CSV = 0.458s ± 0.028s | Parquet = 0.236s ± 0.021s -> Parquet nhanh gấp 1.94x
+
+[D] Đã lưu kết quả đo benchmark CSV: /home/jovyan/work/data/results/storage_benchmark.csv
+
+[E] Đang tạo biểu đồ trực quan hóa: storage_benchmark.png...
+  -> Đã lưu biểu đồ: /home/jovyan/work/reports/figures/storage_benchmark.png
+
+================================================================================
+   HOÀN TẤT THỰC NGHIỆM LƯU TRỮ P4 TRONG 41.79 GIÂY
+================================================================================
+# mã thoát 0, 43.6 giây

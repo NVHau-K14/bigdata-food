@@ -1,0 +1,67 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=hdfs -e HDFS_ROOT=/cleanrun bigdata_spark_cleanrun /opt/conda/bin/python src/vifoodrec_sensitivity.py
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:50:10 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 1:>                                                          (0 + 1) / 1]
+
+[Stage 1:===========================================================(1 + 0) / 1]
+
+                                                                                
+
+[Stage 8:>                                                          (0 + 1) / 1]
+
+                                                                                
+Tham số ALS dùng cho cả 3 biến thể (chọn ở biến thể chính): {'dataset': 'food_vietnam', 'rank': 10, 'regParam': 0.5, 'maxIter': 10, 'seed': 42, 'nonnegative': True}
+
+======================================================================
+BIẾN THỂ chinh: Giữ cả 11 mức 0,0 đến 5,0 (kết quả chính)
+-> Sau lọc: 182,631 dòng; sau K-core (K=3, 1 vòng): 182,631 dòng; 11 mức điểm: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+-> Train=146,012 | Val(sau lọc)=18,204 | Test(sau lọc)=18,415
+   Global Mean                RMSE=1.5706  MAE=1.3502  coverage=100.00%
+   Smoothed Item Mean         RMSE=1.5873  MAE=1.3690  coverage=100.00%
+   ALS Matrix Factorization   RMSE=1.6654  MAE=1.4185  coverage=100.00%
+-> Xong biến thể chinh trong 18.0s
+
+======================================================================
+BIẾN THỂ A_bo_0_0: Bỏ riêng điểm 0,0
+-> Sau lọc: 166,128 dòng; sau K-core (K=3, 1 vòng): 166,128 dòng; 10 mức điểm: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+-> Train=132,771 | Val(sau lọc)=16,581 | Test(sau lọc)=16,776
+   Global Mean                RMSE=1.4325  MAE=1.2464  coverage=100.00%
+   Smoothed Item Mean         RMSE=1.4507  MAE=1.2537  coverage=100.00%
+   ALS Matrix Factorization   RMSE=1.5337  MAE=1.3043  coverage=100.00%
+-> Xong biến thể A_bo_0_0 trong 8.2s
+
+======================================================================
+BIẾN THỂ B_giu_1_den_5: Quy tắc cũ: chỉ giữ điểm 1,0 đến 5,0
+-> Sau lọc: 149,431 dòng; sau K-core (K=3, 1 vòng): 149,431 dòng; 9 mức điểm: [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+-> Train=119,416 | Val(sau lọc)=14,935 | Test(sau lọc)=15,080
+   Global Mean                RMSE=1.2895  MAE=1.1103  coverage=100.00%
+   Smoothed Item Mean         RMSE=1.3058  MAE=1.1280  coverage=100.00%
+   ALS Matrix Factorization   RMSE=1.3929  MAE=1.1822  coverage=100.00%
+-> Xong biến thể B_giu_1_den_5 trong 6.7s
+
+======================================================================
+BẢNG NHẠY CẢM
+      variant  n_rows_clean  n_levels  n_train  n_test                    model   RMSE    MAE  coverage
+        chinh        182631        11   146012   18415              Global Mean 1.5706 1.3502     100.0
+        chinh        182631        11   146012   18415       Smoothed Item Mean 1.5873 1.3690     100.0
+        chinh        182631        11   146012   18415 ALS Matrix Factorization 1.6654 1.4185     100.0
+     A_bo_0_0        166128        10   132771   16776              Global Mean 1.4325 1.2464     100.0
+     A_bo_0_0        166128        10   132771   16776       Smoothed Item Mean 1.4507 1.2537     100.0
+     A_bo_0_0        166128        10   132771   16776 ALS Matrix Factorization 1.5337 1.3043     100.0
+B_giu_1_den_5        149431         9   119416   15080              Global Mean 1.2895 1.1103     100.0
+B_giu_1_den_5        149431         9   119416   15080       Smoothed Item Mean 1.3058 1.1280     100.0
+B_giu_1_den_5        149431         9   119416   15080 ALS Matrix Factorization 1.3929 1.1822     100.0
+
+Đối chiếu biến thể chính với model_comparison.csv (chênh lệch phải bằng 0):
+   Global Mean                chênh RMSE = 0.0, chênh MAE = 0.0
+   Smoothed Item Mean         chênh RMSE = 0.0, chênh MAE = 0.0
+   ALS Matrix Factorization   chênh RMSE = 0.0, chênh MAE = 0.0
+# mã thoát 0, 43.0 giây

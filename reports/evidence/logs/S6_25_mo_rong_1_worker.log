@@ -1,0 +1,194 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=hdfs -e HDFS_ROOT=/cleanrun bigdata_spark_cleanrun /opt/conda/bin/python src/scalability_experiment.py
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:54:27 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 2) / 8]
+
+[Stage 0:>                                                          (0 + 4) / 8]
+
+[Stage 0:============================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 1:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 5:>                                                          (0 + 2) / 8]
+
+[Stage 5:=============================>                             (4 + 2) / 8]
+
+                                                                                
+
+[Stage 135:>                                                        (0 + 2) / 8]
+
+[Stage 135:==============>                                          (2 + 2) / 8]
+
+[Stage 135:============================>                            (4 + 2) / 8]
+
+[Stage 135:==========================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 147:>                                                        (0 + 1) / 1]
+
+                                                                                
+26/10/14 17:55:01 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+netlib-blas: JNI_OnLoad: dlopen(libblas.so.3) failed: libblas.so.3: cannot open shared object file: No such file or directory
+===========================================================================
+THỰC NGHIỆM MỞ RỘNG QUY MÔ DỮ LIỆU VÀ TÀI NGUYÊN (GIAI ĐOẠN P9)
+Chế độ lưu trữ (STORAGE_MODE): hdfs
+===========================================================================
+-> Cấu hình tài nguyên ghi nhận: 1 Worker (2 Cores)
+-> Đọc interactions sạch từ: hdfs://namenode:9000/cleanrun/data/clean/food_com/interactions_clean.parquet
+-> Tổng số người dùng Food.com duy nhất: 30,836 users.
+
+############################################################
+TIẾN HÀNH ĐO LƯỜNG TỶ LỆ MẪU: 10% (2 LẦN CHẠY LẶP)
+############################################################
+
+--- [LẦN CHẠY 1/2] ---
+
+---> [Mẫu 10%] Chuẩn bị tập dữ liệu lấy mẫu theo người dùng...
+     + Số User thực tế: 3,071
+     + Số Tương tác sạch: 71,148
+     + Số Món thực tế: 36,041
+     [Bước 1] Đo thời gian tính toán thống kê tổng hợp...
+     -> Bước 1 hoàn thành trong 0.523 giây (kết quả 5 nhóm rating).
+     [Bước 2] Đo thời gian huấn luyện ALS (rank=10, regParam=0.20, maxIter=10)...
+     -> Bước 2 huấn luyện ALS hoàn thành trong 5.892 giây.
+     -> ALS Test RMSE đạt: 1.1785 (trên 7,119 bản ghi test).
+     [Bước 3] Đo thời gian huấn luyện K-means người dùng (k=4)...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+     -> Bước 3 huấn luyện K-means hoàn thành trong 5.033 giây (Cost: 14,388.5).
+
+--- [LẦN CHẠY 2/2] ---
+
+---> [Mẫu 10%] Chuẩn bị tập dữ liệu lấy mẫu theo người dùng...
+     + Số User thực tế: 3,071
+     + Số Tương tác sạch: 71,148
+     + Số Món thực tế: 36,041
+     [Bước 1] Đo thời gian tính toán thống kê tổng hợp...
+     -> Bước 1 hoàn thành trong 0.129 giây (kết quả 5 nhóm rating).
+     [Bước 2] Đo thời gian huấn luyện ALS (rank=10, regParam=0.20, maxIter=10)...
+     -> Bước 2 huấn luyện ALS hoàn thành trong 2.745 giây.
+     -> ALS Test RMSE đạt: 1.1785 (trên 7,119 bản ghi test).
+     [Bước 3] Đo thời gian huấn luyện K-means người dùng (k=4)...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+     -> Bước 3 huấn luyện K-means hoàn thành trong 3.353 giây (Cost: 14,388.5).
+
+############################################################
+TIẾN HÀNH ĐO LƯỜNG TỶ LỆ MẪU: 25% (2 LẦN CHẠY LẶP)
+############################################################
+
+--- [LẦN CHẠY 1/2] ---
+
+---> [Mẫu 25%] Chuẩn bị tập dữ liệu lấy mẫu theo người dùng...
+     + Số User thực tế: 7,742
+     + Số Tương tác sạch: 176,704
+     + Số Món thực tế: 59,752
+     [Bước 1] Đo thời gian tính toán thống kê tổng hợp...
+     -> Bước 1 hoàn thành trong 0.103 giây (kết quả 5 nhóm rating).
+     [Bước 2] Đo thời gian huấn luyện ALS (rank=10, regParam=0.20, maxIter=10)...
+     -> Bước 2 huấn luyện ALS hoàn thành trong 2.760 giây.
+     -> ALS Test RMSE đạt: 0.8884 (trên 17,647 bản ghi test).
+     [Bước 3] Đo thời gian huấn luyện K-means người dùng (k=4)...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+     -> Bước 3 huấn luyện K-means hoàn thành trong 3.897 giây (Cost: 36,330.4).
+
+--- [LẦN CHẠY 2/2] ---
+
+---> [Mẫu 25%] Chuẩn bị tập dữ liệu lấy mẫu theo người dùng...
+     + Số User thực tế: 7,742
+     + Số Tương tác sạch: 176,704
+     + Số Món thực tế: 59,752
+     [Bước 1] Đo thời gian tính toán thống kê tổng hợp...
+     -> Bước 1 hoàn thành trong 0.157 giây (kết quả 5 nhóm rating).
+     [Bước 2] Đo thời gian huấn luyện ALS (rank=10, regParam=0.20, maxIter=10)...
+     -> Bước 2 huấn luyện ALS hoàn thành trong 2.785 giây.
+     -> ALS Test RMSE đạt: 0.8884 (trên 17,647 bản ghi test).
+     [Bước 3] Đo thời gian huấn luyện K-means người dùng (k=4)...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+     -> Bước 3 huấn luyện K-means hoàn thành trong 2.969 giây (Cost: 36,330.4).
+
+############################################################
+TIẾN HÀNH ĐO LƯỜNG TỶ LỆ MẪU: 50% (2 LẦN CHẠY LẶP)
+############################################################
+
+--- [LẦN CHẠY 1/2] ---
+
+---> [Mẫu 50%] Chuẩn bị tập dữ liệu lấy mẫu theo người dùng...
+     + Số User thực tế: 15,436
+     + Số Tương tác sạch: 358,296
+     + Số Món thực tế: 74,754
+     [Bước 1] Đo thời gian tính toán thống kê tổng hợp...
+     -> Bước 1 hoàn thành trong 0.102 giây (kết quả 5 nhóm rating).
+     [Bước 2] Đo thời gian huấn luyện ALS (rank=10, regParam=0.20, maxIter=10)...
+     -> Bước 2 huấn luyện ALS hoàn thành trong 3.471 giây.
+     -> ALS Test RMSE đạt: 0.7482 (trên 35,792 bản ghi test).
+     [Bước 3] Đo thời gian huấn luyện K-means người dùng (k=4)...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+     -> Bước 3 huấn luyện K-means hoàn thành trong 3.173 giây (Cost: 72,548.6).
+
+--- [LẦN CHẠY 2/2] ---
+
+---> [Mẫu 50%] Chuẩn bị tập dữ liệu lấy mẫu theo người dùng...
+     + Số User thực tế: 15,436
+     + Số Tương tác sạch: 358,296
+     + Số Món thực tế: 74,754
+     [Bước 1] Đo thời gian tính toán thống kê tổng hợp...
+     -> Bước 1 hoàn thành trong 0.091 giây (kết quả 5 nhóm rating).
+     [Bước 2] Đo thời gian huấn luyện ALS (rank=10, regParam=0.20, maxIter=10)...
+     -> Bước 2 huấn luyện ALS hoàn thành trong 3.218 giây.
+     -> ALS Test RMSE đạt: 0.7482 (trên 35,792 bản ghi test).
+     [Bước 3] Đo thời gian huấn luyện K-means người dùng (k=4)...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+     -> Bước 3 huấn luyện K-means hoàn thành trong 3.986 giây (Cost: 72,548.6).
+
+############################################################
+TIẾN HÀNH ĐO LƯỜNG TỶ LỆ MẪU: 100% (2 LẦN CHẠY LẶP)
+############################################################
+
+--- [LẦN CHẠY 1/2] ---
+
+---> [Mẫu 100%] Chuẩn bị tập dữ liệu lấy mẫu theo người dùng...
+     + Số User thực tế: 30,836
+     + Số Tương tác sạch: 706,514
+     + Số Món thực tế: 78,171
+     [Bước 1] Đo thời gian tính toán thống kê tổng hợp...
+     -> Bước 1 hoàn thành trong 0.117 giây (kết quả 5 nhóm rating).
+     [Bước 2] Đo thời gian huấn luyện ALS (rank=10, regParam=0.20, maxIter=10)...
+     -> Bước 2 huấn luyện ALS hoàn thành trong 4.800 giây.
+     -> ALS Test RMSE đạt: 0.6745 (trên 70,233 bản ghi test).
+     [Bước 3] Đo thời gian huấn luyện K-means người dùng (k=4)...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+     -> Bước 3 huấn luyện K-means hoàn thành trong 3.827 giây (Cost: 144,420.5).
+
+--- [LẦN CHẠY 2/2] ---
+
+---> [Mẫu 100%] Chuẩn bị tập dữ liệu lấy mẫu theo người dùng...
+     + Số User thực tế: 30,836
+     + Số Tương tác sạch: 706,514
+     + Số Món thực tế: 78,171
+     [Bước 1] Đo thời gian tính toán thống kê tổng hợp...
+     -> Bước 1 hoàn thành trong 0.092 giây (kết quả 5 nhóm rating).
+     [Bước 2] Đo thời gian huấn luyện ALS (rank=10, regParam=0.20, maxIter=10)...
+     -> Bước 2 huấn luyện ALS hoàn thành trong 4.248 giây.
+     -> ALS Test RMSE đạt: 0.6745 (trên 70,233 bản ghi test).
+     [Bước 3] Đo thời gian huấn luyện K-means người dùng (k=4)...
+-> Đang trích xuất đặc trưng người dùng Food.com...
+     -> Bước 3 huấn luyện K-means hoàn thành trong 3.574 giây (Cost: 144,420.5).
+
+-> Đã cập nhật và gộp kết quả vào: /home/jovyan/work/results/scalability.csv
+-> Đã đồng bộ sang: /home/jovyan/work/data/results/scalability.csv
+-> Đã lưu biểu đồ 1 tại: /home/jovyan/work/reports/figures/scalability_data_size.png
+-> Đã lưu biểu đồ 2 tại: /home/jovyan/work/reports/figures/scalability_speedup_efficiency.png
+-> Đã lưu biểu đồ 3 tại: /home/jovyan/work/reports/figures/scalability_als_rmse.png
+
+===========================================================================
+HOÀN TẤT THỰC NGHIỆM MỞ RỘNG QUY MÔ CHO CẤU HÌNH HIỆN TẠI!
+===========================================================================
+# mã thoát 0, 117.4 giây

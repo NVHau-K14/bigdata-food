@@ -1,0 +1,9 @@
+Tổng kết lần chạy run_all.ps1 (tham số: HdfsRoot='', StorageMode=local, container=bigdata_spark_cleanrun)
+
+01 | local_lam_sach_vietnam | mã 0 | 23.3 giây | S6L_01_local_lam_sach_vietnam.log
+02 | local_chia_du_lieu_vietnam | mã 0 | 17.3 giây | S6L_02_local_chia_du_lieu_vietnam.log
+03 | local_co_so_vietnam | mã 0 | 16.5 giây | S6L_03_local_co_so_vietnam.log
+04 | local_als_vietnam | mã 0 | 75.3 giây | S6L_04_local_als_vietnam.log
+05 | local_kmeans_vietnam | mã 0 | 40.7 giây | S6L_05_local_kmeans_vietnam.log
+
+Tổng thời gian đến thời điểm ghi: 2.9 phút

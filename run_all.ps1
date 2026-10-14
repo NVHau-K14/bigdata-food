@@ -282,7 +282,9 @@ if ($WebOnly) {
 }
 
 Write-Host ""
-Write-Host ("Hoàn tất sau {0:N1} phút. Tổng kết ở reports/evidence/logs/{1}tong_ket.log" -f $script:runWatch.Elapsed.TotalMinutes, $LogPrefix) -ForegroundColor Green
+$summaryName = "{0}tong_ket.log" -f $LogPrefix
+if ($StartAt) { $summaryName = "{0}tong_ket_tiep_tu_{1}.log" -f $LogPrefix, $StartAt }
+Write-Host ("Hoàn tất sau {0:N1} phút. Tổng kết ở reports/evidence/logs/{1}" -f $script:runWatch.Elapsed.TotalMinutes, $summaryName) -ForegroundColor Green
 
 if ($ServeWeb) {
     Write-Host ">> Dashboard: http://localhost:$Port (Ctrl+C để dừng). Cũng mở được trực tiếp web/index.html" -ForegroundColor Green

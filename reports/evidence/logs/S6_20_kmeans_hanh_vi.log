@@ -1,0 +1,156 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=hdfs -e HDFS_ROOT=/cleanrun bigdata_spark_cleanrun /opt/conda/bin/python src/kmeans_behavior.py
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:48:13 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 1:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 4:>                                                          (0 + 4) / 8]
+
+[Stage 4:=============================>                             (4 + 4) / 8]
+
+                                                                                
+
+[Stage 9:==============>                                            (2 + 4) / 8]
+
+                                                                                
+
+[Stage 14:>                                                         (0 + 4) / 4]
+
+                                                                                
+
+[Stage 27:>                                                         (0 + 4) / 8]
+
+[Stage 27:=============================>                            (4 + 4) / 8]
+
+                                                                                
+26/10/14 17:48:33 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+netlib-blas: JNI_OnLoad: dlopen(libblas.so.3) failed: libblas.so.3: cannot open shared object file: No such file or directory
+
+[Stage 1270:>                                                       (0 + 4) / 8]
+
+[Stage 1270:==========================================>             (6 + 2) / 8]
+
+[Stage 1272:>                                                       (0 + 1) / 1]
+
+                                                                                
+netlib-lapack: JNI_OnLoad: dlopen(liblapack.so.3) failed: liblapack.so.3: cannot open shared object file: No such file or directory
+
+[Stage 2206:============================>                           (4 + 4) / 8]
+
+                                                                                
+======================================================================
+CHƯƠNG TRÌNH PHÂN CỤM HÀNH VI BẰNG K-MEANS VÀ TRỰC QUAN HÓA PCA (P8)
+Chế độ lưu trữ: hdfs
+======================================================================
+
+=================================================================
+PHÂN CỤM NGƯỜI DÙNG FOOD.COM (USER CLUSTERING)
+=================================================================
+-> Đang trích xuất đặc trưng người dùng Food.com...
+-> Tổng số người dùng trích xuất: 30,772 users
+
+---> [Grid Search K-means] Thử nghiệm k cho Food.com Users: [2, 3, 4, 5, 6, 7, 8]
+   + k= 2 | Silhouette: 0.5257 | WSSSE: 191,218.7 (8.7s)
+   + k= 3 | Silhouette: 0.2685 | WSSSE: 162,864.3 (5.3s)
+   + k= 4 | Silhouette: 0.2788 | WSSSE: 144,420.9 (4.8s)
+   + k= 5 | Silhouette: 0.2818 | WSSSE: 132,475.9 (4.6s)
+   + k= 6 | Silhouette: 0.2839 | WSSSE: 124,300.4 (4.1s)
+   + k= 7 | Silhouette: 0.2847 | WSSSE: 117,424.5 (4.1s)
+   + k= 8 | Silhouette: 0.2783 | WSSSE: 110,332.4 (3.9s)
+
+-> Lựa chọn k = 4 làm cấu hình phân cụm chính thức cho Food.com.
+-> Đang tìm top món tiêu biểu được chấm cao trong từng cụm...
+
+--- KẾT QUẢ HỒ SƠ CỤM FOOD.COM ---
+Cụm 0: Thành viên lâu năm, đánh giá nhiều (8,273 users - 26.88%)
+  + Điểm TB: 4.68⭐ | Lượt đánh giá: 55.6 | Nấu: 76.5p | Calo: 446.3 kcal
+  + Top món: to die for crock pot roast (524 lượt); whatever floats your boat  brownies (443 lượt); crock pot chicken with black beans   cream cheese (483 lượt)
+Cụm 1: Người chuộng món nấu nhanh, ít calo (8,142 users - 26.46%)
+  + Điểm TB: 4.85⭐ | Lượt đánh giá: 3.8 | Nấu: 45.6p | Calo: 319.4 kcal
+  + Top món: whatever floats your boat  brownies (72 lượt); banana banana bread (65 lượt); fudge crinkles  a great 4 ingredient cake mix cookie (74 lượt)
+Cụm 2: Người dùng khắt khe (3,998 users - 12.99%)
+  + Điểm TB: 3.83⭐ | Lượt đánh giá: 5.8 | Nấu: 84.1p | Calo: 455.7 kcal
+  + Top món: to die for crock pot roast (50 lượt); creamy cajun chicken pasta (74 lượt); crock pot chicken with black beans   cream cheese (61 lượt)
+Cụm 3: Người chuộng món nấu lâu, nhiều calo (10,359 users - 33.66%)
+  + Điểm TB: 4.87⭐ | Lượt đánh giá: 5.0 | Nấu: 107.3p | Calo: 610.5 kcal
+  + Top món: to die for crock pot roast (213 lượt); creamy cajun chicken pasta (180 lượt); crock pot chicken with black beans   cream cheese (217 lượt)
+-> Đang giảm chiều PCA 2D cho Food.com...
+
+=================================================================
+PHÂN CỤM NGƯỜI DÙNG VIFOODREC (USER CLUSTERING)
+=================================================================
+-> Đang trích xuất đặc trưng người dùng ViFoodRec...
+-> Tổng số người dùng trích xuất: 101 users
+
+---> [Grid Search K-means] Thử nghiệm k cho ViFoodRec Users: [2, 3, 4, 5]
+   + k= 2 | Silhouette: 0.2474 | WSSSE: 587.2 (2.1s)
+   + k= 3 | Silhouette: 0.2219 | WSSSE: 516.5 (2.2s)
+   + k= 4 | Silhouette: 0.2369 | WSSSE: 464.4 (1.8s)
+   + k= 5 | Silhouette: 0.2130 | WSSSE: 435.9 (1.7s)
+
+-> Lựa chọn k = 3 làm cấu hình phân cụm chính thức cho ViFoodRec.
+
+-> Chênh lệch tương đối giữa các cụm (lớn nhất trừ nhỏ nhất, chia trung bình toàn hệ thống):
+   + n_ratings      :   2.69%
+   + avg_rating     :   2.76%
+   + std_rating     :   1.56%
+   + pct_man_high   :   6.49%
+   + pct_chay_high  :  17.52%
+   + avg_calo_high  :   1.15%
+   + avg_time_high  :   1.71%
+-> Lớn nhất: 17.52% (ngưỡng 10%). VƯỢT NGƯỠNG: cần người dùng quyết định cách đặt tên; tạm dùng Cụm 1, 2, 3.
+
+=================================================================
+PHÂN CỤM MÓN ĂN VIFOODREC (FOOD CLUSTERING)
+=================================================================
+-> Đang trích xuất đặc trưng món ăn ViFoodRec...
+-> Tổng số món ăn trích xuất: 4,000 món
+
+---> [Grid Search K-means] Thử nghiệm k cho ViFoodRec Foods: [2, 3, 4, 5, 6, 7, 8]
+   + k= 2 | Silhouette: 0.2130 | WSSSE: 25,009.6 (1.8s)
+   + k= 3 | Silhouette: 0.2495 | WSSSE: 21,144.0 (0.9s)
+   + k= 4 | Silhouette: 0.2334 | WSSSE: 19,132.3 (1.7s)
+   + k= 5 | Silhouette: 0.2460 | WSSSE: 17,317.7 (1.9s)
+   + k= 6 | Silhouette: 0.2405 | WSSSE: 16,081.9 (1.9s)
+   + k= 7 | Silhouette: 0.2405 | WSSSE: 15,132.0 (1.9s)
+   + k= 8 | Silhouette: 0.2444 | WSSSE: 14,477.9 (2.0s)
+
+-> Lựa chọn k = 4 làm cấu hình phân cụm chính thức cho món ăn ViFoodRec.
+
+--- KẾT QUẢ HỒ SƠ CỤM MÓN ĂN VIFOODREC ---
+Cụm 0: Món mặn nhiều calo và đường (1,486 món - 37.15%)
+  + Calo: 465.0 kcal | Đạm: 22.3g | Nấu: 31.5p | Mặn: 100.0%
+  + Món ví dụ: Bánh Bò Bông, Bánh Canh Chả Cá Nha Trang, Bánh Khoai Sọ Chiên Giòn Tan
+Cụm 1: Món mặn ít đường (1,211 món - 30.28%)
+  + Calo: 428.9 kcal | Đạm: 23.1g | Nấu: 34.1p | Mặn: 100.0%
+  + Món ví dụ: Bánh Khoai Mì Sầu Riêng Nướng, Bánh Tằm Bì, Bánh giò trứng cút
+Cụm 2: Món chay (195 món - 4.88%)
+  + Calo: 373.5 kcal | Đạm: 22.3g | Nấu: 31.7p | Mặn: 0.0%
+  + Món ví dụ: Bánh khọt chay, Canh Rau Mồng Tơi Chay, Nước Mắm Chay Từ Trái Thơm
+Cụm 3: Món mặn ít calo (1,108 món - 27.7%)
+  + Calo: 249.7 kcal | Đạm: 22.5g | Nấu: 33.1p | Mặn: 100.0%
+  + Món ví dụ: Bánh Crepe Trà Sữa Thái, Bánh Mì Chấm Kem Trứng - Cacao, Bánh Ngải Cứu
+
+-> Đang lưu các tệp phân cụm Parquet...
+-> Đã lưu đầy đủ các tệp Parquet phân cụm!
+
+-> Đang vẽ các biểu đồ trực quan hóa K-means...
+-> Đã lưu reports/figures/kmeans_elbow_silhouette.png
+-> Đang vẽ PCA Scatter Plot Food.com Users...
+-> Đã lưu reports/figures/kmeans_user_clusters_foodcom_pca.png
+-> Đang vẽ PCA Scatter Plot ViFoodRec Users...
+-> Đã lưu reports/figures/kmeans_user_clusters_vifood_pca.png
+-> Đang vẽ PCA Scatter Plot ViFoodRec Foods...
+-> Đã lưu reports/figures/kmeans_food_clusters_vifood_pca.png
+
+[THÀNH CÔNG] Hoàn tất toàn bộ kịch bản Giai đoạn P8!
+# mã thoát 0, 104.5 giây

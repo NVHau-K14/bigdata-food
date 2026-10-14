@@ -1,0 +1,192 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=hdfs -e HDFS_ROOT=/cleanrun bigdata_spark_cleanrun /opt/conda/bin/python src/run_pipeline_p3.py
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:18:52 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+[Stage 0:===========================================================(1 + 0) / 1]
+
+                                                                                
+
+[Stage 3:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 6:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 12:>                                                         (0 + 1) / 1]
+
+                                                                                
+
+[Stage 15:>                                                         (0 + 1) / 1]
+
+                                                                                
+
+[Stage 18:>                                                         (0 + 1) / 1]
+
+                                                                                
+
+[Stage 21:>                                                         (0 + 1) / 1]
+
+                                                                                
+
+[Stage 24:>                                                         (0 + 1) / 1]
+
+[Stage 26:===========================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 30:>                                                         (0 + 1) / 1]
+
+[Stage 30:>                 (0 + 1) / 1][Stage 31:>                 (0 + 1) / 1]
+
+[Stage 30:>                                                         (0 + 1) / 1]
+
+[Stage 30:>                 (0 + 1) / 1][Stage 33:>                 (0 + 2) / 8]
+
+[Stage 30:>                 (0 + 1) / 1][Stage 33:====>             (2 + 2) / 8]
+
+[Stage 33:==============>                                           (2 + 2) / 8]
+
+[Stage 33:====>             (2 + 3) / 8][Stage 35:==>               (1 + 1) / 8]
+
+[Stage 33:====>             (2 + 4) / 8][Stage 35:====>             (2 + 0) / 8]
+
+[Stage 33:=========>        (4 + 4) / 8][Stage 35:====>             (2 + 0) / 8]
+
+[Stage 33:===========>      (5 + 3) / 8][Stage 35:====>             (2 + 1) / 8]
+
+[Stage 33:=============>    (6 + 2) / 8][Stage 35:====>             (2 + 2) / 8]
+
+[Stage 33:===============>  (7 + 1) / 8][Stage 35:=========>        (4 + 3) / 8]
+
+[Stage 35:===========================================>              (6 + 2) / 8]
+
+[Stage 39:===========================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 45:>                                                         (0 + 1) / 1]
+
+[Stage 51:=============================>                            (4 + 2) / 8]
+
+[Stage 51:===========================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 54:===========================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 157:>                                                        (0 + 2) / 8]
+
+[Stage 157:============================>                            (4 + 2) / 8]
+
+                                                                                
+
+[Stage 162:>                                                        (0 + 4) / 8]
+
+[Stage 162:==============>                                          (2 + 4) / 8]
+
+[Stage 162:============================>                            (4 + 4) / 8]
+
+                                                                                
+
+[Stage 242:>                                                        (0 + 1) / 1]
+
+                                                                                
+================================================================================
+   BẮT ĐẦU CHẠY PIPELINE LÀM SẠCH TOÀN DIỆN P3
+================================================================================
+================================================================================
+   BẮT ĐẦU PIPELINE LÀM SẠCH DỮ LIỆU FOOD.COM (P3)
+================================================================================
+
+[A] Đọc dữ liệu thô recipes: hdfs://namenode:9000/cleanrun/data/raw/food_com/RAW_recipes.csv
+  - Tổng số bản ghi ban đầu: 231,637
+  - Sau lọc thiếu ID/name: 231,636 (Loại: 1)
+  - Sau khử trùng id: 231,636 (Loại trùng: 0)
+  - Tách 7 chỉ số dinh dưỡng từ cột nutrition và chuẩn hóa tags/ingredients...
+
+[B] Đọc dữ liệu thô interactions: hdfs://namenode:9000/cleanrun/data/raw/food_com/RAW_interactions.csv
+  - Tổng số tương tác ban đầu: 1,132,367
+  - Sau bỏ NULL (và bỏ cột review): 1,132,367 (Loại: 0)
+  - Sau bỏ rating = 0: 1,071,520 (Loại rating 0: 60,847)
+  - Sau lọc rating [1, 5]: 1,071,520 (Loại ngoài khoảng: 0)
+  - Sau khử trùng cặp (user_id, recipe_id): 1,071,520 (Loại trùng: 0)
+  - Sau kiểm tra khóa ngoại với recipes: 1,071,520 (Loại không khớp FK: 0)
+
+[C] Thực thi vòng lặp K-core lặp đến khi hội tụ (Ngưỡng K=3)...
+    * Vòng lặp 1: 1,071,520 -> 716,239 dòng (Giảm 355,281 dòng)
+    * Vòng lặp 2: 716,239 -> 706,737 dòng (Giảm 9,502 dòng)
+    * Vòng lặp 3: 706,737 -> 706,522 dòng (Giảm 215 dòng)
+    * Vòng lặp 4: 706,522 -> 706,514 dòng (Giảm 8 dòng)
+    * Vòng lặp 5: 706,514 -> 706,514 dòng (Giảm 0 dòng)
+  -> K-core đã HỘI TỤ sau 5 vòng lặp tại 706,514 dòng!
+
+[D] Gắn cờ has_ratings cho bảng recipes...
+
+[E] Ghi Parquet sạch:
+  - Interactions: hdfs://namenode:9000/cleanrun/data/clean/food_com/interactions_clean.parquet
+  - Recipes     : hdfs://namenode:9000/cleanrun/data/clean/food_com/recipes_clean.parquet
+  -> Ghi Parquet Food.com hoàn tất thành công!
+================================================================================
+   BẮT ĐẦU PIPELINE LÀM SẠCH DỮ LIỆU VIFOODREC (P3)
+================================================================================
+
+[A] Đọc dữ liệu thô foods: hdfs://namenode:9000/cleanrun/data/raw/food_vietnam/foods.csv
+  - Tổng số món ăn thô: 4,000
+  - Sau lọc thiếu ID/name: 4,000 (Loại: 0)
+  - Chuẩn hóa text, parse số khẩu phần/thời gian nấu, gắn cờ trùng lặp...
+
+[B] Đọc dữ liệu thô ratings: hdfs://namenode:9000/cleanrun/data/raw/food_vietnam/ratings.csv
+  - Tổng số đánh giá thô: 182,678
+  - Sau bỏ NULL: 182,678 (Loại: 0)
+  - Sau lọc thang điểm 0.0 đến 5.0, bước 0.5 (11 mức): 182,678 (Loại ngoài thang: 0)
+  - Sau khử trùng cặp (user_id, food_id): 182,678 (Loại trùng: 0)
+  - Sau kiểm tra khóa ngoại với foods: 182,631 (Loại food_id không có trong foods: 47)
+
+[C] Thực thi vòng lặp K-core lặp đến khi hội tụ (Ngưỡng K=3)...
+    * Vòng lặp 1: 182,631 -> 182,631 dòng (Giảm 0 dòng)
+  -> K-core ViFoodRec đã HỘI TỤ sau 1 vòng lặp tại 182,631 dòng!
+
+[D] Gắn cờ has_ratings cho bảng foods...
+
+[E] Ghi Parquet sạch (coalesce 1 partition):
+  - Ratings: hdfs://namenode:9000/cleanrun/data/clean/food_vietnam/ratings_clean.parquet
+  - Foods  : hdfs://namenode:9000/cleanrun/data/clean/food_vietnam/foods_clean.parquet
+  -> Ghi Parquet ViFoodRec hoàn tất thành công!
+
+[F] Đã ghi nhật ký làm sạch CSV: /home/jovyan/work/reports/evidence/cleaning_log.csv
+                  dataset  ... rows_dropped
+0        food_com_recipes  ...            0
+1        food_com_recipes  ...            1
+2        food_com_recipes  ...            0
+3   food_com_interactions  ...            0
+4   food_com_interactions  ...            0
+5   food_com_interactions  ...        60847
+6   food_com_interactions  ...            0
+7   food_com_interactions  ...            0
+8   food_com_interactions  ...            0
+9   food_com_interactions  ...       365006
+10        vifoodrec_foods  ...            0
+11        vifoodrec_foods  ...            0
+12      vifoodrec_ratings  ...            0
+13      vifoodrec_ratings  ...            0
+14      vifoodrec_ratings  ...            0
+15      vifoodrec_ratings  ...            0
+16      vifoodrec_ratings  ...           47
+17      vifoodrec_ratings  ...            0
+
+[18 rows x 5 columns]
+[G] Đã ghi nhật ký làm sạch Parquet: hdfs://namenode:9000/cleanrun/data/results/cleaning_log.parquet
+
+================================================================================
+   HOÀN TẤT TOÀN BỘ PIPELINE P3 TRONG 65.67 GIÂY
+================================================================================
+# mã thoát 0, 67.2 giây

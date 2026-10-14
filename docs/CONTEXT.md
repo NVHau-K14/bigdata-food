@@ -11,7 +11,7 @@ Mục tiêu kỹ thuật: baseline -> K-means (phân tích hành vi) -> ALS (g�
 - Máy Windows (PowerShell), Docker Desktop, 24GB RAM (cấp cho Docker khoảng 16GB).
 - Dữ liệu thô nằm ở data/raw/ (CHỈ ĐỌC, tuyệt đối không sửa hay xóa).
 - Thư mục: data/raw, data/processed, src/, notebooks/, web/ (dashboard chính), app/ (bản Streamlit lưu trữ và nguồn dữ liệu xuất), reports/, docs/, results/.
-- Mọi đường dẫn đọc và ghi dữ liệu phải đi qua src/config.py. Có hai chế độ: STORAGE_MODE=hdfs (đường dẫn hdfs://...) và STORAGE_MODE=local (đường dẫn thư mục). Cùng một mã nguồn phải chạy được ở cả hai chế độ.
+- Mọi đường dẫn đọc và ghi dữ liệu phải đi qua src/config.py. Có hai chế độ: STORAGE_MODE=hdfs (đường dẫn hdfs://...) và STORAGE_MODE=local (đường dẫn thư mục). Cùng một mã nguồn phải chạy được ở cả hai chế độ. Biến môi trường `HDFS_ROOT` (mặc định rỗng) đặt thư mục gốc trên HDFS khi chạy thử trên bản sao; chạy toàn bộ bằng `run_all.ps1` (stage S6).
 
 ## 3. Quy tắc trung thực (QUAN TRỌNG NHẤT)
 1. Mọi con số đưa vào báo cáo hoặc biên bản PHẢI đến từ kết quả lệnh thật mà bạn đã chạy. Lưu nguyên văn kết quả lệnh vào reports/evidence/.

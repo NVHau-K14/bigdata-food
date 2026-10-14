@@ -1,0 +1,95 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=local -e HDFS_ROOT= bigdata_spark_cleanrun /opt/conda/bin/python src/baseline.py --only vietnam
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 18:04:30 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/10/14 18:04:42 WARN CacheManager: Asked to cache already cached data.
+======================================================================
+CHƯƠNG TRÌNH HUẤN LUYỆN VÀ ĐÁNH GIÁ 3 MÔ HÌNH BASELINE (P6)
+Chế độ lưu trữ: local
+======================================================================
+
+=======================================================
+CHẠY BASELINES CHO: FOOD_VIETNAM
+Cột item: food_id, Hệ số m: 5
+=======================================================
+-> Train: 146,012 dòng | Test: 18,415 dòng
+-> Điểm trung bình toàn cục (Global Mean mu): 2.5012
+
+--- [1] Đang đánh giá Baseline 1: Global Mean ---
+-> B1: RMSE=1.5706, MAE=1.3502, Coverage=100.0% (1.43s)
+
+--- [2] Đang đánh giá Baseline 2: Smoothed Item Mean ---
+-> B2: RMSE=1.5873, MAE=1.3690, P@10=0.01584, R@10=0.00321 (3.06s)
+
+--- [3] Đang đánh giá Baseline 3: Top-N Popular ---
+-> B3: RMSE=1.5924, MAE=1.3723, P@10=0.02277, R@10=0.00461 (1.56s)
+-> Hoàn tất baselines cho food_vietnam trong 10.37s!
+
+======================================================================
+BẢNG KẾT QUẢ ĐÁNH GIÁ CÁC MÔ HÌNH BASELINE TRÊN TẬP TEST
+======================================================================
+     dataset              model   RMSE    MAE  Precision@10  Recall@10  coverage
+    food_com        Global Mean 0.6266 0.4468       0.00000    0.00000     100.0
+    food_com Smoothed Item Mean 0.6177 0.4214       0.00048    0.00130     100.0
+    food_com      Top-N Popular 0.6568 0.4120       0.00534    0.02170     100.0
+food_vietnam        Global Mean 1.5706 1.3502       0.00000    0.00000     100.0
+food_vietnam Smoothed Item Mean 1.5873 1.3690       0.01584    0.00321     100.0
+food_vietnam      Top-N Popular 1.5924 1.3723       0.02277    0.00461     100.0
+
+======================================================================
+BẢNG PHÂN RÃ RMSE THEO TỪNG MỨC ĐIỂM THẬT (BREAKDOWN)
+======================================================================
+     dataset              model  rating_level   rmse
+    food_com        Global Mean           1.0 3.7146
+    food_com        Global Mean           2.0 2.7146
+    food_com        Global Mean           3.0 1.7146
+    food_com        Global Mean           4.0 0.7146
+    food_com        Global Mean           5.0 0.2854
+    food_com Smoothed Item Mean           1.0 3.6135
+    food_com Smoothed Item Mean           2.0 2.6396
+    food_com Smoothed Item Mean           3.0 1.6582
+    food_com Smoothed Item Mean           4.0 0.6936
+    food_com Smoothed Item Mean           5.0 0.3030
+    food_com      Top-N Popular           1.0 3.5519
+    food_com      Top-N Popular           2.0 2.5959
+    food_com      Top-N Popular           3.0 1.6354
+    food_com      Top-N Popular           4.0 0.7256
+    food_com      Top-N Popular           5.0 0.3934
+food_vietnam        Global Mean           0.0 2.5012
+food_vietnam        Global Mean           0.5 2.0012
+food_vietnam        Global Mean           1.0 1.5012
+food_vietnam        Global Mean           1.5 1.0012
+food_vietnam        Global Mean           2.0 0.5012
+food_vietnam        Global Mean           2.5 0.0012
+food_vietnam        Global Mean           3.0 0.4988
+food_vietnam        Global Mean           3.5 0.9988
+food_vietnam        Global Mean           4.0 1.4988
+food_vietnam        Global Mean           4.5 1.9988
+food_vietnam        Global Mean           5.0 2.4988
+food_vietnam Smoothed Item Mean           0.0 2.5208
+food_vietnam Smoothed Item Mean           0.5 2.0121
+food_vietnam Smoothed Item Mean           1.0 1.5098
+food_vietnam Smoothed Item Mean           1.5 1.0336
+food_vietnam Smoothed Item Mean           2.0 0.5539
+food_vietnam Smoothed Item Mean           2.5 0.2343
+food_vietnam Smoothed Item Mean           3.0 0.5565
+food_vietnam Smoothed Item Mean           3.5 1.0285
+food_vietnam Smoothed Item Mean           4.0 1.5129
+food_vietnam Smoothed Item Mean           4.5 2.0178
+food_vietnam Smoothed Item Mean           5.0 2.4981
+food_vietnam      Top-N Popular           0.0 2.5253
+food_vietnam      Top-N Popular           0.5 2.0158
+food_vietnam      Top-N Popular           1.0 1.5136
+food_vietnam      Top-N Popular           1.5 1.0422
+food_vietnam      Top-N Popular           2.0 0.5689
+food_vietnam      Top-N Popular           2.5 0.2681
+food_vietnam      Top-N Popular           3.0 0.5713
+food_vietnam      Top-N Popular           3.5 1.0370
+food_vietnam      Top-N Popular           4.0 1.5179
+food_vietnam      Top-N Popular           4.5 2.0230
+food_vietnam      Top-N Popular           5.0 2.4997
+
+[THÀNH CÔNG] Hoàn tất toàn bộ kịch bản đánh giá Baseline!
+# mã thoát 0, 16.5 giây

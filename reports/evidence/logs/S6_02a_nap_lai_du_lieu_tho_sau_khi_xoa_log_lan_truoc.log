@@ -1,0 +1,25 @@
+# Nạp lại dữ liệu thô vào /cleanrun/data/raw để có log nguyên văn (log của lần nạp đầu đã bị xóa khi chạy lại). Chỉ xóa thư mục /cleanrun/data/raw do chính stage S6 tạo.
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -rm -r -skipTrash /cleanrun/data/raw
+Deleted /cleanrun/data/raw
+# mã thoát 0
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -mkdir -p /cleanrun/data/raw/food_com /cleanrun/data/raw/food_vietnam
+# mã thoát 0
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -put /data/raw_host/food_com/RAW_interactions.csv /cleanrun/data/raw/food_com/RAW_interactions.csv
+# mã thoát 0
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -put /data/raw_host/food_com/RAW_recipes.csv /cleanrun/data/raw/food_com/RAW_recipes.csv
+# mã thoát 0
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -put /data/raw_host/food_vietnam/foods.csv /cleanrun/data/raw/food_vietnam/foods.csv
+# mã thoát 0
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -put /data/raw_host/food_vietnam/ratings.csv /cleanrun/data/raw/food_vietnam/ratings.csv
+# mã thoát 0
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -ls -R -h /cleanrun/data/raw
+drwxr-xr-x   - root supergroup          0 2026-10-14 18:08 /cleanrun/data/raw/food_com
+-rw-r--r--   2 root supergroup    333.2 M 2026-10-14 18:08 /cleanrun/data/raw/food_com/RAW_interactions.csv
+-rw-r--r--   2 root supergroup    280.9 M 2026-10-14 18:08 /cleanrun/data/raw/food_com/RAW_recipes.csv
+drwxr-xr-x   - root supergroup          0 2026-10-14 18:08 /cleanrun/data/raw/food_vietnam
+-rw-r--r--   2 root supergroup      6.9 M 2026-10-14 18:08 /cleanrun/data/raw/food_vietnam/foods.csv
+-rw-r--r--   2 root supergroup      2.0 M 2026-10-14 18:08 /cleanrun/data/raw/food_vietnam/ratings.csv
+# mã thoát 0
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -checksum /cleanrun/data/raw/food_vietnam/ratings.csv
+/cleanrun/data/raw/food_vietnam/ratings.csv	MD5-of-0MD5-of-512CRC32C	000002000000000000000000201e24edc845b7502054a700e22bf0ab
+# mã thoát 0

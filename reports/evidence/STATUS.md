@@ -1,7 +1,7 @@
-# STATUS: tổng kiểm tra trung thực (sinh lại ở stage S5)
+# STATUS: tổng kiểm tra trung thực (sinh lại ở stage S5, cập nhật lần cuối ở stage S6)
 
-- **Ngày lập:** 14/10/2026. Thay bản STATUS cũ (bản cũ chạy ở chế độ chỉ đọc, trước S1 đến S4).
-- **Phạm vi:** đối chiếu tài liệu với dữ liệu và mã hiện tại sau các stage S1, S2, S3, S3b, S4. Các số trong tệp này đọc lại từ file kết quả và log của phiên S5 (`reports/evidence/logs/S5_*.log`) hoặc từ biên bản `stage_S1.md` đến `stage_S4.md`; cột "Nguồn" ghi file cụ thể.
+- **Ngày lập:** 14/10/2026; cập nhật lần cuối 15/10/2026 sau stage S6 (chạy sạch từ đầu, đóng băng code). Thay bản STATUS cũ (bản cũ chạy ở chế độ chỉ đọc, trước S1 đến S4).
+- **Phạm vi:** đối chiếu tài liệu với dữ liệu và mã hiện tại sau các stage S1, S2, S3, S3b, S4, S5 và S6. Các số trong tệp này đọc lại từ file kết quả và log của phiên S5 (`reports/evidence/logs/S5_*.log`) hoặc từ biên bản `stage_S1.md` đến `stage_S4.md`; cột "Nguồn" ghi file cụ thể.
 - **Cách đọc cột "Trạng thái":** `ĐÃ CHẠY VÀ KIỂM CHỨNG` = có chạy thật và số truy được về file kết quả hoặc log. `CHƯA ĐẠT` = đã chạy nhưng mục tiêu đặt ra không đạt, hoặc chưa chạy. Lý do ghi ở cột bên cạnh.
 - **Quy ước định dạng số:** dấu phẩy thập phân, dấu chấm hàng nghìn.
 
@@ -22,7 +22,7 @@ Bằng chứng đọc ngày 14/10/2026 (log `reports/evidence/logs/S5_03_infra_s
 | `hdfs fsck /data` và `/models` | cả hai `HEALTHY`; `/data` 115 tệp, `/models` 48 tệp; `Average block replication: 2,0`; `Under-replicated blocks: 0` |
 
 Điểm cần nói rõ khi bảo vệ:
-- Chế độ `STORAGE_MODE=local` có trong `src/config.py` nhưng CHƯA KIỂM CHỨNG (xem H5).
+- Chế độ `STORAGE_MODE=local`: đã chạy ở S6 cho ViFoodRec (kết quả trùng chế độ HDFS), chưa chạy cho Food.com (xem H5).
 - Hai vấn đề hạ tầng của bản STATUS cũ đã xử lý ở S1: `unhealthy` do healthcheck mặc định của image kiểm tra Jupyter; `Under replicated blocks: 144` do client Spark ghi với replication 3 (xem `stage_S1.md`).
 
 ---
@@ -41,13 +41,15 @@ Bằng chứng đọc ngày 14/10/2026 (log `reports/evidence/logs/S5_03_infra_s
 | 6c | Thử cải thiện: lưới regParam mở rộng, ALS ngầm định | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | `stage_S3b.md`, `results/als_improve_s3b.csv`, log `S3b_02` | Lưới mở rộng không cải thiện (Food.com). ALS ngầm định: Food.com xấp xỉ ngang Top món phổ biến, ViFoodRec vẫn thua. Mô hình ngầm định chưa lưu lên HDFS và chưa có gợi ý cho web. |
 | 7 | K-means: người dùng Food.com (k = 4), món ViFoodRec (k = 4) | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | `results/kmeans_tuning.csv`, `results/cluster_profiles_food_com.csv`, `results/food_cluster_profiles_vietnam.csv` | Silhouette thấp (0,2743 và 0,2334); k chọn theo khả năng diễn giải. Nhãn cụm Food.com đã đổi sang tiếng Việt ở S3 (số không đổi). |
 | 7b | K-means: người dùng ViFoodRec (k = 3) | **ĐÃ CHẠY VÀ KIỂM CHỨNG**; cụm ít khác nhau | `results/cluster_profiles_food_vietnam.csv`, `stage_S3.md` mục 5 | Gọi "Cụm 1, 2, 3" theo quyết định của người dùng. Sáu trong bảy đặc trưng chênh dưới 7%; `pct_chay_high` chênh 17,52%. |
-| 8 | Thực nghiệm mở rộng quy mô: đo | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | `results/scalability.csv` (32 dòng), `stage_P9.md` | Không có log lệnh nguyên văn; thứ tự chạy các mức không ghi. |
+| 8 | Thực nghiệm mở rộng quy mô: đo | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | `results/scalability.csv` (32 dòng), `stage_P9.md`; chạy lại ở S6 (log `S6_23` đến `S6_26`) | Bản chính không có log lệnh nguyên văn. Chạy lại ở S6 có log; RMSE ALS trùng ở cả bốn mức, thời gian khác và vẫn không tăng theo dữ liệu. Đã sửa `detect_cluster_resource` cho PySpark 4.2. |
 | 8b | Thực nghiệm mở rộng quy mô: kết luận "mở rộng được" | **CHƯA ĐẠT** | `results/scalability.csv` | Thời gian tổng gần phẳng và không đơn điệu; dữ liệu chỉ tới 706.514 dòng. Chỉ kết luận được là chưa thấy thời gian tăng theo dữ liệu trong khoảng này. |
 | 9 | Xuất kết quả cho dashboard | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | log `S3_12`, `S3_13`, `S3b_03`, `S3b_04` (`verify_export.py` 66/66 đạt), `docs/data_contract.md` | `verify_export.py` kiểm tra tồn tại, schema, số dòng, khóa ngoại; không kiểm đúng sai của số liệu. |
 | 10 | Dashboard Streamlit (`app/`) | **ĐÃ CHẠY VÀ KIỂM CHỨNG** (thời điểm P11); là bản lưu | `stage_P11.md` (có khối đính chính), `reports/evidence/test_app_log.txt` | Không cập nhật theo dữ liệu mới. `app/data/` vẫn là nguồn dữ liệu của web. |
 | 11 | Dashboard web tĩnh (`web/`) | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | `stage_S4.md`; log `S4_07` (`verify_web.py` 122/122), `S4_08` (`verify_web_ui.mjs` 129/129), `S4_09` (`verify_web_style.py` 21/21); ảnh `reports/figures/screenshots/web_v2/` | Chỉ thử trên Chrome headless. `web/config.js` để trống thông tin nhóm (có chủ ý). Không có chế độ gợi ý có nghĩa cho người dùng mới ở ViFoodRec (xem H8). |
 | 12 | Đối chiếu bài báo ViFoodRec | **ĐÃ CHẠY VÀ KIỂM CHỨNG** (số trích) | `scratch/paclic_paper_text.txt` dòng 582 đến 586 (Bảng 5), `stage_S3.md` mục 7 | Giao thức khác (bài báo 200 điểm test, nhóm 18.415 điểm). Thang điểm nay trùng nhau. Nguồn bài báo còn nằm ở `scratch/`. |
 | 13 | Tài liệu khớp thực tế | **ĐÃ SỬA** ở S5 | `stage_S5.md` | Mục 4 liệt kê từng điểm lệch và cách xử lý. |
+| 14 | Chạy sạch từ đầu trên bản sao (`run_all.ps1 -CleanRun`, HDFS `/cleanrun`) | **ĐÃ CHẠY VÀ KIỂM CHỨNG** với một ngoại lệ | `stage_S6.md`; log `S6_01` đến `S6_36`; `S6_tong_ket.log`, `S6_tong_ket_tiep_tu_mo_rong_2_worker.log` | 35 bước đều mã thoát 0, khoảng 38 phút. RMSE, MAE, P@10, R@10 của mọi mô hình, cách chia dữ liệu và rò rỉ (0) trùng bản chính. NGOẠI LỆ: K-means Food.com không trùng hệt (H9). Do chính nhóm chạy trên cùng máy, chưa có người ngoài chạy lại (H6). |
+| 15 | Chế độ `STORAGE_MODE=local` | **ĐÃ CHẠY VÀ KIỂM CHỨNG** cho ViFoodRec | `stage_S6.md` mục 2.3; log `S6L_01` đến `S6L_06` | 5 bước, 2,9 phút, kết quả trùng chế độ HDFS. Lần đầu lỗi do trùng đường dẫn, đã sửa trong `config.py`. Food.com chưa chạy ở chế độ local. |
 
 ---
 
@@ -64,12 +66,13 @@ Bằng chứng đọc ngày 14/10/2026 (log `reports/evidence/logs/S5_03_infra_s
 **Về hạ tầng**
 - **H3. Cụm giả lập một máy** (mục 1). Thực nghiệm mở rộng quy mô chỉ tới 706.514 dòng (Parquet sạch 4,56 MB), nên không phải bài toán Big Data theo nghĩa thông thường.
 - **H4. Thư mục thừa `/home/jovyan/...` trên HDFS** (kết quả gợi ý ghi nhầm đường dẫn): đã xóa theo quyết định của người dùng (mục 5, log `S5_08`).
-- **H5. Chế độ local chưa kiểm chứng** (kiểm chứng ở S6). `data/` trên máy chỉ có `raw/`, `processed/`, `results/`; không có `data/clean/` và `data/splits/` mà `config.get_path()` tìm ở chế độ local. `data/processed/*.parquet` là bản cũ (K-core một lượt, 735.006 dòng) và pipeline hiện tại không dùng. Kết quả nằm ở hai nơi trùng nhau (`results/` và `data/results/`).
-- **H6. Chưa chạy từ đầu trên bản sao sạch.** Việc kiểm tra người ngoài chạy lại được toàn bộ pipeline thuộc stage S6.
+- **H5. Chế độ local đã kiểm chứng một phần (S6).** Chạy `run_all.ps1 -StorageMode local` cho ViFoodRec (làm sạch, chia, mô hình cơ sở, ALS, K-means): kết quả trùng chế độ HDFS (`S6L_06`). Lần đầu lỗi vì Spark ghi thư mục Parquet trùng tên tệp bản sao pandas; đã sửa bằng cách ghi kết quả Spark vào `data/spark_results/` ở chế độ local. Food.com chưa chạy ở chế độ local. `data/processed/*.parquet` là bản cũ (K-core một lượt, 735.006 dòng), pipeline hiện tại không dùng. Kết quả nằm ở hai nơi trùng nhau (`results/` và `data/results/`).
+- **H6. Chạy sạch trên bản sao đã làm (S6), chưa có người ngoài chạy lại.** Bản sao chạy trên cùng máy và cùng cụm Docker với bản chính, do nhóm tự thực hiện. Chưa thử dựng cụm từ đầu (`docker compose down -v`) vì sẽ xóa volume HDFS của bản chính, và chưa thử trên máy khác.
 
 **Về mô hình**
 - **H7. ALS không tốt hơn mô hình cơ sở** ở RMSE, MAE, Precision@10, Recall@10 (ALS dự đoán điểm, cả hai bộ). Phân bố dự đoán của ALS ViFoodRec trên test: trung bình 2,0047, độ lệch chuẩn 0,2142, trong khi điểm thật trung bình khoảng 2,50 và trải đều 0,0 đến 5,0 (log `S3_08`); RMSE của ALS (1,6654) gần RMSE khi luôn dự đoán 2,0 (1,6531). Nguyên nhân sâu hơn (regParam 0,5 nằm ở biên lưới và cả 6 cấu hình có regParam 0,5 cho cùng Validation RMSE 1,6576) là giả thuyết chưa kiểm chứng.
 - **H8. Độ tương đồng món ViFoodRec**: cả 40.000 điểm cosine trong `item_neighbors_food_vietnam` bằng 1,0 (`stage_S4.md` mục 3), nên gợi ý cho người dùng mới ở ViFoodRec không phản ánh khác biệt giữa món; web có cảnh báo. Nguyên nhân (regParam lớn làm vector món gần song song) là giả thuyết chưa kiểm chứng.
+- **H9. K-means Food.com không tái lập hoàn toàn khi chạy sạch lại (S6).** Cùng bốn loại cụm và cùng tên, nhưng số người mỗi cụm lệch tới 320 (khoảng 1%) và Silhouette ở k = 4 là 0,2788 thay vì 0,2743. Đã kiểm chứng (log `S6_37`): tập train và đặc trưng giống hệt nhau; chạy hai lần trên cùng dữ liệu cho kết quả y hệt; sắp xếp theo `user_id` thì hai bản gần như trùng. Nguyên nhân: kết quả phụ thuộc thứ tự dòng đầu vào. Cơ chế bên trong Spark là giả thuyết chưa kiểm chứng. Mẫu 5.000 người dùng có gợi ý cho Food.com cũng đổi theo thứ tự dòng (`train_als.py` dòng 322, `.limit(5000)` không sắp xếp); với 4.232 người dùng chung, danh sách gợi ý trùng 100%.
 - Top món phổ biến của ViFoodRec dùng nhánh dự phòng (xếp theo số đánh giá) vì không món nào có điểm trung bình từ 4,0 trở lên trên train: đã kiểm chứng, điểm trung bình lớn nhất của một món là 3,4848 (log `S5_05_verify_toppop.log`).
 - Lưới ALS dự đoán điểm của ViFoodRec và lưới ALS ngầm định chưa mở rộng quá biên 0,5; người dùng quyết định không chạy lại.
 - ALS ngầm định ViFoodRec: tham số tốt nhất chọn trên 101 người dùng, các cấu hình khác cách nhau 1 đến 2 lượt trúng, nên tham số chọn được không đáng tin (`stage_S3b.md` mục 3).
@@ -78,6 +81,7 @@ Bằng chứng đọc ngày 14/10/2026 (log `reports/evidence/logs/S5_03_infra_s
 - Món tiêu biểu của cụm người dùng ViFoodRec: số lượt giữa các món rất sát nhau (10 đến 11 lượt cho món đứng đầu), chỉ mang tính minh họa.
 
 **Về bằng chứng**
+- Khoảng trống bằng chứng ở S6: log các lệnh nạp dữ liệu thô của lần chạy 2 bị xóa khi dọn log; đã nạp lại để có log (`S6_02a`); xem `stage_S6.md` mục 5.
 - Các biên bản P4, P5, P6, P7, P8, P9 không chứa log lệnh nguyên văn (CONTEXT §5.2); số liệu vẫn truy được về file kết quả. Từ S1 trở đi, mọi lệnh đều có log trong `reports/evidence/logs/`.
 - Hình PCA cụm Food.com (`reports/figures/kmeans_user_clusters_foodcom_pca.png`) còn tên cụm cũ bằng tiếng Anh (quyết định không vẽ lại; không dùng hình này ở web hay báo cáo).
 
@@ -140,7 +144,7 @@ Số dòng sau làm sạch (nhất quán sau S2): Food.com 706.514 (cũ 735.006 
 3. **Hình PCA cụm Food.com:** không vẽ lại.
 4. **Thông tin nhóm trong `web/config.js`:** không cần điền; để trống có chủ ý.
 5. **Giấy phép dữ liệu ViFoodRec:** người dùng cho biết đây là dự án công khai, miễn phí trên GitHub. Chưa đọc được văn bản giấy phép cụ thể trong phiên này, nên báo cáo ghi theo đúng điều người dùng nói và ghi giấy phép cụ thể là "chưa xác nhận" nếu kho không nêu.
-6. **Chế độ `STORAGE_MODE=local`:** kiểm chứng ở S6.
+6. **Chế độ `STORAGE_MODE=local`:** kiểm chứng ở S6 cho ViFoodRec, kết quả trùng chế độ HDFS (H5); Food.com chưa chạy ở chế độ local.
 
 ---
 
@@ -224,3 +228,7 @@ Nguồn: `results/model_comparison.csv` (11 dòng). RMSE, MAE 4 chữ số; P@10
 | Số tương tác sau làm sạch: ViFoodRec so với bản cũ | 182.631 so với 149.431 | `cleaning_log.csv`; `backup_v2_truoc_S2/` |
 | Kiểm thử web: `verify_web.py`; `verify_web_ui.mjs`; `verify_web_style.py` | 122/122; 129/129; 21/21 | log `S4_07`, `S4_08`, `S4_09` |
 | Replication; khối thiếu bản sao | 2; 0 | log `S5_03_infra_state.log` |
+| Chạy sạch trên bản sao (S6): số bước; mã thoát khác 0; thời gian | 35; 0; khoảng 38 phút | `S6_tong_ket.log`, `S6_tong_ket_tiep_tu_mo_rong_2_worker.log` |
+| Chạy sạch: `verify_clean.py`; `verify_export.py`; `verify_web_ui.mjs`; `verify_web.py`; `verify_web_style.py` | 6/6; 66/66; 129/129; 122/122; 21/21 | log `S6_13`, `S6_29`, `S6_33`, `S6_34`, `S6_35` |
+| Chạy sạch: `fsck` `/cleanrun/data`; `/cleanrun/models` | HEALTHY, 115 tệp; HEALTHY, 48 tệp; Under-replicated 0 | log `S6_30`, `S6_31` |
+| K-means Food.com k = 4 khi chạy sạch: Silhouette; cỡ cụm | 0,2788; 3.998 / 10.359 / 8.142 / 8.273 (bản chính 0,2743; 3.993 / 10.679 / 7.905 / 8.195) | `kmeans_tuning.csv`, `cluster_profiles_food_com.csv` của bản sao; `S6_36`, `S6_37` |

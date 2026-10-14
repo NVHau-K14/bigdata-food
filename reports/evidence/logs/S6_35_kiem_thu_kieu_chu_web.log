@@ -1,0 +1,55 @@
+$ python src/verify_web_style.py
+======================================================================
+ KIỂM TRA KIỂU DÁNG, TƯƠNG PHẢN VÀ KHẢ NĂNG ĐỌC (src/verify_web_style.py)
+======================================================================
+
+--- 1. Quét mã ---
+[DAT] Không emoji hay ký tự biểu tượng (kể cả dấu tích, mũi tên, so sánh, nhân, cộng trừ, gạch dài) trong mã web
+[DAT] Không có text-transform khác none
+[DAT] Không có gradient
+[DAT] Không có box-shadow (ngoài dòng chú thích)
+[DAT] Không có animation hay @keyframes tự chạy
+[DAT] Không có setInterval hay requestAnimationFrame tự chạy trong JS
+
+--- 2. Tương phản WCAG ---
+[DAT] Chữ chính trên nền trắng: 16.40:1 (cần từ 7.0:1)
+[DAT] Chữ phụ trên nền trắng: 10.43:1 (cần từ 7.0:1)
+[DAT] Chữ phụ trên nền phụ (tiêu đề cột): 9.69:1 (cần từ 7.0:1)
+[DAT] Chữ xanh lá trên nền trắng: 9.00:1 (cần từ 7.0:1)
+[DAT] Chữ xanh lá trên nền chọn (dòng cụm): 7.96:1 (cần từ 7.0:1)
+[DAT] Chữ trắng trên nút xanh lá: 9.00:1 (cần từ 7.0:1)
+[DAT] Chữ cam nhỏ trên nền trắng (số dòng bị loại): 5.26:1 (cần từ 4.5:1)
+[DAT] Chữ cam nhỏ trên nền phụ (dòng cảnh báo): 4.89:1 (cần từ 4.5:1)
+[DAT] Cột biểu đồ xanh lá đậm trên nền trắng: 9.00:1 (cần từ 3.0:1)
+[DAT] Cột biểu đồ xám trung tính trên nền trắng: 3.52:1 (cần từ 3.0:1)
+
+--- 3. Màu biểu đồ ở thang xám ---
+[DAT] Xanh lá đậm (xám 63/255) và xám trung tính (xám 136/255) cách nhau từ 40 bậc
+[DAT] Độ chói tương đối khác nhau từ 0,1 (0.067 và 0.249)
+
+--- 4. Diện tích màu cam trên ảnh chụp ---
+[DAT] Có ảnh chụp để đo : 28 ảnh
+[DAT] Diện tích cam lớn nhất trên một ảnh: 0.459% (1366x768_goi-y-vifoodrec-moi.png), cần dưới 2%
+
+--- 5. Mô phỏng chia sẻ online (960x540, JPEG 60%) ---
+[DAT] Đã tạo 14 ảnh chia sẻ : dung lượng trung bình 43 KB
+    Tỷ lệ ký tự có cỡ chữ từ 9 px trở lên sau khi thu nhỏ một nửa (chỉ báo cáo):
+    - 1920x1080 du-lieu:  10.8% ký tự (141/1308)
+    - 1920x1080 glossary:  10.8% ký tự (141/1308)
+    - 1920x1080 goi-y-food-com-co-san:   5.7% ký tự (372/6539)
+    - 1920x1080 goi-y-food-com-moi:  20.1% ký tự (479/2384)
+    - 1920x1080 goi-y-vifoodrec-co-san:   9.7% ký tự (345/3570)
+    - 1920x1080 goi-y-vifoodrec-moi:  13.3% ký tự (371/2785)
+    - 1920x1080 hanh-vi-food-com:   9.5% ký tự (172/1820)
+    - 1920x1080 hanh-vi-vifoodrec-mon:  12.4% ký tự (175/1411)
+    - 1920x1080 hanh-vi-vifoodrec-nguoi-dung:   8.6% ký tự (145/1692)
+    - 1920x1080 he-thong-luu-tru:  27.3% ký tự (442/1620)
+    - 1920x1080 he-thong-mo-rong:  35.8% ký tự (442/1236)
+    - 1920x1080 mo-hinh-food-com:  18.4% ký tự (192/1044)
+    - 1920x1080 mo-hinh-vifoodrec:  16.1% ký tự (195/1208)
+    - 1920x1080 tuning-modal:   9.5% ký tự (172/1820)
+
+======================================================================
+ KẾT QUẢ: 21/21 đạt
+======================================================================
+# mã thoát 0, 2.4 giây

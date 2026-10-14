@@ -1,0 +1,17 @@
+Tổng kết lần chạy run_all.ps1 (tham số: HdfsRoot='/cleanrun', StorageMode=hdfs, container=bigdata_spark_cleanrun)
+
+23 | mo_rong_2_worker | mã 0 | 118.3 giây | S6_23_mo_rong_2_worker.log
+24 | dung_worker_2 | mã 0 | 1.3 giây | S6_24_dung_worker_2.log
+25 | mo_rong_1_worker | mã 0 | 117.4 giây | S6_25_mo_rong_1_worker.log
+26 | bat_lai_worker_2 | mã 0 | 0.3 giây | S6_26_bat_lai_worker_2.log
+27 | xuat_mon_tieu_bieu_cum | mã 0 | 22.5 giây | S6_27_xuat_mon_tieu_bieu_cum.log
+28 | xuat_ket_qua | mã 0 | 20.7 giây | S6_28_xuat_ket_qua.log
+29 | kiem_tra_xuat | mã 0 | 2.4 giây | S6_29_kiem_tra_xuat.log
+30 | hdfs_fsck | mã 0 | 2.0 giây | S6_30_hdfs_fsck.log
+31 | hdfs_fsck_models | mã 0 | 1.8 giây | S6_31_hdfs_fsck_models.log
+32 | xuat_du_lieu_web | mã 0 | 1.6 giây | S6_32_xuat_du_lieu_web.log
+33 | kiem_thu_giao_dien_web | mã 0 | 43.8 giây | S6_33_kiem_thu_giao_dien_web.log
+34 | doi_chieu_so_lieu_web | mã 0 | 1.4 giây | S6_34_doi_chieu_so_lieu_web.log
+35 | kiem_thu_kieu_chu_web | mã 0 | 2.4 giây | S6_35_kiem_thu_kieu_chu_web.log
+
+Tổng thời gian đến thời điểm ghi: 5.7 phút

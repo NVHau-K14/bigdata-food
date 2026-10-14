@@ -1,0 +1,27 @@
+Tổng kết lần chạy run_all.ps1 (tham số: HdfsRoot='/cleanrun', StorageMode=hdfs, container=bigdata_spark_cleanrun)
+
+01 | tao_container_client | mã 0 | 0.4 giây | S6_01_tao_container_client.log
+02 | mkdir_raw_interactions | mã 0 | 1.5 giây | S6_02_mkdir_raw_interactions.log
+03 | kiem_tra_raw_interactions | mã 0 | 1.6 giây | S6_03_kiem_tra_raw_interactions.log
+04 | mkdir_raw_recipes | mã 0 | 1.5 giây | S6_04_mkdir_raw_recipes.log
+05 | kiem_tra_raw_recipes | mã 0 | 1.7 giây | S6_05_kiem_tra_raw_recipes.log
+06 | mkdir_foods | mã 0 | 1.8 giây | S6_06_mkdir_foods.log
+07 | kiem_tra_foods | mã 0 | 1.8 giây | S6_07_kiem_tra_foods.log
+08 | mkdir_ratings | mã 0 | 1.9 giây | S6_08_mkdir_ratings.log
+09 | kiem_tra_ratings | mã 0 | 1.6 giây | S6_09_kiem_tra_ratings.log
+10 | kiem_tra_du_lieu_tho | mã 0 | 1.6 giây | S6_10_kiem_tra_du_lieu_tho.log
+11 | kiem_tra_cum_smoke_test | mã 0 | 18.6 giây | S6_11_kiem_tra_cum_smoke_test.log
+12 | lam_sach_hai_bo | mã 0 | 67.2 giây | S6_12_lam_sach_hai_bo.log
+13 | kiem_tra_du_lieu_sach | mã 0 | 23.0 giây | S6_13_kiem_tra_du_lieu_sach.log
+14 | benchmark_luu_tru | mã 0 | 43.6 giây | S6_14_benchmark_luu_tru.log
+15 | eda | mã 0 | 36.6 giây | S6_15_eda.log
+16 | chia_du_lieu | mã 0 | 28.7 giây | S6_16_chia_du_lieu.log
+17 | mo_hinh_co_so | mã 0 | 33.3 giây | S6_17_mo_hinh_co_so.log
+18 | als_du_doan_diem | mã 0 | 227.4 giây | S6_18_als_du_doan_diem.log
+19 | als_ngam_dinh | mã 0 | 1,297.9 giây | S6_19_als_ngam_dinh.log
+20 | kmeans_hanh_vi | mã 0 | 104.5 giây | S6_20_kmeans_hanh_vi.log
+21 | doi_nhan_cum_food_com | mã 0 | 15.9 giây | S6_21_doi_nhan_cum_food_com.log
+22 | do_nhay_vifoodrec | mã 0 | 43.0 giây | S6_22_do_nhay_vifoodrec.log
+23 | mo_rong_2_worker | mã 1 | 9.1 giây | S6_23_mo_rong_2_worker.log
+
+Tổng thời gian đến thời điểm ghi: 32.8 phút

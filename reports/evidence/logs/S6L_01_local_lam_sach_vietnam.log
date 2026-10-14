@@ -1,0 +1,92 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=local -e HDFS_ROOT= bigdata_spark_cleanrun /opt/conda/bin/python src/run_pipeline_p3.py --only vietnam
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 18:03:49 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 3:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 21:>                                                         (0 + 1) / 1]
+
+[Stage 22:>                                                         (0 + 1) / 1]
+
+                                                                                
+
+[Stage 71:>                                                         (0 + 1) / 1]
+
+                                                                                
+
+[Stage 79:>                                                         (0 + 1) / 1]
+
+                                                                                
+
+[Stage 80:>                                                         (0 + 1) / 1]
+
+                                                                                
+================================================================================
+   BẮT ĐẦU CHẠY PIPELINE LÀM SẠCH TOÀN DIỆN P3
+================================================================================
+
+[Bỏ qua Food.com] Giữ 10 dòng nhật ký từ /home/jovyan/work/reports/evidence/cleaning_log.csv
+================================================================================
+   BẮT ĐẦU PIPELINE LÀM SẠCH DỮ LIỆU VIFOODREC (P3)
+================================================================================
+
+[A] Đọc dữ liệu thô foods: /home/jovyan/work/data/raw/food_vietnam/foods.csv
+  - Tổng số món ăn thô: 4,000
+  - Sau lọc thiếu ID/name: 4,000 (Loại: 0)
+  - Chuẩn hóa text, parse số khẩu phần/thời gian nấu, gắn cờ trùng lặp...
+
+[B] Đọc dữ liệu thô ratings: /home/jovyan/work/data/raw/food_vietnam/ratings.csv
+  - Tổng số đánh giá thô: 182,678
+  - Sau bỏ NULL: 182,678 (Loại: 0)
+  - Sau lọc thang điểm 0.0 đến 5.0, bước 0.5 (11 mức): 182,678 (Loại ngoài thang: 0)
+  - Sau khử trùng cặp (user_id, food_id): 182,678 (Loại trùng: 0)
+  - Sau kiểm tra khóa ngoại với foods: 182,631 (Loại food_id không có trong foods: 47)
+
+[C] Thực thi vòng lặp K-core lặp đến khi hội tụ (Ngưỡng K=3)...
+    * Vòng lặp 1: 182,631 -> 182,631 dòng (Giảm 0 dòng)
+  -> K-core ViFoodRec đã HỘI TỤ sau 1 vòng lặp tại 182,631 dòng!
+
+[D] Gắn cờ has_ratings cho bảng foods...
+
+[E] Ghi Parquet sạch (coalesce 1 partition):
+  - Ratings: /home/jovyan/work/data/clean/food_vietnam/ratings_clean.parquet
+  - Foods  : /home/jovyan/work/data/clean/food_vietnam/foods_clean.parquet
+  -> Ghi Parquet ViFoodRec hoàn tất thành công!
+
+[F] Đã ghi nhật ký làm sạch CSV: /home/jovyan/work/reports/evidence/cleaning_log.csv
+                  dataset  ... rows_dropped
+0        food_com_recipes  ...            0
+1        food_com_recipes  ...            1
+2        food_com_recipes  ...            0
+3   food_com_interactions  ...            0
+4   food_com_interactions  ...            0
+5   food_com_interactions  ...        60847
+6   food_com_interactions  ...            0
+7   food_com_interactions  ...            0
+8   food_com_interactions  ...            0
+9   food_com_interactions  ...       365006
+10        vifoodrec_foods  ...            0
+11        vifoodrec_foods  ...            0
+12      vifoodrec_ratings  ...            0
+13      vifoodrec_ratings  ...            0
+14      vifoodrec_ratings  ...            0
+15      vifoodrec_ratings  ...            0
+16      vifoodrec_ratings  ...           47
+17      vifoodrec_ratings  ...            0
+
+[18 rows x 5 columns]
+[G] Đã ghi nhật ký làm sạch Parquet: /home/jovyan/work/data/spark_results/cleaning_log.parquet
+
+================================================================================
+   HOÀN TẤT TOÀN BỘ PIPELINE P3 TRONG 21.93 GIÂY
+================================================================================
+# mã thoát 0, 23.3 giây

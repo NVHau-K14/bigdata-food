@@ -1,0 +1,2 @@
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -test -e /cleanrun/data/raw/food_vietnam/ratings.csv
+# mã thoát 0, 1.6 giây

@@ -1,0 +1,8 @@
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -ls -R -h /cleanrun/data/raw
+drwxr-xr-x   - root supergroup          0 2026-10-14 16:48 /cleanrun/data/raw/food_com
+-rw-r--r--   2 root supergroup    333.2 M 2026-10-14 16:47 /cleanrun/data/raw/food_com/RAW_interactions.csv
+-rw-r--r--   2 root supergroup    280.9 M 2026-10-14 16:48 /cleanrun/data/raw/food_com/RAW_recipes.csv
+drwxr-xr-x   - root supergroup          0 2026-10-14 16:48 /cleanrun/data/raw/food_vietnam
+-rw-r--r--   2 root supergroup      6.9 M 2026-10-14 16:48 /cleanrun/data/raw/food_vietnam/foods.csv
+-rw-r--r--   2 root supergroup      2.0 M 2026-10-14 16:48 /cleanrun/data/raw/food_vietnam/ratings.csv
+# mã thoát 0, 1.6 giây

@@ -1,0 +1,65 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=hdfs -e HDFS_ROOT=/cleanrun bigdata_spark_cleanrun /opt/conda/bin/python src/export_for_app.py
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:56:51 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 1:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 3:>                                                          (0 + 4) / 4]
+
+[Stage 3:=============================>                             (2 + 2) / 4]
+
+                                                                                
+===========================================================================
+CHƯƠNG TRÌNH XUẤT KẾT QUẢ CHO DASHBOARD STREAMLIT (PROMPT P10)
+Chế độ lưu trữ nguồn: hdfs
+===========================================================================
+Thư mục đích: /home/jovyan/work/app/data
+
+---> [1/6] Đang xuất foods_vietnam.parquet...
+     ✓ Đã xuất 4,000 món ViFoodRec vào foods_vietnam.parquet (3.28 MB)
+
+---> [2/6] Đang xuất recipes_foodcom_sample.parquet...
+     ✓ Đã xuất 78,171 công thức Food.com vào recipes_foodcom_sample.parquet (10.27 MB)
+
+---> [3/6] Đang xuất recommendations...
+     ✓ Đã xuất 1,010 gợi ý ViFoodRec vào recommendations_vietnam.parquet (0.01 MB)
+     ✓ Đã xuất 50,000 gợi ý Food.com vào recommendations_foodcom_sample.parquet (0.25 MB)
+
+---> [4/6] Đang xuất item_neighbors...
+     ✓ Đã xuất 4,000 item neighbors ViFoodRec vào item_neighbors_vietnam.parquet (0.10 MB)
+     ✓ Đã xuất 20,000 item neighbors Food.com vào item_neighbors_foodcom.parquet (1.52 MB)
+
+---> [5/6] Đang xuất clusters & profiles...
+     ✓ Đã copy profile cluster_profiles_food_vietnam.csv
+     ✓ Đã copy profile cluster_profiles_food_com.csv
+     ✓ Đã copy profile food_cluster_profiles_vietnam.csv
+     ✓ Đã copy profile kmeans_tuning.csv
+     ✓ Đã xuất các tệp phân cụm thành công!
+
+---> [6/6] Đang xuất benchmarks, logs và EDA tables...
+     ✓ Đã xuất model_comparison.csv
+     ✓ Đã xuất als_tuning_food_vietnam.csv
+     ✓ Đã xuất als_tuning_food_com.csv
+     ✓ Đã xuất scalability.csv
+     ✓ Đã xuất storage_benchmark.csv
+     ✓ Đã xuất cleaning_log.csv
+     ✓ Đã xuất baseline_metrics.csv
+     ✓ Đã xuất baseline_rmse_breakdown.csv
+     ✓ Đã xuất als_rmse_breakdown.csv
+     ✓ Đã copy toàn bộ 20 bảng EDA vào eda/
+
+===========================================================================
+HOÀN TẤT XUẤT DỮ LIỆU CHO DASHBOARD!
+Tổng dung lượng thư mục app/data/: 17.79 MB (Tiêu chuẩn: < 100 MB -> ĐẠT)
+Thời gian thực thi: 19.35 giây
+===========================================================================
+# mã thoát 0, 20.7 giây

@@ -1,0 +1,81 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=hdfs -e HDFS_ROOT=/cleanrun bigdata_spark_cleanrun /opt/conda/bin/python src/verify_clean.py
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:20:00 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 3:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 4:>                                                          (0 + 4) / 8]
+
+[Stage 4:============================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 37:=============================>                            (4 + 4) / 8]
+
+[Stage 37:===========================================>              (6 + 2) / 8]
+
+                                                                                
+================================================================================
+   BẮT ĐẦU KIỂM CHỨNG TỰ ĐỘNG ĐỘC LẬP (VERIFY CLEAN - P3)
+================================================================================
+
+[0] Nạp dữ liệu Parquet sạch:
+  - Food.com interactions: hdfs://namenode:9000/cleanrun/data/clean/food_com/interactions_clean.parquet
+  - Food.com recipes     : hdfs://namenode:9000/cleanrun/data/clean/food_com/recipes_clean.parquet
+  - ViFoodRec ratings    : hdfs://namenode:9000/cleanrun/data/clean/food_vietnam/ratings_clean.parquet
+  - ViFoodRec foods      : hdfs://namenode:9000/cleanrun/data/clean/food_vietnam/foods_clean.parquet
+
+  * Số dòng đo được: Food.com inter=706,514, recipes=231,636
+  * Số dòng đo được: ViFoodRec rat=182,631, foods=4,000
+
+[1] Kiểm tra giá trị NULL ở các cột khóa chính và rating...
+  -> Kết quả: ĐẠT (Tất cả NULL = 0)
+
+[2] Kiểm tra thang điểm: Food.com trong [1.0, 5.0]; ViFoodRec thuộc đúng 11 mức 0.0 đến 5.0...
+  - ViFoodRec: các mức điểm có trong dữ liệu sạch (11 mức): [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+  -> Kết quả: ĐẠT (Điểm ngoài thang: Food.com=0, ViFoodRec=0)
+
+[3] Kiểm tra tính duy nhất cặp (user, món)...
+  -> Kết quả: ĐẠT (Food.com: True, ViFoodRec: True)
+
+[4] Kiểm tra tiêu chí K-core (Ngưỡng K >= 3)...
+  - Food.com  : min(user)=3, min(recipe)=3 -> ĐẠT
+  - ViFoodRec : min(user)=1641, min(food)=27 -> ĐẠT
+  -> Kết quả K-core chung: ĐẠT
+
+[5] Kiểm tra toàn vẹn khóa ngoại (Foreign Key Integrity)...
+  -> Kết quả: ĐẠT (Food.com orphan=0, ViFoodRec orphan=0)
+
+[6] Đối chiếu số dòng với nhật ký cleaning_log.csv...
+  - Số dòng thô: Food.com=1,132,367 (chuẩn 1,132,367), ViFoodRec=182,678 (chuẩn 182,678)
+  - Khớp log cuối: fc_inter=706,514==706,514, vn_rat=182,631==182,631
+  -> Kết quả: ĐẠT
+
+================================================================================
+   BẢNG TỔNG HỢP KẾT QUẢ KIỂM CHỨNG TỰ ĐỘNG (VERIFY SUMMARY)
+================================================================================
+1. No NULL in primary keys & ratings             : ĐẠT [PASS]
+   Chi tiết: fc_inter=0, fc_rec=0, vn_rat=0, vn_food=0
+2. Rating scale (Food.com 1-5, ViFoodRec 11 levels) : ĐẠT [PASS]
+   Chi tiết: fc_out=0, vn_out=0, vn_distinct_levels=11
+3. No duplicate (user, item) pairs               : ĐẠT [PASS]
+   Chi tiết: fc_inter(706514==706514), vn_rat(182631==182631)
+4. K-core convergence (min interactions >= 3)    : ĐẠT [PASS]
+   Chi tiết: Food.com: min_u=3, min_r=3 | ViFoodRec: min_u=1641, min_f=27
+5. Foreign Key Integrity (0 orphan records)      : ĐẠT [PASS]
+   Chi tiết: fc_orphan=0, vn_orphan=0
+6. Row count consistency with cleaning_log.csv   : ĐẠT [PASS]
+   Chi tiết: Raw matched=True, Final matched=True
+================================================================================
+ALL VERIFICATION CHECKS PASSED SUCCESSFULLY!
+================================================================================
+# mã thoát 0, 23.0 giây

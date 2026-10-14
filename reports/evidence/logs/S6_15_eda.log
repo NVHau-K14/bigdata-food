@@ -1,0 +1,68 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=hdfs -e HDFS_ROOT=/cleanrun bigdata_spark_cleanrun /opt/conda/bin/python src/eda_analysis.py
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 17:21:06 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 2:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 4:>                                                          (0 + 4) / 8]
+
+[Stage 4:============================================>              (6 + 2) / 8]
+
+                                                                                
+
+[Stage 70:=============================>                            (4 + 4) / 8]
+
+                                                                                
+
+[Stage 130:>                                                        (0 + 1) / 1]
+
+                                                                                
+================================================================================
+   BẮT ĐẦU PHÂN TÍCH KHÁM PHÁ DỮ LIỆU (EDA) TRÊN CỤM SPARK (P5)
+================================================================================
+
+[1/13] Nạp dữ liệu Parquet sạch từ HDFS...
+
+[2/13] EDA 1: Phân phối điểm đánh giá (Food.com vs ViFoodRec)...
+
+[3/13] EDA 2: Phân phối số tương tác theo User & Item (Hiện tượng đuôi dài)...
+
+[4/13] EDA 3: Top món phổ biến vs Top món điểm cao Food.com...
+
+[5/13] EDA 4: Top món phổ biến vs Top món điểm cao ViFoodRec...
+
+[6/13] EDA 5: Xu hướng tương tác theo năm của Food.com...
+
+[7/13] EDA 6: Tính mùa vụ (Thứ trong tuần và Tháng trong năm)...
+
+[8/13] EDA 7: Quan hệ Thời gian nấu, Calo và Điểm trung bình...
+
+[9/13] EDA 8: Top 15 Tags và Top 15 Nguyên liệu (Food.com)...
+
+[10/13] EDA 9: So sánh Món mặn vs Món chay (ViFoodRec)...
+
+[11/13] EDA 10: Quan hệ Thời gian nấu và Calo với Điểm số (ViFoodRec)...
+
+[12/13] EDA 11: Top 15 Nguyên liệu món ăn Việt Nam...
+
+[13/13] EDA 12: So sánh Ma trận tương tác hai bộ dữ liệu...
+   Food.com : {'users': 30836, 'items': 78171, 'inter': 706514, 'sparsity': 99.97068991570993, 'mean': 4.714621366314043, 'med_user': 6.0, 'med_item': 5.0}
+   ViFoodRec: {'users': 101, 'items': 4000, 'inter': 182631, 'sparsity': 54.79430693069307, 'mean': 2.499605762439016, 'med_user': 1795.0, 'med_item': 46.0}
+
+[+] EDA 13: So sánh phân phối điểm ViFoodRec với phân phối đều...
+
+================================================================================
+   HOÀN TẤT TOÀN BỘ 13 PHÂN TÍCH EDA P5 TRONG 34.83 GIÂY
+   - Đã lưu 13 file kết quả CSV tại: /home/jovyan/work/data/results/eda
+   - Đã lưu 13 biểu đồ PNG tại: /home/jovyan/work/reports/figures
+================================================================================
+# mã thoát 0, 36.6 giây

@@ -1,0 +1,133 @@
+$ node src/verify_web_ui.mjs
+[DAT] Không cuộn trang: 1920x1080 du-lieu : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 du-lieu : 75 ký tự: ViFoodRec nhỏ nhưng dày (độ thưa 54,79%), Food.com lớn nhưng độ thưa 99,97%
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 du-lieu : đáy 1070
+[DAT] Văn bản hiển thị sạch: 1920x1080 du-lieu
+[DAT] Không cuộn trang: 1920x1080 he-thong-luu-tru : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 he-thong-luu-tru : 79 ký tự: HDFS 3.3.6 và Spark 4.2.0; Parquet nhỏ hơn CSV 4,19 đến 7,03 lần ở dữ liệu sạch
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 he-thong-luu-tru : đáy 1070
+[DAT] Trang Hệ thống: mỗi panel trống không quá 25%: 1920x1080 he-thong-luu-tru : lớn nhất 24.0%
+[DAT] Văn bản hiển thị sạch: 1920x1080 he-thong-luu-tru
+[DAT] Không cuộn trang: 1920x1080 he-thong-mo-rong : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 he-thong-mo-rong : 79 ký tự: HDFS 3.3.6 và Spark 4.2.0; Parquet nhỏ hơn CSV 4,19 đến 7,03 lần ở dữ liệu sạch
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 he-thong-mo-rong : đáy 1070
+[DAT] Trang Hệ thống: mỗi panel trống không quá 25%: 1920x1080 he-thong-mo-rong : lớn nhất 22.6%
+[DAT] Văn bản hiển thị sạch: 1920x1080 he-thong-mo-rong
+[DAT] Không cuộn trang: 1920x1080 hanh-vi-food-com : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 hanh-vi-food-com : 62 ký tự: Food.com: 4 nhóm khác nhau về điểm trung bình và thời gian nấu
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 hanh-vi-food-com : đáy 1070
+[DAT] Trang Hành vi: danh sách món của cụm không cuộn trong ở 1920x1080: 1920x1080 hanh-vi-food-com : panel cao 632px
+[DAT] Văn bản hiển thị sạch: 1920x1080 hanh-vi-food-com
+[DAT] Không cuộn trang: 1920x1080 hanh-vi-vifoodrec-nguoi-dung : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 hanh-vi-vifoodrec-nguoi-dung : 64 ký tự: ViFoodRec: 3 cụm chênh nhau ít, điểm trung bình từ 2,47 đến 2,54
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 hanh-vi-vifoodrec-nguoi-dung : đáy 1070
+[DAT] Trang Hành vi: danh sách món của cụm không cuộn trong ở 1920x1080: 1920x1080 hanh-vi-vifoodrec-nguoi-dung : panel cao 684px
+[DAT] Văn bản hiển thị sạch: 1920x1080 hanh-vi-vifoodrec-nguoi-dung
+[DAT] Không cuộn trang: 1920x1080 hanh-vi-vifoodrec-mon : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 hanh-vi-vifoodrec-mon : 79 ký tự: ViFoodRec: 4 cụm món, khác nhau nhiều nhất ở tỷ lệ món không chay và lượng calo
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 hanh-vi-vifoodrec-mon : đáy 1070
+[DAT] Trang Hành vi: danh sách món của cụm không cuộn trong ở 1920x1080: 1920x1080 hanh-vi-vifoodrec-mon : panel cao 632px
+[DAT] Văn bản hiển thị sạch: 1920x1080 hanh-vi-vifoodrec-mon
+[DAT] Không cuộn trang: 1920x1080 goi-y-vifoodrec-co-san : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 goi-y-vifoodrec-co-san : 86 ký tự: ViFoodRec: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 goi-y-vifoodrec-co-san : đáy 1070
+[DAT] Trang Gợi ý: danh sách 10 món không cuộn trong ở 1920x1080: 1920x1080 goi-y-vifoodrec-co-san : panel cao 927px
+[DAT] Văn bản hiển thị sạch: 1920x1080 goi-y-vifoodrec-co-san
+[DAT] Không cuộn trang: 1920x1080 goi-y-vifoodrec-moi : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 goi-y-vifoodrec-moi : 86 ký tự: ViFoodRec: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 goi-y-vifoodrec-moi : đáy 1070
+[DAT] Trang Gợi ý: danh sách 10 món không cuộn trong ở 1920x1080: 1920x1080 goi-y-vifoodrec-moi : panel cao 927px
+[DAT] Văn bản hiển thị sạch: 1920x1080 goi-y-vifoodrec-moi
+[DAT] Không cuộn trang: 1920x1080 goi-y-food-com-co-san : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 goi-y-food-com-co-san : 85 ký tự: Food.com: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 goi-y-food-com-co-san : đáy 1070
+[DAT] Trang Gợi ý: danh sách 10 món không cuộn trong ở 1920x1080: 1920x1080 goi-y-food-com-co-san : panel cao 927px
+[DAT] Văn bản hiển thị sạch: 1920x1080 goi-y-food-com-co-san
+[DAT] Không cuộn trang: 1920x1080 goi-y-food-com-moi : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 goi-y-food-com-moi : 85 ký tự: Food.com: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 goi-y-food-com-moi : đáy 1070
+[DAT] Trang Gợi ý: danh sách 10 món không cuộn trong ở 1920x1080: 1920x1080 goi-y-food-com-moi : panel cao 927px
+[DAT] Văn bản hiển thị sạch: 1920x1080 goi-y-food-com-moi
+[DAT] Không cuộn trang: 1920x1080 mo-hinh-vifoodrec : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 mo-hinh-vifoodrec : 89 ký tự: ViFoodRec: ALS không đứng đầu ở độ đo nào; RMSE thấp nhất là Trung bình toàn cục (1,5706)
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 mo-hinh-vifoodrec : đáy 1070
+[DAT] Văn bản hiển thị sạch: 1920x1080 mo-hinh-vifoodrec
+[DAT] Không cuộn trang: 1920x1080 mo-hinh-food-com : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 mo-hinh-food-com : 86 ký tự: Food.com: ALS ngầm định đứng đầu P@10 (0,00570); RMSE, MAE và R@10 thuộc mô hình cơ sở
+[DAT] Chân trang nằm trong khung nhìn: 1920x1080 mo-hinh-food-com : đáy 1070
+[DAT] Văn bản hiển thị sạch: 1920x1080 mo-hinh-food-com
+[DAT] Không cuộn trang: 1920x1080 glossary : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Văn bản hiển thị sạch: 1920x1080 glossary
+[DAT] Không cuộn trang: 1920x1080 tuning-modal : scrollHeight 1080 / innerHeight 1080, mainOverflow 0
+[DAT] Văn bản hiển thị sạch: 1920x1080 tuning-modal
+[DAT] Không cuộn trang: 1366x768 du-lieu : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 du-lieu : 75 ký tự: ViFoodRec nhỏ nhưng dày (độ thưa 54,79%), Food.com lớn nhưng độ thưa 99,97%
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 du-lieu : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 du-lieu
+[DAT] Không cuộn trang: 1366x768 he-thong-luu-tru : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 he-thong-luu-tru : 79 ký tự: HDFS 3.3.6 và Spark 4.2.0; Parquet nhỏ hơn CSV 4,19 đến 7,03 lần ở dữ liệu sạch
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 he-thong-luu-tru : đáy 760
+[DAT] Trang Hệ thống: mỗi panel trống không quá 25%: 1366x768 he-thong-luu-tru : lớn nhất 17.2%
+[DAT] Văn bản hiển thị sạch: 1366x768 he-thong-luu-tru
+[DAT] Không cuộn trang: 1366x768 he-thong-mo-rong : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 he-thong-mo-rong : 79 ký tự: HDFS 3.3.6 và Spark 4.2.0; Parquet nhỏ hơn CSV 4,19 đến 7,03 lần ở dữ liệu sạch
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 he-thong-mo-rong : đáy 760
+[DAT] Trang Hệ thống: mỗi panel trống không quá 25%: 1366x768 he-thong-mo-rong : lớn nhất 17.2%
+[DAT] Văn bản hiển thị sạch: 1366x768 he-thong-mo-rong
+[DAT] Không cuộn trang: 1366x768 hanh-vi-food-com : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 hanh-vi-food-com : 62 ký tự: Food.com: 4 nhóm khác nhau về điểm trung bình và thời gian nấu
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 hanh-vi-food-com : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 hanh-vi-food-com
+[DAT] Không cuộn trang: 1366x768 hanh-vi-vifoodrec-nguoi-dung : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 hanh-vi-vifoodrec-nguoi-dung : 64 ký tự: ViFoodRec: 3 cụm chênh nhau ít, điểm trung bình từ 2,47 đến 2,54
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 hanh-vi-vifoodrec-nguoi-dung : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 hanh-vi-vifoodrec-nguoi-dung
+[DAT] Không cuộn trang: 1366x768 hanh-vi-vifoodrec-mon : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 hanh-vi-vifoodrec-mon : 79 ký tự: ViFoodRec: 4 cụm món, khác nhau nhiều nhất ở tỷ lệ món không chay và lượng calo
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 hanh-vi-vifoodrec-mon : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 hanh-vi-vifoodrec-mon
+[DAT] Không cuộn trang: 1366x768 goi-y-vifoodrec-co-san : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 goi-y-vifoodrec-co-san : 86 ký tự: ViFoodRec: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 goi-y-vifoodrec-co-san : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 goi-y-vifoodrec-co-san
+[DAT] Không cuộn trang: 1366x768 goi-y-vifoodrec-moi : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 goi-y-vifoodrec-moi : 86 ký tự: ViFoodRec: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 goi-y-vifoodrec-moi : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 goi-y-vifoodrec-moi
+[DAT] Không cuộn trang: 1366x768 goi-y-food-com-co-san : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 goi-y-food-com-co-san : 85 ký tự: Food.com: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 goi-y-food-com-co-san : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 goi-y-food-com-co-san
+[DAT] Không cuộn trang: 1366x768 goi-y-food-com-moi : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 goi-y-food-com-moi : 85 ký tự: Food.com: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 goi-y-food-com-moi : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 goi-y-food-com-moi
+[DAT] Không cuộn trang: 1366x768 mo-hinh-vifoodrec : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 mo-hinh-vifoodrec : 89 ký tự: ViFoodRec: ALS không đứng đầu ở độ đo nào; RMSE thấp nhất là Trung bình toàn cục (1,5706)
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 mo-hinh-vifoodrec : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 mo-hinh-vifoodrec
+[DAT] Không cuộn trang: 1366x768 mo-hinh-food-com : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Tiêu đề một dòng và không quá 90 ký tự: 1366x768 mo-hinh-food-com : 86 ký tự: Food.com: ALS ngầm định đứng đầu P@10 (0,00570); RMSE, MAE và R@10 thuộc mô hình cơ sở
+[DAT] Chân trang nằm trong khung nhìn: 1366x768 mo-hinh-food-com : đáy 760
+[DAT] Văn bản hiển thị sạch: 1366x768 mo-hinh-food-com
+[DAT] Không cuộn trang: 1366x768 glossary : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Văn bản hiển thị sạch: 1366x768 glossary
+[DAT] Không cuộn trang: 1366x768 tuning-modal : scrollHeight 768 / innerHeight 768, mainOverflow 0
+[DAT] Văn bản hiển thị sạch: 1366x768 tuning-modal
+[DAT] Demo: người dùng ViFoodRec 70 xem 10 món : Sườn Cốt Lết Rim Nước Tương Maggi | Tim heo xào măng tây | Kho Quẹt Tóp Mỡ Tôm Khô | Bún Bò Nam Bộ | Chè Dừa Dẻo Trân Châu Bắp Nữ Hoàng | Bánh Ướt Lòng Gà | Canh nghêu bó xôi | Làm Chả Lụa Tại Nhà | Đậu hũ chiên xốt cà | Nghêu Hai Còi Hấp Sả Ớt
+[DAT] Demo: huy hiệu cụm dùng nhãn Cụm n (A2) : Cụm hành vi: Cụm 3
+[DAT] Demo: người dùng mới chọn bun bo, canh chua, pho cho ra danh sách : đã chọn: Bún bò giò heo (Không chay) / Canh Chua Tôm Bông So Đũa (Không chay) / Khoai Tây Viên Phô Mai Chiên (Không chay); 10 món; đầu danh sách: Bún gạo xào mayo | Xáo lòng | Phở trộn
+[DAT] Demo: người dùng mới chọn banh xeo, che, goi cuon cho ra danh sách : đã chọn: Bánh Xèo Kim Chi (Không chay) / Chè Cam (Không chay) / Gỏi cuốn cá hồi (Không chay); 10 món; đầu danh sách: Cá điêu hồng nướng riềng mẻ | Nghêu kho tộ | Bò kho
+[DAT] Demo: người dùng mới chọn com tam, lau, bo kho cho ra danh sách : đã chọn: Nước Mắm Cơm Tấm (Không chay) / Lẩu bạch tuộc (Không chay) / Thịt Bò Kho Sả (Không chay); 10 món; đầu danh sách: Canh Cà Bung Đơn Giản | Váng đậu cuộn rau củ chiên | Canh hàu sữa măng chua
+[DAT] Demo: 3 bộ món cho 3 danh sách khác nhau : 3 danh sách khác nhau
+[DAT] Demo: tìm không dấu "bun bo" ra "Bún bò" : Bún bò giò heo (Không chay) | Bún Bò Huế Chay (Chay) | Bún Bò Nam Bộ (Không chay) | Bún Bò Tái (Không chay)
+[DAT] Bộ lọc loại món "Chay": mọi món là Chay : 1 món
+[DAT] Bộ lọc loại món "Không chay": mọi món là Không chay : 10 món
+[DAT] Bộ lọc thời gian nấu tối đa 30 phút : 10 món, thời gian lớn nhất 30
+[DAT] Bộ lọc calo tối đa 400 : 10 món, calo lớn nhất 370
+[DAT] Bộ lọc số món hiển thị: 5 món : 5 món (trước lọc: 10)
+[DAT] Nút "Xóa bộ lọc" khôi phục số món : 10 món
+[DAT] Hành vi Food.com: không có tên món tiếng Việt có dấu (A1) : 40 món, ví dụ: 1. to die for crock pot roast  | 2. crock pot chicken with black beans   cream cheese  | 3. whatever floats your boat  brownies 
+
+Tổng: 129/129 đạt; 0 không đạt
+# mã thoát 0, 43.8 giây

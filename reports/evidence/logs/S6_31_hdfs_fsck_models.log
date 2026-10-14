@@ -1,0 +1,44 @@
+$ docker exec namenode /opt/hadoop/bin/hdfs fsck /cleanrun/models
+Connecting to namenode via http://namenode:9870/fsck?ugi=root&path=%2Fcleanrun%2Fmodels
+FSCK started by root (auth:SIMPLE) from /172.18.0.3 for path /cleanrun/models at Wed Oct 14 17:57:15 UTC 2026
+
+
+Status: HEALTHY
+ Number of data-nodes:	2
+ Number of racks:		1
+ Total dirs:			11
+ Total symlinks:		0
+
+Replicated Blocks:
+ Total size:	5008765 B
+ Total files:	48
+ Total blocks (validated):	42 (avg. block size 119256 B)
+ Minimally replicated blocks:	42 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	2.0
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Blocks queued for replication:	0
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+ Blocks queued for replication:	0
+FSCK ended at Wed Oct 14 17:57:15 UTC 2026 in 25 milliseconds
+
+
+The filesystem under path '/cleanrun/models' is HEALTHY
+# mã thoát 0, 1.8 giây

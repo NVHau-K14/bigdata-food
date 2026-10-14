@@ -1,0 +1,2 @@
+$ docker exec namenode /opt/hadoop/bin/hdfs dfs -mkdir -p /cleanrun/data/raw/food_com
+# mã thoát 0, 1.5 giây

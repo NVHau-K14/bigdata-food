@@ -1,0 +1,102 @@
+results/als_improve_s3b.csv                        | GIỐNG TỪNG BYTE | 
+results/als_rmse_breakdown.csv                     | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/als_tuning_food_com.csv                    | GIỐNG TỪNG BYTE | 
+results/als_tuning_food_vietnam.csv                | KHÁC SỐ LIỆU | total_time_sec: lệch tối đa 3.82 | thời gian: train_time_sec: lệch tối đa 3.7
+results/baseline_metrics.csv                       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/baseline_rmse_breakdown.csv                | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/cluster_profiles_food_com.csv              | GIỐNG TỪNG BYTE | 
+results/cluster_profiles_food_vietnam.csv          | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/cluster_top_items.csv                      | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_01_food_com_rating_dist.csv        | GIỐNG TỪNG BYTE | 
+results/eda/eda_01_vifoodrec_rating_dist.csv       | GIỐNG TỪNG BYTE | 
+results/eda/eda_02_food_com_item_activity.csv      | GIỐNG TỪNG BYTE | 
+results/eda/eda_02_food_com_user_activity.csv      | GIỐNG TỪNG BYTE | 
+results/eda/eda_03_food_com_top_highest.csv        | GIỐNG TỪNG BYTE | 
+results/eda/eda_03_food_com_top_popular.csv        | GIỐNG TỪNG BYTE | 
+results/eda/eda_04_vifoodrec_top_highest.csv       | GIỐNG TỪNG BYTE | 
+results/eda/eda_04_vifoodrec_top_popular.csv       | GIỐNG TỪNG BYTE | 
+results/eda/eda_05_food_com_yearly_trend.csv       | GIỐNG TỪNG BYTE | 
+results/eda/eda_06_food_com_day_of_week.csv        | GIỐNG TỪNG BYTE | 
+results/eda/eda_06_food_com_monthly.csv            | GIỐNG TỪNG BYTE | 
+results/eda/eda_07_food_com_calo_groups.csv        | GIỐNG TỪNG BYTE | 
+results/eda/eda_07_food_com_time_groups.csv        | GIỐNG TỪNG BYTE | 
+results/eda/eda_08_food_com_top_ingredients.csv    | GIỐNG TỪNG BYTE | 
+results/eda/eda_08_food_com_top_tags.csv           | GIỐNG TỪNG BYTE | 
+results/eda/eda_09_vifoodrec_man_vs_chay.csv       | GIỐNG TỪNG BYTE | 
+results/eda/eda_10_vifoodrec_calo_groups.csv       | GIỐNG TỪNG BYTE | 
+results/eda/eda_10_vifoodrec_time_groups.csv       | GIỐNG TỪNG BYTE | 
+results/eda/eda_11_vifoodrec_top_ingredients.csv   | GIỐNG TỪNG BYTE | 
+results/eda/eda_12_dataset_comparison.csv          | GIỐNG TỪNG BYTE | 
+results/food_cluster_profiles_vietnam.csv          | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/kmeans_tuning.csv                          | CHỈ KHÁC CỘT THỜI GIAN | time_sec: lệch tối đa 1.31
+results/model_comparison.csv                       | KHÁC SỐ DÒNG | 11 so với 8
+results/scalability.csv                            | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/vifoodrec_sensitivity.csv                  | GIỐNG TỪNG BYTE | 
+reports/evidence/als_improve_s3b.csv               | GIỐNG TỪNG BYTE | 
+reports/evidence/baseline_metrics.csv              | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/baseline_rmse_breakdown.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/cleaning_log.csv                  | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/cluster_profiles_food_com.csv     | GIỐNG TỪNG BYTE | 
+reports/evidence/cluster_profiles_food_vietnam.csv | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/food_cluster_profiles_vietnam.csv | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/model_comparison.csv              | KHÁC SỐ DÒNG | 11 so với 8
+reports/evidence/split_log.csv                     | KHÁC SỐ LIỆU | time_seconds: lệch tối đa 7.44581
+reports/evidence/vifoodrec_sensitivity.csv         | GIỐNG TỪNG BYTE | 
+app/data/als_rmse_breakdown.csv                    | GIỐNG TỪNG BYTE | 
+app/data/als_tuning_food_com.csv                   | GIỐNG TỪNG BYTE | 
+app/data/als_tuning_food_vietnam.csv               | GIỐNG TỪNG BYTE | 
+app/data/baseline_metrics.csv                      | GIỐNG TỪNG BYTE | 
+app/data/baseline_rmse_breakdown.csv               | GIỐNG TỪNG BYTE | 
+app/data/cleaning_log.csv                          | GIỐNG TỪNG BYTE | 
+app/data/cluster_profiles_food_com.csv             | GIỐNG TỪNG BYTE | 
+app/data/cluster_profiles_food_vietnam.csv         | GIỐNG TỪNG BYTE | 
+app/data/cluster_top_items.csv                     | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_01_food_com_rating_dist.csv       | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_01_vifoodrec_rating_dist.csv      | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_02_food_com_item_activity.csv     | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_02_food_com_user_activity.csv     | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_03_food_com_top_highest.csv       | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_03_food_com_top_popular.csv       | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_04_vifoodrec_top_highest.csv      | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_04_vifoodrec_top_popular.csv      | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_05_food_com_yearly_trend.csv      | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_06_food_com_day_of_week.csv       | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_06_food_com_monthly.csv           | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_07_food_com_calo_groups.csv       | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_07_food_com_time_groups.csv       | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_08_food_com_top_ingredients.csv   | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_08_food_com_top_tags.csv          | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_09_vifoodrec_man_vs_chay.csv      | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_10_vifoodrec_calo_groups.csv      | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_10_vifoodrec_time_groups.csv      | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_11_vifoodrec_top_ingredients.csv  | GIỐNG TỪNG BYTE | 
+app/data/eda/eda_12_dataset_comparison.csv         | GIỐNG TỪNG BYTE | 
+app/data/eda_12_dataset_comparison.csv             | GIỐNG TỪNG BYTE | 
+app/data/food_cluster_profiles_vietnam.csv         | GIỐNG TỪNG BYTE | 
+app/data/kmeans_tuning.csv                         | GIỐNG TỪNG BYTE | 
+app/data/model_comparison.csv                      | GIỐNG TỪNG BYTE | 
+app/data/scalability.csv                           | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/storage_benchmark.csv                     | GIỐNG TỪNG BYTE | 
+app/data/food_clusters_vietnam.parquet             | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/foods_vietnam.parquet                     | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/item_neighbors_food_com.parquet           | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/item_neighbors_food_vietnam.parquet       | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/item_neighbors_foodcom.parquet            | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/item_neighbors_vietnam.parquet            | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/recipes_foodcom_sample.parquet            | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/recommendations_food_com.parquet          | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/recommendations_food_vietnam.parquet      | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/recommendations_foodcom_sample.parquet    | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/recommendations_vietnam.parquet           | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/user_clusters_food_com.parquet            | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/user_clusters_food_vietnam.parquet        | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/user_clusters_foodcom.parquet             | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/user_clusters_vietnam.parquet             | GIỐNG (số dòng, cột, tổng cột số) | 
+
+Tổng hợp:
+  GIỐNG TỪNG BYTE: 60
+  GIỐNG (số dòng, cột, tổng cột số): 15
+  GIỐNG SỐ LIỆU (khác định dạng): 14
+  KHÁC SỐ LIỆU: 2
+  KHÁC SỐ DÒNG: 2
+  CHỈ KHÁC CỘT THỜI GIAN: 1

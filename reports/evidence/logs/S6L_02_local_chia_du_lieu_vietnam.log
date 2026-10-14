@@ -1,0 +1,50 @@
+$ docker exec -w /home/jovyan/work -e STORAGE_MODE=local -e HDFS_ROOT= bigdata_spark_cleanrun /opt/conda/bin/python src/split_data.py --only vietnam
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 18:04:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+[Stage 69:>                                                         (0 + 1) / 1]
+
+                                                                                
+======================================================================
+CHƯƠNG TRÌNH PHÂN CHIA DỮ LIỆU TRAIN / VAL / TEST (P6)
+Chế độ lưu trữ: local
+======================================================================
+[Bỏ qua Food.com] Giữ dòng nhật ký cũ từ /home/jovyan/work/reports/evidence/split_log.csv
+
+=======================================================
+BẮT ĐẦU CHIA DỮ LIỆU: FOOD_VIETNAM
+Đường dẫn đầu vào: /home/jovyan/work/data/clean/food_vietnam/ratings_clean.parquet
+Cột item: food_id
+=======================================================
+-> Tổng số tương tác đầu vào: 182,631 dòng
+-> Phân chia ban đầu: Train=146,012 (79.95%), Val=18,204 (9.97%), Test=18,415 (10.08%)
+-> Tập Train có 101 users và 4,000 items
+-> Lọc Cold-Start Validation: Giữ 18,204 dòng (loại 0 dòng, 0.00%)
+-> Lọc Cold-Start Test:       Giữ 18,415 dòng (loại 0 dòng, 0.00%)
+-> Đang kiểm tra rò rỉ dữ liệu giữa các tập...
+   + Cặp (user, item) trùng Train & Val:  0 (Kỳ vọng = 0)
+   + Cặp (user, item) trùng Train & Test: 0 (Kỳ vọng = 0)
+   + Cặp (user, item) trùng Val & Test:   0 (Kỳ vọng = 0)
+   => XÁC NHẬN: Không có bất kỳ sự rò rỉ dữ liệu nào giữa các tập!
+-> Đang lưu dữ liệu ra Parquet...
+   + Train: /home/jovyan/work/data/splits/food_vietnam/train.parquet
+   + Val:   /home/jovyan/work/data/splits/food_vietnam/validation.parquet
+   + Test:  /home/jovyan/work/data/splits/food_vietnam/test.parquet
+-> Hoàn tất food_vietnam trong 11.35s!
+
+======================================================================
+BẢNG TỔNG HỢP NHẬT KÝ PHÂN CHIA DỮ LIỆU (SPLIT LOG)
+======================================================================
+     dataset  total_clean  train_rows  train_pct  val_raw_rows  val_clean_rows  val_dropped_rows  val_drop_pct  test_raw_rows  test_clean_rows  test_dropped_rows  test_drop_pct  leak_train_val  leak_train_test  leak_val_test  n_train_users  n_train_items  time_seconds
+    food_com       706514      565420  80.029554         70424           70002               422      0.599228          70670            70233                437       0.618367               0                0              0          30772          77960     16.920552
+food_vietnam       182631      146012  79.949187         18204           18204                 0      0.000000          18415            18415                  0       0.000000               0                0              0            101           4000     11.353090
+
+-> Đã lưu bảng log tại:
+   + /home/jovyan/work/data/results/split_log.csv
+   + /home/jovyan/work/reports/evidence/split_log.csv
+
+[THÀNH CÔNG] Hoàn tất toàn bộ quy trình phân chia dữ liệu!
+# mã thoát 0, 17.3 giây

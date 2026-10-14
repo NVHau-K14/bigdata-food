@@ -1,0 +1,8 @@
+Tổng kết lần chạy run_all.ps1 (tham số: HdfsRoot='', StorageMode=hdfs, container=bigdata_spark_env)
+
+01 | xuat_du_lieu_web | mã 0 | 1.4 giây | S6W_01_xuat_du_lieu_web.log
+02 | kiem_thu_giao_dien_web | mã 0 | 43.2 giây | S6W_02_kiem_thu_giao_dien_web.log
+03 | doi_chieu_so_lieu_web | mã 0 | 1.0 giây | S6W_03_doi_chieu_so_lieu_web.log
+04 | kiem_thu_kieu_chu_web | mã 0 | 2.6 giây | S6W_04_kiem_thu_kieu_chu_web.log
+
+Tổng thời gian đến thời điểm ghi: 0.8 phút

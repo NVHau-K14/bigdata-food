@@ -1,0 +1,101 @@
+results/als_improve_s3b.csv                        | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/als_rmse_breakdown.csv                     | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/als_tuning_food_com.csv                    | KHÁC SỐ LIỆU | total_time_sec: lệch tối đa 3.45 | thời gian: train_time_sec: lệch tối đa 3.42
+results/als_tuning_food_vietnam.csv                | KHÁC SỐ LIỆU | total_time_sec: lệch tối đa 0.62 | thời gian: train_time_sec: lệch tối đa 0.47
+results/baseline_metrics.csv                       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/baseline_rmse_breakdown.csv                | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/cluster_profiles_food_com.csv              | KHÁC SỐ LIỆU | n_ratings: lệch tối đa 0.428952; avg_rating: lệch tối đa 0.00197206; std_rating: lệch tối đa 0.00369717; pct_high_rating: lệch tối đa 0.000787039; avg_minutes: lệch tối đa 1.40025; avg_calories: lệch tối đa 5.96218; avg_n_ingredients: lệch tối đa 0.0449155; activity_span_days: lệch tối đa 20.2076; cluster: lệch tối đa 3; user_count: lệch tối đa 320; user_pct: lệch tối đa 1.04
+results/cluster_profiles_food_vietnam.csv          | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/cluster_top_items.csv                      | KHÁC SỐ LIỆU | item_id: lệch tối đa 83607; name: khác chuỗi; count: lệch tối đa 451; calories: lệch tối đa 958.7 | thời gian: time: lệch tối đa 1330
+results/eda/eda_01_food_com_rating_dist.csv        | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_01_vifoodrec_rating_dist.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_02_food_com_item_activity.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_02_food_com_user_activity.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_03_food_com_top_highest.csv        | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_03_food_com_top_popular.csv        | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_04_vifoodrec_top_highest.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_04_vifoodrec_top_popular.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_05_food_com_yearly_trend.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_06_food_com_day_of_week.csv        | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_06_food_com_monthly.csv            | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_07_food_com_calo_groups.csv        | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_07_food_com_time_groups.csv        | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_08_food_com_top_ingredients.csv    | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_08_food_com_top_tags.csv           | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_09_vifoodrec_man_vs_chay.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_10_vifoodrec_calo_groups.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_10_vifoodrec_time_groups.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_11_vifoodrec_top_ingredients.csv   | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/eda/eda_12_dataset_comparison.csv          | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/food_cluster_profiles_vietnam.csv          | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/kmeans_tuning.csv                          | KHÁC SỐ LIỆU | silhouette: lệch tối đa 0.0262; wssse: lệch tối đa 3052.09 | thời gian: time_sec: lệch tối đa 3.28
+results/model_comparison.csv                       | GIỐNG SỐ LIỆU (khác định dạng) | 
+results/scalability.csv                            | CHỈ KHÁC CỘT THỜI GIAN | time_run_1: lệch tối đa 3.217; time_run_2: lệch tối đa 2.657; avg_time: lệch tối đa 2.937
+results/vifoodrec_sensitivity.csv                  | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/als_improve_s3b.csv               | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/baseline_metrics.csv              | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/baseline_rmse_breakdown.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/cleaning_log.csv                  | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/cluster_profiles_food_com.csv     | KHÁC SỐ LIỆU | n_ratings: lệch tối đa 0.428952; avg_rating: lệch tối đa 0.00197206; std_rating: lệch tối đa 0.00369717; pct_high_rating: lệch tối đa 0.000787039; avg_minutes: lệch tối đa 1.40025; avg_calories: lệch tối đa 5.96218; avg_n_ingredients: lệch tối đa 0.0449155; activity_span_days: lệch tối đa 20.2076; cluster: lệch tối đa 3; user_count: lệch tối đa 320; user_pct: lệch tối đa 1.04
+reports/evidence/cluster_profiles_food_vietnam.csv | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/food_cluster_profiles_vietnam.csv | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/model_comparison.csv              | GIỐNG SỐ LIỆU (khác định dạng) | 
+reports/evidence/split_log.csv                     | KHÁC SỐ LIỆU | time_seconds: lệch tối đa 10.6099
+reports/evidence/vifoodrec_sensitivity.csv         | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/als_rmse_breakdown.csv                    | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/als_tuning_food_com.csv                   | KHÁC SỐ LIỆU | total_time_sec: lệch tối đa 3.45 | thời gian: train_time_sec: lệch tối đa 3.42
+app/data/als_tuning_food_vietnam.csv               | KHÁC SỐ LIỆU | total_time_sec: lệch tối đa 0.62 | thời gian: train_time_sec: lệch tối đa 0.47
+app/data/baseline_metrics.csv                      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/baseline_rmse_breakdown.csv               | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/cleaning_log.csv                          | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/cluster_profiles_food_com.csv             | KHÁC SỐ LIỆU | n_ratings: lệch tối đa 0.428952; avg_rating: lệch tối đa 0.00197206; std_rating: lệch tối đa 0.00369717; pct_high_rating: lệch tối đa 0.000787039; avg_minutes: lệch tối đa 1.40025; avg_calories: lệch tối đa 5.96218; avg_n_ingredients: lệch tối đa 0.0449155; activity_span_days: lệch tối đa 20.2076; cluster: lệch tối đa 3; user_count: lệch tối đa 320; user_pct: lệch tối đa 1.04
+app/data/cluster_profiles_food_vietnam.csv         | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/cluster_top_items.csv                     | KHÁC SỐ LIỆU | item_id: lệch tối đa 83607; name: khác chuỗi; count: lệch tối đa 451; calories: lệch tối đa 958.7 | thời gian: time: lệch tối đa 1330
+app/data/eda/eda_01_food_com_rating_dist.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_01_vifoodrec_rating_dist.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_02_food_com_item_activity.csv     | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_02_food_com_user_activity.csv     | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_03_food_com_top_highest.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_03_food_com_top_popular.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_04_vifoodrec_top_highest.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_04_vifoodrec_top_popular.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_05_food_com_yearly_trend.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_06_food_com_day_of_week.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_06_food_com_monthly.csv           | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_07_food_com_calo_groups.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_07_food_com_time_groups.csv       | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_08_food_com_top_ingredients.csv   | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_08_food_com_top_tags.csv          | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_09_vifoodrec_man_vs_chay.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_10_vifoodrec_calo_groups.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_10_vifoodrec_time_groups.csv      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_11_vifoodrec_top_ingredients.csv  | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda/eda_12_dataset_comparison.csv         | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/eda_12_dataset_comparison.csv             | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/food_cluster_profiles_vietnam.csv         | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/kmeans_tuning.csv                         | KHÁC SỐ LIỆU | silhouette: lệch tối đa 0.0262; wssse: lệch tối đa 3052.09 | thời gian: time_sec: lệch tối đa 3.28
+app/data/model_comparison.csv                      | GIỐNG SỐ LIỆU (khác định dạng) | 
+app/data/scalability.csv                           | CHỈ KHÁC CỘT THỜI GIAN | time_run_1: lệch tối đa 3.217; time_run_2: lệch tối đa 2.657; avg_time: lệch tối đa 2.937
+app/data/storage_benchmark.csv                     | KHÁC SỐ LIỆU | notes: khác chuỗi | thời gian: avg_time_sec: lệch tối đa 0.062; std_time_sec: lệch tối đa 0.074
+app/data/food_clusters_vietnam.parquet             | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/foods_vietnam.parquet                     | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/item_neighbors_food_com.parquet           | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/item_neighbors_food_vietnam.parquet       | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/item_neighbors_foodcom.parquet            | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/item_neighbors_vietnam.parquet            | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/recipes_foodcom_sample.parquet            | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/recommendations_food_com.parquet          | KHÁC TỔNG CỘT SỐ | tổng calories: 19357080 so với 19329780; tổng minutes_clean: 4084889 so với 4084776
+app/data/recommendations_food_vietnam.parquet      | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/recommendations_foodcom_sample.parquet    | KHÁC TỔNG CỘT SỐ | tổng calories: 19357080 so với 19329780; tổng minutes_clean: 4084889 so với 4084776
+app/data/recommendations_vietnam.parquet           | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/user_clusters_food_com.parquet            | KHÁC TỔNG CỘT SỐ | tổng cluster: 51074 so với 47215
+app/data/user_clusters_food_vietnam.parquet        | GIỐNG (số dòng, cột, tổng cột số) | 
+app/data/user_clusters_foodcom.parquet             | KHÁC TỔNG CỘT SỐ | tổng cluster: 51074 so với 47215
+app/data/user_clusters_vietnam.parquet             | GIỐNG (số dòng, cột, tổng cột số) | 
+
+Tổng hợp:
+  GIỐNG SỐ LIỆU (khác định dạng): 64
+  KHÁC SỐ LIỆU: 13
+  GIỐNG (số dòng, cột, tổng cột số): 11
+  KHÁC TỔNG CỘT SỐ: 4
+  CHỈ KHÁC CỘT THỜI GIAN: 2
