@@ -52,7 +52,7 @@ def run_benchmark():
     print("=" * 80)
     
     results = []
-    benchmark_hdfs_dir = "hdfs://namenode:9000/data/benchmark"
+    benchmark_hdfs_dir = get_path("data", "benchmark")  # theo STORAGE_MODE và HDFS_ROOT, không viết cứng
     
     # =========================================================================
     # THÍ NGHIỆM A: DỮ LIỆU THÔ ĐẦY ĐỦ (FULL RAW)

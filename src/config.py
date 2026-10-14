@@ -17,6 +17,10 @@ STORAGE_MODE = os.environ.get("STORAGE_MODE", "hdfs").lower()
 HDFS_NAMENODE_URL = os.environ.get("HDFS_NAMENODE_URL", "hdfs://namenode:9000")
 SPARK_MASTER_URL = os.environ.get("SPARK_MASTER_URL", "spark://spark-master:7077")
 
+# Thư mục gốc trên HDFS, mặc định rỗng (đường dẫn dạng hdfs://namenode:9000/data/...). Đặt, ví dụ, HDFS_ROOT=/cleanrun
+# để mọi đường dẫn nằm dưới /cleanrun/data/... khi chạy thử trên bản sao mà không đụng dữ liệu của bản chính.
+HDFS_ROOT = os.environ.get("HDFS_ROOT", "").rstrip("/")
+
 # Hệ số nhân bản HDFS, phải khớp dfs.replication trong docker-compose.yml
 HDFS_REPLICATION = int(os.environ.get("HDFS_REPLICATION", 2))
 
@@ -87,7 +91,7 @@ def get_path(stage: str, dataset: str = "", filename: str = "") -> str:
     rel_path = "/".join(sub_parts)
     
     if STORAGE_MODE == "hdfs":
-        return f"{HDFS_NAMENODE_URL}/{rel_path}"
+        return f"{HDFS_NAMENODE_URL}{HDFS_ROOT}/{rel_path}"
     else:
         return str(PROJECT_ROOT / rel_path)
 
@@ -153,6 +157,7 @@ if __name__ == "__main__":
     print(f"STORAGE_MODE: {get_storage_mode()}")
     print(f"HDFS_NAMENODE_URL: {HDFS_NAMENODE_URL}")
     print(f"SPARK_MASTER_URL: {SPARK_MASTER_URL}")
+    print(f"HDFS_ROOT: {HDFS_ROOT or '(rỗng)'}")
     print(f"Path raw food_com interactions: {get_path('raw', 'food_com', 'RAW_interactions.csv')}")
     print(f"Path clean food_com interactions: {get_path('clean', 'food_com', 'interactions_clean.parquet')}")
     print(f"Path models als_model: {get_path('models', 'food_com', 'als_best_model')}")

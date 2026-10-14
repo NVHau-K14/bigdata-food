@@ -1,0 +1,16 @@
+# Thư viện Python của pipeline, ghim đúng phiên bản đã chạy thật (đọc ngày 14/10/2026).
+# Phần Spark/HDFS chạy trong Docker; các dòng này mô tả môi trường Python của hai nơi chạy.
+
+# 1. Trong container bigdata_spark_env (Python 3.13.16, image quay.io/jupyter/pyspark-notebook:spark-4.2.0).
+#    Image đã có sẵn các thư viện này; chỉ ghi lại để tái lập.
+pyspark==4.2.0
+pandas==2.3.3
+pyarrow==25.0.0
+numpy==2.5.4
+matplotlib==3.11.2
+seaborn==0.13.2
+
+# 2. Trên máy chủ (Python 3.11.9 trên Windows): xuất dữ liệu web và kiểm thử web.
+#    Cài bằng: pip install pandas==2.3.3 pyarrow==25.0.1 numpy==2.4.6 pillow==12.3.0
+#    (pyarrow, numpy khác bản trong container vì hai môi trường cài riêng; kết quả xuất không phụ thuộc khác biệt này).
+#    Kiểm thử giao diện cần Node.js 24.14.0 và Chrome hoặc Edge.

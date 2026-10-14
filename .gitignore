@@ -4,3 +4,7 @@ backup_*/
 .env
 __pycache__/
 .ipynb_checkpoints/
+# Dữ liệu trung gian sinh khi chạy chế độ local hoặc chạy lại pipeline
+data/clean/
+data/splits/
+models/
