@@ -57,8 +57,7 @@ python scratch/s5_gate_check.py                                                 
 
 - Các biên bản P3 đến P11 còn nguyên văn nội dung cũ sau khối đính chính; người đọc cần đọc khối này trước. Khối nêu điểm sai ở mức tôi đã kiểm chứng; tôi không rà từng câu của các biên bản dài, nên có thể còn câu cũ khác không được liệt kê (ví dụ các mô tả dữ liệu ViFoodRec cũ rải rác trong P3 và P5).
 - `README.md` chưa có hướng dẫn chạy từ đầu đến cuối và chưa ghim phiên bản thư viện (S6).
-- Những quyết định cần người dùng: xem `STATUS.md` mục 5 (thư mục thừa trên HDFS, chạy lại ALS ViFoodRec với lưới mở rộng, hình PCA Food.com, thông tin nhóm trong `web/config.js`, giấy phép dữ liệu, chế độ local).
-- `web/config.js` vẫn để trống thông tin nhóm (nhóm tự điền).
+- Quyết định của người dùng sau S5 (ghi ở `STATUS.md` mục 5): xóa thư mục thừa trên HDFS (đã làm, log `S5_08`: `hdfs dfs -rm -r -skipTrash /home`, 2,4 MB trùng với `results/`; sau đó `/data` HEALTHY, 0 khối thiếu bản sao); không chạy lại ALS ViFoodRec; không vẽ lại hình PCA Food.com; không điền `web/config.js`; dữ liệu ViFoodRec là dự án công khai, miễn phí trên GitHub (giấy phép cụ thể chưa đọc được, ghi "chưa xác nhận" nếu kho không nêu); kiểm chứng chế độ local ở S6.
 
 ## 6. Điểm cần hiểu để trả lời phản biện
 

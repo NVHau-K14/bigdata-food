@@ -45,7 +45,7 @@ Bằng chứng đọc ngày 14/10/2026 (log `reports/evidence/logs/S5_03_infra_s
 | 8b | Thực nghiệm mở rộng quy mô: kết luận "mở rộng được" | **CHƯA ĐẠT** | `results/scalability.csv` | Thời gian tổng gần phẳng và không đơn điệu; dữ liệu chỉ tới 706.514 dòng. Chỉ kết luận được là chưa thấy thời gian tăng theo dữ liệu trong khoảng này. |
 | 9 | Xuất kết quả cho dashboard | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | log `S3_12`, `S3_13`, `S3b_03`, `S3b_04` (`verify_export.py` 66/66 đạt), `docs/data_contract.md` | `verify_export.py` kiểm tra tồn tại, schema, số dòng, khóa ngoại; không kiểm đúng sai của số liệu. |
 | 10 | Dashboard Streamlit (`app/`) | **ĐÃ CHẠY VÀ KIỂM CHỨNG** (thời điểm P11); là bản lưu | `stage_P11.md` (có khối đính chính), `reports/evidence/test_app_log.txt` | Không cập nhật theo dữ liệu mới. `app/data/` vẫn là nguồn dữ liệu của web. |
-| 11 | Dashboard web tĩnh (`web/`) | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | `stage_S4.md`; log `S4_07` (`verify_web.py` 122/122), `S4_08` (`verify_web_ui.mjs` 129/129), `S4_09` (`verify_web_style.py` 21/21); ảnh `reports/figures/screenshots/web_v2/` | Chỉ thử trên Chrome headless. `web/config.js` để trống thông tin nhóm (chờ nhóm điền). Không có chế độ gợi ý có nghĩa cho người dùng mới ở ViFoodRec (xem H8). |
+| 11 | Dashboard web tĩnh (`web/`) | **ĐÃ CHẠY VÀ KIỂM CHỨNG** | `stage_S4.md`; log `S4_07` (`verify_web.py` 122/122), `S4_08` (`verify_web_ui.mjs` 129/129), `S4_09` (`verify_web_style.py` 21/21); ảnh `reports/figures/screenshots/web_v2/` | Chỉ thử trên Chrome headless. `web/config.js` để trống thông tin nhóm (có chủ ý). Không có chế độ gợi ý có nghĩa cho người dùng mới ở ViFoodRec (xem H8). |
 | 12 | Đối chiếu bài báo ViFoodRec | **ĐÃ CHẠY VÀ KIỂM CHỨNG** (số trích) | `scratch/paclic_paper_text.txt` dòng 582 đến 586 (Bảng 5), `stage_S3.md` mục 7 | Giao thức khác (bài báo 200 điểm test, nhóm 18.415 điểm). Thang điểm nay trùng nhau. Nguồn bài báo còn nằm ở `scratch/`. |
 | 13 | Tài liệu khớp thực tế | **ĐÃ SỬA** ở S5 | `stage_S5.md` | Mục 4 liệt kê từng điểm lệch và cách xử lý. |
 
@@ -59,19 +59,19 @@ Bằng chứng đọc ngày 14/10/2026 (log `reports/evidence/logs/S5_03_infra_s
 - Food.com lệch 5 sao: 78,40% đánh giá (`results/eda/eda_01_food_com_rating_dist.csv`), nên RMSE tổng thể bị kéo bởi lớp 5 sao; Trung bình toàn cục (μ = 4,7146) đã có RMSE 0,6266.
 - K-core và các thống kê dùng để lọc tính trên toàn bộ dữ liệu trước khi chia train, validation, test. Chia ngẫu nhiên theo dòng, không có đánh giá theo thời gian dù Food.com có cột `date`.
 - Đơn vị nguyên liệu dính chữ ("muỗngl", "muỗngu") nằm trong dữ liệu gốc `foods.csv` (2.568 trong 4.000 món; log `S4_11`). Chỉ báo cáo, không sửa.
-- Giấy phép dữ liệu ViFoodRec: chưa xác nhận.
+- Giấy phép dữ liệu ViFoodRec: người dùng cho biết là dự án công khai, miễn phí trên GitHub; văn bản giấy phép cụ thể chưa đọc được (mục 5).
 
 **Về hạ tầng**
 - **H3. Cụm giả lập một máy** (mục 1). Thực nghiệm mở rộng quy mô chỉ tới 706.514 dòng (Parquet sạch 4,56 MB), nên không phải bài toán Big Data theo nghĩa thông thường.
-- **H4. Thư mục thừa `/home/jovyan/work/data/results/` trên HDFS** (kết quả gợi ý ghi nhầm đường dẫn, xuất hiện từ lần chạy trước S1, được ghi thêm ở S3). Chưa xóa vì ngoài phạm vi và không khôi phục được.
-- **H5. Chế độ local chưa kiểm chứng.** `data/` trên máy chỉ có `raw/`, `processed/`, `results/`; không có `data/clean/` và `data/splits/` mà `config.get_path()` tìm ở chế độ local. `data/processed/*.parquet` là bản cũ (K-core một lượt, 735.006 dòng) và pipeline hiện tại không dùng. Kết quả nằm ở hai nơi trùng nhau (`results/` và `data/results/`).
+- **H4. Thư mục thừa `/home/jovyan/...` trên HDFS** (kết quả gợi ý ghi nhầm đường dẫn): đã xóa theo quyết định của người dùng (mục 5, log `S5_08`).
+- **H5. Chế độ local chưa kiểm chứng** (kiểm chứng ở S6). `data/` trên máy chỉ có `raw/`, `processed/`, `results/`; không có `data/clean/` và `data/splits/` mà `config.get_path()` tìm ở chế độ local. `data/processed/*.parquet` là bản cũ (K-core một lượt, 735.006 dòng) và pipeline hiện tại không dùng. Kết quả nằm ở hai nơi trùng nhau (`results/` và `data/results/`).
 - **H6. Chưa chạy từ đầu trên bản sao sạch.** Việc kiểm tra người ngoài chạy lại được toàn bộ pipeline thuộc stage S6.
 
 **Về mô hình**
 - **H7. ALS không tốt hơn mô hình cơ sở** ở RMSE, MAE, Precision@10, Recall@10 (ALS dự đoán điểm, cả hai bộ). Phân bố dự đoán của ALS ViFoodRec trên test: trung bình 2,0047, độ lệch chuẩn 0,2142, trong khi điểm thật trung bình khoảng 2,50 và trải đều 0,0 đến 5,0 (log `S3_08`); RMSE của ALS (1,6654) gần RMSE khi luôn dự đoán 2,0 (1,6531). Nguyên nhân sâu hơn (regParam 0,5 nằm ở biên lưới và cả 6 cấu hình có regParam 0,5 cho cùng Validation RMSE 1,6576) là giả thuyết chưa kiểm chứng.
 - **H8. Độ tương đồng món ViFoodRec**: cả 40.000 điểm cosine trong `item_neighbors_food_vietnam` bằng 1,0 (`stage_S4.md` mục 3), nên gợi ý cho người dùng mới ở ViFoodRec không phản ánh khác biệt giữa món; web có cảnh báo. Nguyên nhân (regParam lớn làm vector món gần song song) là giả thuyết chưa kiểm chứng.
 - Top món phổ biến của ViFoodRec dùng nhánh dự phòng (xếp theo số đánh giá) vì không món nào có điểm trung bình từ 4,0 trở lên trên train: đã kiểm chứng, điểm trung bình lớn nhất của một món là 3,4848 (log `S5_05_verify_toppop.log`).
-- Lưới ALS dự đoán điểm của ViFoodRec và lưới ALS ngầm định chưa mở rộng quá biên 0,5.
+- Lưới ALS dự đoán điểm của ViFoodRec và lưới ALS ngầm định chưa mở rộng quá biên 0,5; người dùng quyết định không chạy lại.
 - ALS ngầm định ViFoodRec: tham số tốt nhất chọn trên 101 người dùng, các cấu hình khác cách nhau 1 đến 2 lượt trúng, nên tham số chọn được không đáng tin (`stage_S3b.md` mục 3).
 - Chưa có baseline "ngẫu nhiên" được đo. Không đo độ đa dạng, độ mới lạ hay thiên kiến phổ biến.
 - Gợi ý cho người dùng mới (cosine trên vector nhân tố ẩn của món) chưa có đánh giá định lượng.
@@ -79,7 +79,7 @@ Bằng chứng đọc ngày 14/10/2026 (log `reports/evidence/logs/S5_03_infra_s
 
 **Về bằng chứng**
 - Các biên bản P4, P5, P6, P7, P8, P9 không chứa log lệnh nguyên văn (CONTEXT §5.2); số liệu vẫn truy được về file kết quả. Từ S1 trở đi, mọi lệnh đều có log trong `reports/evidence/logs/`.
-- Hình PCA cụm Food.com (`reports/figures/kmeans_user_clusters_foodcom_pca.png`) còn tên cụm cũ bằng tiếng Anh (quyết định giữ nguyên ngày 14/10/2026; không dùng hình này ở web hay báo cáo).
+- Hình PCA cụm Food.com (`reports/figures/kmeans_user_clusters_foodcom_pca.png`) còn tên cụm cũ bằng tiếng Anh (quyết định không vẽ lại; không dùng hình này ở web hay báo cáo).
 
 ---
 
@@ -133,14 +133,14 @@ Số dòng sau làm sạch (nhất quán sau S2): Food.com 706.514 (cũ 735.006 
 
 ---
 
-## 5. Cần người dùng quyết định
+## 5. Quyết định của người dùng (14/10/2026, sau S5)
 
-1. **Thư mục thừa trên HDFS** `/home/jovyan/work/data/results/` (H4): xóa hay giữ?
-2. **Chạy lại ALS ViFoodRec với lưới regParam mở rộng** (0,5 đang ở biên, H7) và xem độ tương đồng món có còn bằng 1,0 không (H8)? Việc này đổi số liệu và phải xuất lại web, nên nếu làm thì phải làm trước S6.
-3. **Vẽ lại hình PCA cụm Food.com** với tên cụm tiếng Việt, hay tiếp tục không dùng hình này?
-4. **Thông tin nhóm** trong `web/config.js` (tên trường, lớp, thành viên): nhóm tự điền.
-5. **Giấy phép dữ liệu ViFoodRec:** cần xác nhận với tác giả hoặc ghi "chưa xác nhận" trong báo cáo.
-6. **Chế độ `STORAGE_MODE=local`:** kiểm chứng ở S6 hay ghi rõ là chưa hỗ trợ?
+1. **Thư mục thừa trên HDFS** `/home/jovyan/work/data/results/` (H4): xóa. Đã xóa (log `S5_08_xoa_thu_muc_thua_hdfs.log`); đó là 4 thư mục Parquet gợi ý và láng giềng (2,4 MB) trùng với `results/` trên máy. Sau khi xóa, `/data` HEALTHY, Under replicated blocks 0, Missing blocks 0.
+2. **Chạy lại ALS ViFoodRec với lưới mở rộng:** không chạy lại. H7 và H8 là hạn chế được chấp nhận và ghi trong báo cáo.
+3. **Hình PCA cụm Food.com:** không vẽ lại.
+4. **Thông tin nhóm trong `web/config.js`:** không cần điền; để trống có chủ ý.
+5. **Giấy phép dữ liệu ViFoodRec:** người dùng cho biết đây là dự án công khai, miễn phí trên GitHub. Chưa đọc được văn bản giấy phép cụ thể trong phiên này, nên báo cáo ghi theo đúng điều người dùng nói và ghi giấy phép cụ thể là "chưa xác nhận" nếu kho không nêu.
+6. **Chế độ `STORAGE_MODE=local`:** kiểm chứng ở S6.
 
 ---
 

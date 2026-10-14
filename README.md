@@ -22,7 +22,7 @@ Hai bộ không có người dùng chung nên không gộp; mỗi bộ chạy đ
 
 - ViFoodRec: giữ cả điểm 0,0 và 0,5 vì số dòng mỗi mức ngang nhau (từ 8,99% đến 9,23%), không có bằng chứng 0,0 là "chưa chấm". Chỉ loại 47 dòng có `food_id` không có trong danh mục (`reports/evidence/stage_S2.md`).
 - Food.com: phân phối lệch, 78,40% đánh giá là 5 sao (`results/eda/eda_01_food_com_rating_dist.csv`).
-- Giấy phép của dữ liệu ViFoodRec: chưa xác nhận. Khi trích dẫn, ghi nguồn bài báo PACLIC 2024.
+- Dữ liệu ViFoodRec là dự án công khai, miễn phí trên GitHub (theo người dùng); văn bản giấy phép cụ thể chưa xác nhận. Khi trích dẫn, ghi nguồn bài báo PACLIC 2024.
 
 ---
 
@@ -117,6 +117,6 @@ Kịch bản chạy từ đầu đến cuối và thử trên bản sao sạch l
 - ViFoodRec chỉ có 101 người dùng, phân phối điểm gần đều trên 11 mức (độ lệch chuẩn 1,5798 so với 1,5811 của phân phối đều lý thuyết, `stage_S2.md`). Nguồn gốc dữ liệu chưa được kiểm chứng.
 - Độ tương đồng giữa các món ViFoodRec đều bằng 1,0 (40.000 điểm), nên gợi ý cho người dùng mới ở bộ này không phản ánh khác biệt giữa món (`stage_S4.md`).
 - Ba cụm người dùng ViFoodRec không có tên diễn giải vì chênh lệch giữa các cụm nhỏ ở hầu hết đặc trưng (`stage_S3.md` mục 5).
-- Hình PCA cụm Food.com (`reports/figures/kmeans_user_clusters_foodcom_pca.png`) còn tên cụm cũ bằng tiếng Anh, chưa vẽ lại.
+- Hình PCA cụm Food.com (`reports/figures/kmeans_user_clusters_foodcom_pca.png`) còn tên cụm cũ bằng tiếng Anh, không vẽ lại và không dùng.
 - Chia train, validation, test theo dòng ngẫu nhiên, không theo thời gian; K-core tính trên toàn bộ dữ liệu trước khi chia.
 - Đã kiểm thử web trên Chrome headless, chưa thử Edge, Firefox, Safari.
