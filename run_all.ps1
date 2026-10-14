@@ -182,10 +182,11 @@ if ($WebOnly) {
     }
     if ($CleanRun) {
         # Cụm của bản chính đang chạy; bản sao dùng container client riêng gắn thư mục này để không đụng thư mục chính.
+        # Tên máy phải không có dấu gạch dưới: Spark từ chối URL driver dạng spark://...@bigdata_spark_cleanrun:port.
         $net = (docker inspect namenode --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}').Trim()
         $exists = (docker ps -a --filter "name=^$ClientContainer$" --format '{{.Names}}')
         if (-not $exists) {
-            $runCmd = "docker run -d --name $ClientContainer --hostname $ClientContainer --network $net --user root " +
+            $runCmd = "docker run -d --name $ClientContainer --hostname spark-cleanrun --network-alias spark-cleanrun --network $net --user root " +
                 "-e SPARK_HOME=/usr/local/spark -e PYTHONPATH=/usr/local/spark/python:/usr/local/spark/python/lib/py4j-0.10.9.9-src.zip " +
                 "-e PYSPARK_PYTHON=$Py -e PYSPARK_DRIVER_PYTHON=$Py -e HDFS_NAMENODE_URL=hdfs://namenode:9000 -e SPARK_MASTER_URL=spark://spark-master:7077 " +
                 "-v ""${root}:/home/jovyan/work"" -w /home/jovyan/work $SparkImage sleep infinity"
