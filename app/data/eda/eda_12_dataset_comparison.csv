@@ -1,8 +1,8 @@
 ChiSo,Food_com,ViFoodRec
 Số User (Users),30836.0,101.0
 Số Món (Items),78171.0,4000.0
-Số Tương tác (Ratings),706514.0,149431.0
-Độ thưa ma trận (Sparsity %),99.97,63.01
-Điểm TB (Mean Rating),4.71,3.0
-Trung vị tương tác/User,6.0,1469.0
-Trung vị tương tác/Item,5.0,37.0
+Số Tương tác (Ratings),706514.0,182631.0
+Độ thưa ma trận (Sparsity %),99.97,54.79
+Điểm TB (Mean Rating),4.71,2.5
+Trung vị tương tác/User,6.0,1795.0
+Trung vị tương tác/Item,5.0,46.0

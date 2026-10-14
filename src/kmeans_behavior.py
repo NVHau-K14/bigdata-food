@@ -7,6 +7,9 @@ Thực thi toàn bộ quy trình Phân cụm hành vi (K-means Behavior Analysis
 3. Phân cụm món ăn ViFoodRec (4,000 món) -> food_clusters_vietnam.parquet, food_cluster_profiles_vietnam.csv
 4. Tính Silhouette & WSSSE cho từng k, chọn k tối ưu có căn cứ rõ ràng.
 5. Giảm chiều PCA 2D và vẽ bộ biểu đồ trực quan trong reports/figures/.
+
+Đặt tên cụm theo số liệu bằng src/cluster_naming.py. Tham số --only vietnam: chỉ chạy lại ViFoodRec,
+giữ nguyên số liệu Food.com (nhãn Food.com đổi bằng src/relabel_food_com_clusters.py).
 """
 
 import sys
@@ -25,6 +28,10 @@ from pyspark.ml.evaluation import ClusteringEvaluator
 # Đảm bảo import được config và user_features từ src
 sys.path.append(str(Path(__file__).resolve().parent))
 from config import get_spark_session, get_path, get_storage_mode, PROJECT_ROOT
+from cluster_naming import (
+    name_food_com_user_clusters, name_vifoodrec_user_clusters,
+    name_vifoodrec_food_clusters, REL_DIFF_THRESHOLD
+)
 from user_features import (
     extract_food_com_user_features,
     extract_vifoodrec_user_features,
@@ -110,7 +117,7 @@ def run_user_clustering_food_com(spark, train_df, recipes_df):
     overall_stats = user_feats_df.select([F.avg(c).alias(c) for c in raw_cols]).collect()[0]
     overall_dict = {c: float(overall_stats[c]) for c in raw_cols}
     overall_dict["cluster"] = -1
-    overall_dict["cluster_name"] = "Toàn bộ hệ thống (Overall)"
+    overall_dict["cluster_name"] = "Toàn bộ hệ thống"
     overall_dict["user_count"] = n_users
     overall_dict["user_pct"] = 100.0
     profile_rows.append(overall_dict)
@@ -118,34 +125,21 @@ def run_user_clustering_food_com(spark, train_df, recipes_df):
     cluster_counts = clustered_df.groupBy("prediction").count().collect()
     cluster_count_map = {r["prediction"]: r["count"] for r in cluster_counts}
 
-    # Đặt tên cụm dựa trên các giá trị trung bình định lượng
-    cluster_name_map = {}
+    # Tính hồ sơ từng cụm rồi đặt tên theo cực trị của số liệu (cluster_naming.py)
+    cluster_rows = []
     for c_id in range(best_k):
         c_df = clustered_df.filter(F.col("prediction") == c_id)
         c_stats = c_df.select([F.avg(c).alias(c) for c in raw_cols]).collect()[0]
         c_dict = {c: float(c_stats[c]) for c in raw_cols}
         c_count = cluster_count_map.get(c_id, 0)
-        c_pct = (c_count / n_users) * 100.0
-
-        # Heuristic đặt tên cụm dựa trên đặc trưng nổi bật:
-        # - avg_rating thấp hơn đáng kể (< 4.3) -> Khắt khe
-        # - n_ratings và activity_span cao vượt trội -> Tích cực / Chuyên gia
-        # - avg_minutes thấp (< 25p) -> Chuộng món nấu nhanh
-        # - avg_calories cao -> Chuộng món đậm vị / calo cao
-        if c_dict["avg_rating"] < 4.4:
-            c_name = "Người dùng Đánh giá Khắt khe (Critical Reviewers)"
-        elif c_dict["n_ratings"] > 25 or c_dict["activity_span_days"] > 1500:
-            c_name = "Thành viên Thâm niên Tích cực (Power Users)"
-        elif c_dict["avg_minutes"] < overall_dict["avg_minutes"] * 0.9:
-            c_name = "Người chuộng Món Nhanh Gọn (Quick & Easy)"
-        else:
-            c_name = "Người dùng Phổ thông Dễ tính (General Enthusiasts)"
-
-        cluster_name_map[c_id] = c_name
         c_dict["cluster"] = c_id
-        c_dict["cluster_name"] = c_name
         c_dict["user_count"] = c_count
-        c_dict["user_pct"] = round(c_pct, 2)
+        c_dict["user_pct"] = round((c_count / n_users) * 100.0, 2)
+        cluster_rows.append(c_dict)
+
+    cluster_name_map = name_food_com_user_clusters(cluster_rows)
+    for c_dict in cluster_rows:
+        c_dict["cluster_name"] = cluster_name_map[c_dict["cluster"]]
         profile_rows.append(c_dict)
 
     profile_df = pd.DataFrame(profile_rows)
@@ -239,7 +233,7 @@ def run_user_clustering_vifoodrec(spark, train_df, foods_df):
     overall_stats = user_feats_df.select([F.avg(c).alias(c) for c in raw_cols]).collect()[0]
     overall_dict = {c: float(overall_stats[c]) for c in raw_cols}
     overall_dict["cluster"] = -1
-    overall_dict["cluster_name"] = "Toàn bộ hệ thống (Overall)"
+    overall_dict["cluster_name"] = "Toàn bộ hệ thống"
     overall_dict["user_count"] = n_users
     overall_dict["user_pct"] = 100.0
     profile_rows.append(overall_dict)
@@ -247,27 +241,26 @@ def run_user_clustering_vifoodrec(spark, train_df, foods_df):
     cluster_counts = clustered_df.groupBy("prediction").count().collect()
     cluster_count_map = {r["prediction"]: r["count"] for r in cluster_counts}
 
-    cluster_name_map = {}
+    cluster_rows = []
     for c_id in range(best_k):
         c_df = clustered_df.filter(F.col("prediction") == c_id)
         c_stats = c_df.select([F.avg(c).alias(c) for c in raw_cols]).collect()[0]
         c_dict = {c: float(c_stats[c]) for c in raw_cols}
         c_count = cluster_count_map.get(c_id, 0)
-        c_pct = (c_count / n_users) * 100.0
-
-        # Đặt tên cụm phân biệt dựa trên chỉ số thật của 101 user
-        if c_dict["avg_rating"] < 2.98:
-            c_name = "Thực Khách Tiết Chế & Khắt Khe (Selective Diners)"
-        elif c_dict["n_ratings"] > 1200:
-            c_name = "Thành Viên Đánh Giá Tích Cực (Active Gourmet Diners)"
-        else:
-            c_name = "Thực Khách Chuộng Bữa Nhanh (Convenient Diners)"
-
-        cluster_name_map[c_id] = c_name
         c_dict["cluster"] = c_id
-        c_dict["cluster_name"] = c_name
         c_dict["user_count"] = c_count
-        c_dict["user_pct"] = round(c_pct, 2)
+        c_dict["user_pct"] = round((c_count / n_users) * 100.0, 2)
+        cluster_rows.append(c_dict)
+
+    # CONTEXT mục 7.4: chênh lệch tương đối giữa các cụm < 10% ở mọi đặc trưng thì gọi "Cụm 1, 2, 3"
+    cluster_name_map, rel_diffs, is_generic = name_vifoodrec_user_clusters(cluster_rows, overall_dict, raw_cols)
+    print("\n-> Chênh lệch tương đối giữa các cụm (lớn nhất trừ nhỏ nhất, chia trung bình toàn hệ thống):")
+    for feat, d in rel_diffs.items():
+        print(f"   + {feat:15s}: {d * 100:6.2f}%")
+    print(f"-> Lớn nhất: {max(rel_diffs.values()) * 100:.2f}% (ngưỡng {REL_DIFF_THRESHOLD * 100:.0f}%). "
+          f"{'Dưới ngưỡng: gọi Cụm 1, 2, 3, không đặt tên diễn giải.' if is_generic else 'VƯỢT NGƯỠNG: cần người dùng quyết định cách đặt tên; tạm dùng Cụm 1, 2, 3.'}")
+    for c_dict in cluster_rows:
+        c_dict["cluster_name"] = cluster_name_map[c_dict["cluster"]]
         profile_rows.append(c_dict)
 
     profile_df = pd.DataFrame(profile_rows)
@@ -328,7 +321,7 @@ def run_food_clustering_vifoodrec(spark, foods_df):
     overall_stats = food_feats_df.select([F.avg(c).alias(c) for c in raw_cols]).collect()[0]
     overall_dict = {c: float(overall_stats[c]) for c in raw_cols}
     overall_dict["cluster"] = -1
-    overall_dict["cluster_name"] = "Toàn bộ món (Overall)"
+    overall_dict["cluster_name"] = "Toàn bộ món"
     overall_dict["food_count"] = n_foods
     overall_dict["food_pct"] = 100.0
     profile_rows.append(overall_dict)
@@ -336,28 +329,21 @@ def run_food_clustering_vifoodrec(spark, foods_df):
     cluster_counts = clustered_df.groupBy("prediction").count().collect()
     cluster_count_map = {r["prediction"]: r["count"] for r in cluster_counts}
 
-    cluster_name_map = {}
+    cluster_rows = []
     for c_id in range(best_k):
         c_df = clustered_df.filter(F.col("prediction") == c_id)
         c_stats = c_df.select([F.avg(c).alias(c) for c in raw_cols]).collect()[0]
         c_dict = {c: float(c_stats[c]) for c in raw_cols}
         c_count = cluster_count_map.get(c_id, 0)
-        c_pct = (c_count / n_foods) * 100.0
-
-        if c_dict["is_savory"] < 0.5:
-            c_name = "Món Chay Thanh Tịnh (Vegetarian Specialties)"
-        elif c_dict["calories"] < 300:
-            c_name = "Món Bánh & Ăn Vặt Ít Calo (Low-Calorie Snacks & Sweets)"
-        elif c_dict["sugar"] < 18.0:
-            c_name = "Món Mặn Canh Hầm Ít Đường (Low-Sugar Savory & Stews)"
-        else:
-            c_name = "Món Mặn Chiên Xào Đậm Vị (Rich Savory Dishes)"
-
-        cluster_name_map[c_id] = c_name
         c_dict["cluster"] = c_id
-        c_dict["cluster_name"] = c_name
         c_dict["food_count"] = c_count
-        c_dict["food_pct"] = round(c_pct, 2)
+        c_dict["food_pct"] = round((c_count / n_foods) * 100.0, 2)
+        cluster_rows.append(c_dict)
+
+    # Tên theo cực trị của số liệu (cluster_naming.py); không dùng tên mô tả cách chế biến vì chưa đo
+    cluster_name_map = name_vifoodrec_food_clusters(cluster_rows)
+    for c_dict in cluster_rows:
+        c_dict["cluster_name"] = cluster_name_map[c_dict["cluster"]]
         profile_rows.append(c_dict)
 
     profile_df = pd.DataFrame(profile_rows)
@@ -412,9 +398,9 @@ def plot_kmeans_results(fc_pca, vf_pca, food_pca, all_tuning):
     # Subplot 1: Silhouette Scores
     for task, grp in tune_df.groupby("task"):
         axes[0].plot(grp["k"], grp["silhouette"], marker="o", linewidth=2, label=task)
-    axes[0].set_title("Hệ số Silhouette theo Số cụm K (Clustering Quality)", fontsize=11, fontweight="bold", pad=12)
+    axes[0].set_title("Hệ số Silhouette theo số cụm K", fontsize=11, fontweight="bold", pad=12)
     axes[0].set_xlabel("Số cụm K", fontsize=10)
-    axes[0].set_ylabel("Silhouette Score (Càng cao càng tốt)", fontsize=10)
+    axes[0].set_ylabel("Hệ số Silhouette (càng cao càng tốt)", fontsize=10)
     axes[0].legend(frameon=True, facecolor="#f8f9fa")
     axes[0].grid(True, linestyle="--", alpha=0.5)
 
@@ -424,9 +410,9 @@ def plot_kmeans_results(fc_pca, vf_pca, food_pca, all_tuning):
         max_cost = grp["wssse"].max()
         norm_cost = (grp["wssse"] / max_cost) * 100.0
         axes[1].plot(grp["k"], norm_cost, marker="s", linestyle="--", linewidth=2, label=f"{task} (Chuẩn hóa %)")
-    axes[1].set_title("Chi phí WSSSE theo Số cụm K (Đường cong Elbow)", fontsize=11, fontweight="bold", pad=12)
+    axes[1].set_title("Chi phí WSSSE theo số cụm K (đường cong khuỷu tay)", fontsize=11, fontweight="bold", pad=12)
     axes[1].set_xlabel("Số cụm K", fontsize=10)
-    axes[1].set_ylabel("WSSSE Chuẩn hóa (%)", fontsize=10)
+    axes[1].set_ylabel("WSSSE chuẩn hóa (%)", fontsize=10)
     axes[1].legend(frameon=True, facecolor="#f8f9fa")
     axes[1].grid(True, linestyle="--", alpha=0.5)
 
@@ -435,25 +421,26 @@ def plot_kmeans_results(fc_pca, vf_pca, food_pca, all_tuning):
     plt.close()
     print("-> Đã lưu reports/figures/kmeans_elbow_silhouette.png")
 
-    # 2. PCA Scatter Plot: Food.com Users (Mẫu tối đa 15,000 điểm)
-    print("-> Đang vẽ PCA Scatter Plot Food.com Users...")
-    fc_sample = fc_pca.sample(False, 0.5, seed=42).limit(15000).collect()
-    pc1 = [r["pca_features"][0] for r in fc_sample]
-    pc2 = [r["pca_features"][1] for r in fc_sample]
-    labels = [r["cluster_name"] for r in fc_sample]
+    # 2. PCA Scatter Plot: Food.com Users (Mẫu tối đa 15,000 điểm); bỏ qua khi fc_pca là None (--only vietnam)
+    if fc_pca is not None:
+        print("-> Đang vẽ PCA Scatter Plot Food.com Users...")
+        fc_sample = fc_pca.sample(False, 0.5, seed=42).limit(15000).collect()
+        pc1 = [r["pca_features"][0] for r in fc_sample]
+        pc2 = [r["pca_features"][1] for r in fc_sample]
+        labels = [r["cluster_name"] for r in fc_sample]
 
-    df_plot_fc = pd.DataFrame({"PC1": pc1, "PC2": pc2, "Cluster": labels})
-    plt.figure(figsize=(10, 7), dpi=300)
-    sns.scatterplot(data=df_plot_fc, x="PC1", y="PC2", hue="Cluster", palette="tab10", alpha=0.6, s=18)
-    plt.title("Food.com: Phân bố Cụm Hành vi Người dùng trên Không gian PCA 2D", fontsize=12, fontweight="bold", pad=12)
-    plt.xlabel("Thành phần Chính 1 (Principal Component 1)", fontsize=10)
-    plt.ylabel("Thành phần Chính 2 (Principal Component 2)", fontsize=10)
-    plt.legend(frameon=True, facecolor="#f8f9fa", bbox_to_anchor=(1.02, 1), loc="upper left")
-    plt.grid(True, linestyle="--", alpha=0.4)
-    plt.tight_layout()
-    plt.savefig(figures_dir / "kmeans_user_clusters_foodcom_pca.png")
-    plt.close()
-    print("-> Đã lưu reports/figures/kmeans_user_clusters_foodcom_pca.png")
+        df_plot_fc = pd.DataFrame({"PC1": pc1, "PC2": pc2, "Cluster": labels})
+        plt.figure(figsize=(10, 7), dpi=300)
+        sns.scatterplot(data=df_plot_fc, x="PC1", y="PC2", hue="Cluster", palette="tab10", alpha=0.6, s=18)
+        plt.title("Food.com: Phân bố cụm hành vi người dùng trên không gian PCA 2D", fontsize=12, fontweight="bold", pad=12)
+        plt.xlabel("Thành phần chính 1", fontsize=10)
+        plt.ylabel("Thành phần chính 2", fontsize=10)
+        plt.legend(frameon=True, facecolor="#f8f9fa", bbox_to_anchor=(1.02, 1), loc="upper left")
+        plt.grid(True, linestyle="--", alpha=0.4)
+        plt.tight_layout()
+        plt.savefig(figures_dir / "kmeans_user_clusters_foodcom_pca.png")
+        plt.close()
+        print("-> Đã lưu reports/figures/kmeans_user_clusters_foodcom_pca.png")
 
     # 3. PCA Scatter Plot: ViFoodRec Users
     print("-> Đang vẽ PCA Scatter Plot ViFoodRec Users...")
@@ -465,9 +452,9 @@ def plot_kmeans_results(fc_pca, vf_pca, food_pca, all_tuning):
     })
     plt.figure(figsize=(9, 6.5), dpi=300)
     sns.scatterplot(data=df_plot_vf, x="PC1", y="PC2", hue="Cluster", palette="Set1", s=60, alpha=0.9)
-    plt.title("ViFoodRec: Phân bố Cụm Người dùng trên Không gian PCA 2D (101 Users)", fontsize=12, fontweight="bold", pad=12)
-    plt.xlabel("Thành phần Chính 1 (PC1)", fontsize=10)
-    plt.ylabel("Thành phần Chính 2 (PC2)", fontsize=10)
+    plt.title("ViFoodRec: Phân bố cụm người dùng trên không gian PCA 2D (101 người dùng)", fontsize=12, fontweight="bold", pad=12)
+    plt.xlabel("Thành phần chính 1", fontsize=10)
+    plt.ylabel("Thành phần chính 2", fontsize=10)
     plt.legend(frameon=True, facecolor="#f8f9fa")
     plt.grid(True, linestyle="--", alpha=0.4)
     plt.tight_layout()
@@ -485,9 +472,9 @@ def plot_kmeans_results(fc_pca, vf_pca, food_pca, all_tuning):
     })
     plt.figure(figsize=(10, 7), dpi=300)
     sns.scatterplot(data=df_plot_food, x="PC1", y="PC2", hue="Cluster", palette="Set2", s=25, alpha=0.7)
-    plt.title("ViFoodRec: Phân cụm Đặc trưng Dinh dưỡng Món ăn trên Không gian PCA 2D (4,000 Món)", fontsize=12, fontweight="bold", pad=12)
-    plt.xlabel("Thành phần Chính 1 (PC1)", fontsize=10)
-    plt.ylabel("Thành phần Chính 2 (PC2)", fontsize=10)
+    plt.title("ViFoodRec: Phân cụm đặc trưng dinh dưỡng món ăn trên không gian PCA 2D (4.000 món)", fontsize=12, fontweight="bold", pad=12)
+    plt.xlabel("Thành phần chính 1", fontsize=10)
+    plt.ylabel("Thành phần chính 2", fontsize=10)
     plt.legend(frameon=True, facecolor="#f8f9fa", bbox_to_anchor=(1.02, 1), loc="upper left")
     plt.grid(True, linestyle="--", alpha=0.4)
     plt.tight_layout()
@@ -496,7 +483,7 @@ def plot_kmeans_results(fc_pca, vf_pca, food_pca, all_tuning):
     print("-> Đã lưu reports/figures/kmeans_food_clusters_vifood_pca.png")
 
 
-def main():
+def main(only=None):
     print("=" * 70)
     print("CHƯƠNG TRÌNH PHÂN CỤM HÀNH VI BẰNG K-MEANS VÀ TRỰC QUAN HÓA PCA (P8)")
     print(f"Chế độ lưu trữ: {get_storage_mode()}")
@@ -505,17 +492,19 @@ def main():
     spark = get_spark_session(app_name="KMeansBehaviorPipeline", shuffle_partitions=8)
 
     # Đọc dữ liệu Train và metadata món ăn từ HDFS
-    fc_train = spark.read.parquet(get_path("splits", "food_com", "train.parquet")).cache()
-    fc_recipes = spark.read.parquet(get_path("clean", "food_com", "recipes_clean.parquet")).cache()
-
     vf_train = spark.read.parquet(get_path("splits", "food_vietnam", "train.parquet")).cache()
     vf_foods = spark.read.parquet(get_path("clean", "food_vietnam", "foods_clean.parquet")).cache()
 
     all_tuning_records = []
 
-    # 1. Phân cụm User Food.com
-    fc_users_res, fc_profiles, fc_tune, fc_pca, best_k_fc = run_user_clustering_food_com(spark, fc_train, fc_recipes)
-    all_tuning_records.extend(fc_tune)
+    # 1. Phân cụm User Food.com (bỏ qua khi --only vietnam: Food.com đã kiểm chứng, không chạy lại;
+    #    nhãn cụm Food.com được đổi tên bằng src/relabel_food_com_clusters.py mà không đổi số liệu)
+    fc_users_res = fc_profiles = fc_pca = None
+    if only != "vietnam":
+        fc_train = spark.read.parquet(get_path("splits", "food_com", "train.parquet")).cache()
+        fc_recipes = spark.read.parquet(get_path("clean", "food_com", "recipes_clean.parquet")).cache()
+        fc_users_res, fc_profiles, fc_tune, fc_pca, best_k_fc = run_user_clustering_food_com(spark, fc_train, fc_recipes)
+        all_tuning_records.extend(fc_tune)
 
     # 2. Phân cụm User ViFoodRec
     vf_users_res, vf_profiles, vf_tune, vf_pca, best_k_vf = run_user_clustering_vifoodrec(spark, vf_train, vf_foods)
@@ -535,9 +524,10 @@ def main():
     evid_dir.mkdir(parents=True, exist_ok=True)
 
     # Xuất hồ sơ cụm CSV
-    fc_profiles.to_csv(data_res_dir / "cluster_profiles_food_com.csv", index=False)
-    fc_profiles.to_csv(res_dir / "cluster_profiles_food_com.csv", index=False)
-    fc_profiles.to_csv(evid_dir / "cluster_profiles_food_com.csv", index=False)
+    if fc_profiles is not None:
+        fc_profiles.to_csv(data_res_dir / "cluster_profiles_food_com.csv", index=False)
+        fc_profiles.to_csv(res_dir / "cluster_profiles_food_com.csv", index=False)
+        fc_profiles.to_csv(evid_dir / "cluster_profiles_food_com.csv", index=False)
 
     vf_profiles.to_csv(data_res_dir / "cluster_profiles_food_vietnam.csv", index=False)
     vf_profiles.to_csv(res_dir / "cluster_profiles_food_vietnam.csv", index=False)
@@ -549,15 +539,21 @@ def main():
 
     # Xuất bảng Tuning CSV
     tune_df = pd.DataFrame(all_tuning_records)
+    if only == "vietnam":
+        # Giữ dòng tuning Food.com cũ (không chạy lại), thay các dòng ViFoodRec
+        old_tune = pd.read_csv(res_dir / "kmeans_tuning.csv")
+        tune_df = pd.concat([old_tune[old_tune["task"].str.startswith("Food.com")], tune_df], ignore_index=True)
+        all_tuning_records = tune_df.to_dict("records")
     tune_df.to_csv(data_res_dir / "kmeans_tuning.csv", index=False)
     tune_df.to_csv(res_dir / "kmeans_tuning.csv", index=False)
 
     # Xuất Parquet cho người dùng và món ăn
     print("\n-> Đang lưu các tệp phân cụm Parquet...")
     # Lưu HDFS và local
-    fc_users_res.write.mode("overwrite").parquet(get_path("results", "", "user_clusters_food_com.parquet"))
-    fc_users_res.toPandas().to_parquet(data_res_dir / "user_clusters_food_com.parquet", index=False)
-    fc_users_res.toPandas().to_parquet(res_dir / "user_clusters_food_com.parquet", index=False)
+    if fc_users_res is not None:
+        fc_users_res.write.mode("overwrite").parquet(get_path("results", "", "user_clusters_food_com.parquet"))
+        fc_users_res.toPandas().to_parquet(data_res_dir / "user_clusters_food_com.parquet", index=False)
+        fc_users_res.toPandas().to_parquet(res_dir / "user_clusters_food_com.parquet", index=False)
 
     vf_users_res.coalesce(1).write.mode("overwrite").parquet(get_path("results", "", "user_clusters_food_vietnam.parquet"))
     vf_users_res.toPandas().to_parquet(data_res_dir / "user_clusters_food_vietnam.parquet", index=False)
@@ -578,4 +574,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--only", choices=["vietnam"], default=None,
+                        help="Chỉ chạy lại ViFoodRec, giữ nguyên số liệu Food.com")
+    main(only=parser.parse_args().only)

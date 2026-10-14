@@ -1,0 +1,8 @@
+{
+  "dataset": "food_vietnam",
+  "rank": 10,
+  "regParam": 0.5,
+  "maxIter": 10,
+  "seed": 42,
+  "nonnegative": true
+}

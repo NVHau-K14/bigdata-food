@@ -1,0 +1,22 @@
+== fsck /data
+Status: HEALTHY
+ Total files:	115
+ Under-replicated blocks:	0 (0.0 %)
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Total files:	0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+== fsck /models
+Status: HEALTHY
+ Total files:	48
+ Under-replicated blocks:	0 (0.0 %)
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Total files:	0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0

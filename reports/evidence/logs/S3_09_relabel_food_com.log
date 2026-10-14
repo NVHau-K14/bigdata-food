@@ -1,0 +1,22 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 14:46:34 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:>                                                          (0 + 4) / 8][Stage 1:=============================>                             (4 + 4) / 8][Stage 1:============================================>              (6 + 2) / 8]                                                                                [Stage 2:>                                                          (0 + 4) / 8][Stage 2:=============================>                             (4 + 4) / 8][Stage 2:====================================>                      (5 + 3) / 8]                                                                                === Đối chiếu tên cụm với số liệu hồ sơ (Food.com) ===
+ cluster                         cluster_name  user_count  user_pct  avg_rating  n_ratings  activity_span_days  avg_minutes  avg_calories
+      -1                     Toàn bộ hệ thống       30772    100.00    4.680734  18.374496         1040.567399    79.679363    469.207214
+       0                  Người dùng khắt khe        3993     12.98    3.831941   5.778863          740.864262    84.137557    456.238651
+       1 Người chuộng món nấu lâu, nhiều calo       10679     34.70    4.872982   5.043731          871.919000   105.879489    604.500794
+       2  Người chuộng món nấu nhanh, ít calo        7905     25.69    4.853415   3.703605          478.244782    45.534272    317.908541
+       3   Thành viên lâu năm, đánh giá nhiều        8195     26.63    4.677216  56.034899         1948.788408    76.302211    445.168087
+
+Tên cũ -> tên mới:
+  Toàn bộ hệ thống (Overall)  ->  Toàn bộ hệ thống
+  Người dùng Đánh giá Khắt khe (Critical Reviewers)  ->  Người dùng khắt khe
+  Người dùng Phổ thông Dễ tính (General Enthusiasts)  ->  Người chuộng món nấu lâu, nhiều calo
+  Người chuộng Món Nhanh Gọn (Quick & Easy)  ->  Người chuộng món nấu nhanh, ít calo
+  Thành viên Thâm niên Tích cực (Power Users)  ->  Thành viên lâu năm, đánh giá nhiều
+
+Đã ghi nhãn mới vào hdfs://namenode:9000/data/results/user_clusters_food_com.parquet
+Số người dùng mỗi cụm (không đổi): {0: 3993, 1: 10679, 2: 7905, 3: 8195}

@@ -11,6 +11,8 @@ Quy tắc thực hiện (P6):
 3. Kiểm tra rò rỉ dữ liệu (Data Leakage Verification): kiểm tra giao cặp (user, item)
    giữa train/val/test phải bằng 0.
 4. Ghi kết quả dạng Parquet vào /data/splits/<bộ>/ và xuất nhật ký split_log.csv.
+
+Tham số --only vietnam: chỉ chia lại ViFoodRec, giữ nguyên chia dữ liệu và dòng nhật ký của Food.com.
 """
 
 import os
@@ -23,6 +25,50 @@ from pyspark.sql import functions as F
 # Đảm bảo import được config từ thư mục src
 sys.path.append(str(Path(__file__).resolve().parent))
 from config import get_spark_session, get_path, get_storage_mode, PROJECT_ROOT
+
+
+def split_with_cold_start_filter(df, item_col, seed=42):
+    """
+    Chia 80/10/10 bằng rand(seed) rồi lọc cold-start trên validation và test.
+    Hàm dùng chung cho chia dữ liệu chính (ghi HDFS) và các biến thể nhạy cảm (chỉ trong bộ nhớ),
+    để cả hai cùng một cách chia.
+
+    Returns:
+        (train_df, val_filtered, test_filtered, stats) với stats là dict số dòng.
+    """
+    total_raw_count = df.count()
+
+    # [0.0, 0.8) -> Train (80%), [0.8, 0.9) -> Val (10%), [0.9, 1.0] -> Test (10%)
+    df_rand = df.withColumn("_split_rand", F.rand(seed=seed))
+
+    train_df = df_rand.filter(F.col("_split_rand") < 0.8).drop("_split_rand").cache()
+    val_raw = df_rand.filter((F.col("_split_rand") >= 0.8) & (F.col("_split_rand") < 0.9)).drop("_split_rand").cache()
+    test_raw = df_rand.filter(F.col("_split_rand") >= 0.9).drop("_split_rand").cache()
+
+    train_count = train_df.count()
+    val_raw_count = val_raw.count()
+    test_raw_count = test_raw.count()
+
+    # Cold-start: chỉ giữ dòng val/test có user và item đã xuất hiện trong train
+    train_users = train_df.select("user_id").distinct()
+    train_items = train_df.select(item_col).distinct()
+    n_train_users = train_users.count()
+    n_train_items = train_items.count()
+
+    val_filtered = val_raw.join(train_users, on="user_id", how="inner")                           .join(train_items, on=item_col, how="inner").cache()
+    test_filtered = test_raw.join(train_users, on="user_id", how="inner")                             .join(train_items, on=item_col, how="inner").cache()
+
+    stats = {
+        "total_raw_count": total_raw_count,
+        "train_count": train_count,
+        "val_raw_count": val_raw_count,
+        "test_raw_count": test_raw_count,
+        "n_train_users": n_train_users,
+        "n_train_items": n_train_items,
+        "val_clean_count": val_filtered.count(),
+        "test_clean_count": test_filtered.count(),
+    }
+    return train_df, val_filtered, test_filtered, stats
 
 
 def split_and_filter_dataset(spark, dataset_name, input_path, item_col, output_dir_stage):
@@ -39,40 +85,23 @@ def split_and_filter_dataset(spark, dataset_name, input_path, item_col, output_d
     
     # 1. Đọc dữ liệu sạch
     df = spark.read.parquet(input_path)
-    total_raw_count = df.count()
+
+    # 2. Chia và lọc cold-start (hàm dùng chung)
+    train_df, val_filtered, test_filtered, st = split_with_cold_start_filter(df, item_col, seed=42)
+    total_raw_count = st["total_raw_count"]
+    train_count = st["train_count"]
+    val_raw_count = st["val_raw_count"]
+    test_raw_count = st["test_raw_count"]
+    n_train_users = st["n_train_users"]
+    n_train_items = st["n_train_items"]
+    val_clean_count = st["val_clean_count"]
+    test_clean_count = st["test_clean_count"]
+
     print(f"-> Tổng số tương tác đầu vào: {total_raw_count:,} dòng")
-
-    # 2. Phân chia ngẫu nhiên xác định với rand(seed=42)
-    # [0.0, 0.8) -> Train (80%), [0.8, 0.9) -> Val (10%), [0.9, 1.0] -> Test (10%)
-    df_rand = df.withColumn("_split_rand", F.rand(seed=42))
-    
-    train_df = df_rand.filter(F.col("_split_rand") < 0.8).drop("_split_rand").cache()
-    val_raw = df_rand.filter((F.col("_split_rand") >= 0.8) & (F.col("_split_rand") < 0.9)).drop("_split_rand").cache()
-    test_raw = df_rand.filter(F.col("_split_rand") >= 0.9).drop("_split_rand").cache()
-
-    train_count = train_df.count()
-    val_raw_count = val_raw.count()
-    test_raw_count = test_raw.count()
-
     print(f"-> Phân chia ban đầu: Train={train_count:,} ({train_count/total_raw_count:.2%}), "
           f"Val={val_raw_count:,} ({val_raw_count/total_raw_count:.2%}), "
           f"Test={test_raw_count:,} ({test_raw_count/total_raw_count:.2%})")
-
-    # 3. Trích xuất danh sách user và item phân biệt có trong Train
-    train_users = train_df.select("user_id").distinct()
-    train_items = train_df.select(item_col).distinct()
-    n_train_users = train_users.count()
-    n_train_items = train_items.count()
     print(f"-> Tập Train có {n_train_users:,} users và {n_train_items:,} items")
-
-    # 4. Lọc Cold-Start trên Validation và Test
-    val_filtered = val_raw.join(train_users, on="user_id", how="inner") \
-                          .join(train_items, on=item_col, how="inner").cache()
-    test_filtered = test_raw.join(train_users, on="user_id", how="inner") \
-                            .join(train_items, on=item_col, how="inner").cache()
-
-    val_clean_count = val_filtered.count()
-    test_clean_count = test_filtered.count()
 
     val_dropped = val_raw_count - val_clean_count
     val_drop_pct = (val_dropped / val_raw_count) * 100 if val_raw_count > 0 else 0.0
@@ -142,7 +171,7 @@ def split_and_filter_dataset(spark, dataset_name, input_path, item_col, output_d
     }
 
 
-def main():
+def main(only=None):
     print("=" * 70)
     print("CHƯƠNG TRÌNH PHÂN CHIA DỮ LIỆU TRAIN / VAL / TEST (P6)")
     print(f"Chế độ lưu trữ: {get_storage_mode()}")
@@ -152,16 +181,24 @@ def main():
 
     results = []
 
-    # 1. Thực hiện cho Food.com
-    food_com_input = get_path("clean", "food_com", "interactions_clean.parquet")
-    res_food_com = split_and_filter_dataset(
-        spark=spark,
-        dataset_name="food_com",
-        input_path=food_com_input,
-        item_col="recipe_id",
-        output_dir_stage="splits"
-    )
-    results.append(res_food_com)
+    out_csv_results = PROJECT_ROOT / "data" / "results" / "split_log.csv"
+    out_csv_reports = PROJECT_ROOT / "reports" / "evidence" / "split_log.csv"
+
+    # 1. Thực hiện cho Food.com (bỏ qua khi --only vietnam: giữ nguyên dòng nhật ký cũ)
+    if only == "vietnam":
+        old_log = pd.read_csv(out_csv_reports)
+        results.extend(old_log[old_log["dataset"] == "food_com"].to_dict("records"))
+        print(f"[Bỏ qua Food.com] Giữ dòng nhật ký cũ từ {out_csv_reports}")
+    else:
+        food_com_input = get_path("clean", "food_com", "interactions_clean.parquet")
+        res_food_com = split_and_filter_dataset(
+            spark=spark,
+            dataset_name="food_com",
+            input_path=food_com_input,
+            item_col="recipe_id",
+            output_dir_stage="splits"
+        )
+        results.append(res_food_com)
 
     # 2. Thực hiện cho ViFoodRec
     vifood_input = get_path("clean", "food_vietnam", "ratings_clean.parquet")
@@ -177,8 +214,6 @@ def main():
     # 3. Xuất bảng tổng hợp split_log.csv
     log_df = pd.DataFrame(results)
     
-    out_csv_results = PROJECT_ROOT / "data" / "results" / "split_log.csv"
-    out_csv_reports = PROJECT_ROOT / "reports" / "evidence" / "split_log.csv"
     out_csv_results.parent.mkdir(parents=True, exist_ok=True)
     out_csv_reports.parent.mkdir(parents=True, exist_ok=True)
 
@@ -198,4 +233,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--only", choices=["vietnam"], default=None,
+                        help="Chỉ chia lại ViFoodRec, giữ nguyên Food.com (đã kiểm chứng)")
+    main(only=parser.parse_args().only)

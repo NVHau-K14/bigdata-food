@@ -14,30 +14,36 @@ food_com,Top-N Popular,2.0,2.5959
 food_com,Top-N Popular,3.0,1.6354
 food_com,Top-N Popular,4.0,0.7256
 food_com,Top-N Popular,5.0,0.3934
-food_vietnam,Global Mean,1.0,1.9981
-food_vietnam,Global Mean,1.5,1.4981
-food_vietnam,Global Mean,2.0,0.9981
-food_vietnam,Global Mean,2.5,0.4981
-food_vietnam,Global Mean,3.0,0.0019
-food_vietnam,Global Mean,3.5,0.5019
-food_vietnam,Global Mean,4.0,1.0019
-food_vietnam,Global Mean,4.5,1.5019
-food_vietnam,Global Mean,5.0,2.0019
-food_vietnam,Smoothed Item Mean,1.0,2.0118
-food_vietnam,Smoothed Item Mean,1.5,1.5219
-food_vietnam,Smoothed Item Mean,2.0,1.0167
-food_vietnam,Smoothed Item Mean,2.5,0.5419
-food_vietnam,Smoothed Item Mean,3.0,0.2027
-food_vietnam,Smoothed Item Mean,3.5,0.5312
-food_vietnam,Smoothed Item Mean,4.0,1.0207
-food_vietnam,Smoothed Item Mean,4.5,1.5184
-food_vietnam,Smoothed Item Mean,5.0,2.0067
-food_vietnam,Top-N Popular,1.0,2.0164
-food_vietnam,Top-N Popular,1.5,1.529
-food_vietnam,Top-N Popular,2.0,1.0243
-food_vietnam,Top-N Popular,2.5,0.5569
-food_vietnam,Top-N Popular,3.0,0.2384
-food_vietnam,Top-N Popular,3.5,0.5434
-food_vietnam,Top-N Popular,4.0,1.0279
-food_vietnam,Top-N Popular,4.5,1.524
-food_vietnam,Top-N Popular,5.0,2.0095
+food_vietnam,Global Mean,0.0,2.5012
+food_vietnam,Global Mean,0.5,2.0012
+food_vietnam,Global Mean,1.0,1.5012
+food_vietnam,Global Mean,1.5,1.0012
+food_vietnam,Global Mean,2.0,0.5012
+food_vietnam,Global Mean,2.5,0.0012
+food_vietnam,Global Mean,3.0,0.4988
+food_vietnam,Global Mean,3.5,0.9988
+food_vietnam,Global Mean,4.0,1.4988
+food_vietnam,Global Mean,4.5,1.9988
+food_vietnam,Global Mean,5.0,2.4988
+food_vietnam,Smoothed Item Mean,0.0,2.5208
+food_vietnam,Smoothed Item Mean,0.5,2.0121
+food_vietnam,Smoothed Item Mean,1.0,1.5098
+food_vietnam,Smoothed Item Mean,1.5,1.0336
+food_vietnam,Smoothed Item Mean,2.0,0.5539
+food_vietnam,Smoothed Item Mean,2.5,0.2343
+food_vietnam,Smoothed Item Mean,3.0,0.5565
+food_vietnam,Smoothed Item Mean,3.5,1.0285
+food_vietnam,Smoothed Item Mean,4.0,1.5129
+food_vietnam,Smoothed Item Mean,4.5,2.0178
+food_vietnam,Smoothed Item Mean,5.0,2.4981
+food_vietnam,Top-N Popular,0.0,2.5253
+food_vietnam,Top-N Popular,0.5,2.0158
+food_vietnam,Top-N Popular,1.0,1.5136
+food_vietnam,Top-N Popular,1.5,1.0422
+food_vietnam,Top-N Popular,2.0,0.5689
+food_vietnam,Top-N Popular,2.5,0.2681
+food_vietnam,Top-N Popular,3.0,0.5713
+food_vietnam,Top-N Popular,3.5,1.037
+food_vietnam,Top-N Popular,4.0,1.5179
+food_vietnam,Top-N Popular,4.5,2.023
+food_vietnam,Top-N Popular,5.0,2.4997

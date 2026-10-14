@@ -1,0 +1,76 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 14:20:19 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:>                                                          (0 + 1) / 1]                                                                                [Stage 3:>                                                          (0 + 1) / 1]                                                                                [Stage 7:>                                                          (0 + 1) / 1]                                                                                [Stage 123:>                                                        (0 + 1) / 1]                                                                                [Stage 3164:>                                                     (0 + 2) / 100][Stage 3164:======>                                              (12 + 2) / 100][Stage 3164:==============>                                      (28 + 2) / 100][Stage 3164:==========================>                          (50 + 2) / 100][Stage 3164:=====================================>               (71 + 2) / 100][Stage 3164:================================================>    (92 + 2) / 100]                                                                                [Stage 3240:=================================>                     (6 + 2) / 10][Stage 3240:============================================>          (8 + 2) / 10]                                                                                [Stage 3295:=============>                                       (26 + 2) / 100][Stage 3295:===========================>                         (51 + 2) / 100][Stage 3295:========================================>            (77 + 2) / 100]                                                                                [Stage 3351:================================>                    (62 + 2) / 100][Stage 3351:==============================================>      (88 + 2) / 100]                                                                                ======================================================================
+CHƯƠNG TRÌNH HUẤN LUYỆN, TINH CHỈNH VÀ ĐÁNH GIÁ MÔ HÌNH ALS (P7)
+Chế độ lưu trữ: hdfs
+======================================================================
+
+==================================================================
+KHỞI CHẠY PIPELINE HUẤN LUYỆN ALS: FOOD_VIETNAM
+==================================================================
+-> Quy mô tập dữ liệu: Train=146,012 | Val=18,204 | Test=18,415
+
+---> Bắt đầu Grid Search Tuning cho FOOD_VIETNAM...
+[1/24] rank=10, reg=0.01, maxIter=10 | Val RMSE: 1.8162 (Fit: 5.9s)
+[2/24] rank=10, reg=0.01, maxIter=15 | Val RMSE: 1.8298 (Fit: 4.2s)
+[3/24] rank=10, reg=0.05, maxIter=10 | Val RMSE: 1.7322 (Fit: 2.8s)
+[4/24] rank=10, reg=0.05, maxIter=15 | Val RMSE: 1.7364 (Fit: 3.5s)
+[5/24] rank=10, reg=0.10, maxIter=10 | Val RMSE: 1.6712 (Fit: 2.5s)
+[6/24] rank=10, reg=0.10, maxIter=15 | Val RMSE: 1.6752 (Fit: 2.7s)
+[7/24] rank=10, reg=0.50, maxIter=10 | Val RMSE: 1.6576 (Fit: 1.9s)
+[8/24] rank=10, reg=0.50, maxIter=15 | Val RMSE: 1.6576 (Fit: 2.7s)
+[9/24] rank=20, reg=0.01, maxIter=10 | Val RMSE: 2.0208 (Fit: 2.7s)
+[10/24] rank=20, reg=0.01, maxIter=15 | Val RMSE: 2.0594 (Fit: 3.4s)
+[11/24] rank=20, reg=0.05, maxIter=10 | Val RMSE: 1.8151 (Fit: 2.4s)
+[12/24] rank=20, reg=0.05, maxIter=15 | Val RMSE: 1.8160 (Fit: 3.4s)
+[13/24] rank=20, reg=0.10, maxIter=10 | Val RMSE: 1.6916 (Fit: 2.4s)
+[14/24] rank=20, reg=0.10, maxIter=15 | Val RMSE: 1.6936 (Fit: 3.4s)
+[15/24] rank=20, reg=0.50, maxIter=10 | Val RMSE: 1.6576 (Fit: 2.3s)
+[16/24] rank=20, reg=0.50, maxIter=15 | Val RMSE: 1.6576 (Fit: 3.0s)
+[17/24] rank=50, reg=0.01, maxIter=10 | Val RMSE: 2.1363 (Fit: 4.8s)
+[18/24] rank=50, reg=0.01, maxIter=15 | Val RMSE: 2.2138 (Fit: 7.0s)
+[19/24] rank=50, reg=0.05, maxIter=10 | Val RMSE: 1.8145 (Fit: 4.9s)
+[20/24] rank=50, reg=0.05, maxIter=15 | Val RMSE: 1.8144 (Fit: 7.0s)
+[21/24] rank=50, reg=0.10, maxIter=10 | Val RMSE: 1.6764 (Fit: 4.9s)
+[22/24] rank=50, reg=0.10, maxIter=15 | Val RMSE: 1.6774 (Fit: 6.0s)
+[23/24] rank=50, reg=0.50, maxIter=10 | Val RMSE: 1.6576 (Fit: 3.4s)
+[24/24] rank=50, reg=0.50, maxIter=15 | Val RMSE: 1.6576 (Fit: 4.9s)
+---> Tham số tốt nhất cho food_vietnam: {'rank': 10, 'regParam': 0.5, 'maxIter': 10} với Validation RMSE = 1.6576
+-> Đã lưu kết quả tuning vào /home/jovyan/work/results/als_tuning_food_vietnam.csv
+
+---> Đang đánh giá mô hình ALS tốt nhất trên tập TEST...
+-> Đang tính toán Precision@10 và Recall@10 trên tập Test...
+
+============================================================
+KẾT QUẢ TEST SET - ALS (food_vietnam):
+RMSE: 1.6654 | MAE: 1.4185 | Coverage: 100.0%
+Precision@10: 0.01386 | Recall@10: 0.00285
+Thời gian suy luận: 0.78s
+============================================================
+
+-> Đang lưu mô hình tốt nhất vào: hdfs://namenode:9000/models/food_vietnam/als_best_model
+
+---> Xuất Top-10 gợi ý món ăn kèm metadata...
+-> Đã xuất tệp recommendations thành công!
+
+---> Đang tính toán Cosine Similarity cho Item Latent Factors...
+-> Thu thập 4,000 vector món ăn để tính toán tương đồng.
+-> Đã xuất tệp item_neighbors thành công!
+
+======================================================================
+BẢNG SO SÁNH TỔNG HỢP BASELINE VÀ ALS (MODEL COMPARISON)
+======================================================================
+     dataset                    model   RMSE    MAE  Precision@10  Recall@10  coverage
+    food_com              Global Mean 0.6266 0.4468       0.00000    0.00000     100.0
+    food_com       Smoothed Item Mean 0.6177 0.4214       0.00048    0.00130     100.0
+    food_com            Top-N Popular 0.6568 0.4120       0.00534    0.02170     100.0
+food_vietnam              Global Mean 1.5706 1.3502       0.00000    0.00000     100.0
+food_vietnam       Smoothed Item Mean 1.5873 1.3690       0.01584    0.00321     100.0
+food_vietnam            Top-N Popular 1.5924 1.3723       0.02277    0.00461     100.0
+food_vietnam ALS Matrix Factorization 1.6654 1.4185       0.01386    0.00285     100.0
+    food_com ALS Matrix Factorization 0.6747 0.5094       0.00017    0.00096     100.0
+
+[THÀNH CÔNG] Hoàn tất toàn bộ kịch bản Giai đoạn P7!

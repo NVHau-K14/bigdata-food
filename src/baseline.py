@@ -11,6 +11,8 @@ Xây dựng và đánh giá 3 mô hình Baseline trên tập kiểm thử cho c�
 - Precision@10, Recall@10
 - RMSE theo từng mức điểm đánh giá thật
 Kết quả lưu ra data/results/baseline_metrics.csv và reports/evidence/baseline_metrics.csv
+
+Tham số --only vietnam: chỉ chạy lại ViFoodRec, giữ nguyên các dòng Food.com đã có.
 """
 
 import sys
@@ -209,7 +211,19 @@ def run_baselines_for_dataset(spark, dataset_name: str, item_col: str, quality_t
     return metrics_list, breakdown_list
 
 
-def main():
+def merge_keep_other_datasets(new_df, csv_path, dataset_name):
+    """
+    Thay các dòng của dataset_name trong csv_path bằng new_df, giữ nguyên dòng của bộ khác.
+    Dùng khi chỉ chạy lại ViFoodRec (--only vietnam) mà Food.com đã kiểm chứng và không chạy lại.
+    """
+    if csv_path.exists():
+        old_df = pd.read_csv(csv_path)
+        kept = old_df[old_df["dataset"] != dataset_name]
+        return pd.concat([kept, new_df], ignore_index=True)
+    return new_df
+
+
+def main(only=None):
     print("=" * 70)
     print("CHƯƠNG TRÌNH HUẤN LUYỆN VÀ ĐÁNH GIÁ 3 MÔ HÌNH BASELINE (P6)")
     print(f"Chế độ lưu trữ: {get_storage_mode()}")
@@ -220,19 +234,20 @@ def main():
     all_metrics = []
     all_breakdowns = []
 
-    # 1. Đánh giá Food.com
+    # 1. Đánh giá Food.com (bỏ qua khi --only vietnam)
     # Với Food.com: điểm >= 4.0 là món phù hợp
-    fc_metrics, fc_breakdowns = run_baselines_for_dataset(
-        spark=spark,
-        dataset_name="food_com",
-        item_col="recipe_id",
-        quality_threshold=4.0
-    )
-    all_metrics.extend(fc_metrics)
-    all_breakdowns.extend(fc_breakdowns)
+    if only != "vietnam":
+        fc_metrics, fc_breakdowns = run_baselines_for_dataset(
+            spark=spark,
+            dataset_name="food_com",
+            item_col="recipe_id",
+            quality_threshold=4.0
+        )
+        all_metrics.extend(fc_metrics)
+        all_breakdowns.extend(fc_breakdowns)
 
     # 2. Đánh giá ViFoodRec
-    # Với ViFoodRec: do phân phối đều quanh 3.0, điểm >= 4.0 là món phù hợp
+    # Món phù hợp = rating >= 4.0, giữ nguyên quy tắc cũ để so sánh được
     vf_metrics, vf_breakdowns = run_baselines_for_dataset(
         spark=spark,
         dataset_name="food_vietnam",
@@ -254,6 +269,11 @@ def main():
     data_results_dir.mkdir(parents=True, exist_ok=True)
     results_dir.mkdir(parents=True, exist_ok=True)
     evidence_dir.mkdir(parents=True, exist_ok=True)
+
+    if only == "vietnam":
+        # Giữ dòng Food.com cũ, thay dòng ViFoodRec
+        metrics_df = merge_keep_other_datasets(metrics_df, results_dir / "baseline_metrics.csv", "food_vietnam")
+        breakdown_df = merge_keep_other_datasets(breakdown_df, results_dir / "baseline_rmse_breakdown.csv", "food_vietnam")
 
     metrics_df.to_csv(data_results_dir / "baseline_metrics.csv", index=False)
     metrics_df.to_csv(results_dir / "baseline_metrics.csv", index=False)
@@ -278,4 +298,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--only", choices=["vietnam"], default=None,
+                        help="Chỉ chạy lại ViFoodRec, giữ nguyên số liệu Food.com")
+    main(only=parser.parse_args().only)

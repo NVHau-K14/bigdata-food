@@ -16,8 +16,11 @@ Quy trình thực hiện (P7):
 7. Tính độ tương đồng Cosine giữa các món từ Item Latent Factors (Top-10 neighbors):
    - ViFoodRec: toàn bộ 4.000 món -> results/item_neighbors_food_vietnam.parquet
    - Food.com: Top 20.000 món phổ biến nhất -> results/item_neighbors_food_com.parquet
+
+Tham số --only vietnam: chỉ chạy lại ViFoodRec, giữ nguyên mô hình và kết quả Food.com.
 """
 
+import json
 import sys
 import time
 from pathlib import Path
@@ -92,6 +95,21 @@ def tune_als_model(spark, train_df, val_df, item_col, param_grid, dataset_name):
 
     print(f"---> Tham số tốt nhất cho {dataset_name}: {best_params} với Validation RMSE = {best_rmse:.4f}")
     return best_model, best_params, tuning_records
+
+
+def save_local_copies(spark_df, filename):
+    """
+    Ghi bản sao một file Parquet ra thư mục data/results/ và results/ trên máy (qua pandas).
+    Không dùng spark.write với đường dẫn local vì khi STORAGE_MODE=hdfs, đường dẫn không có scheme
+    được hiểu theo HDFS mặc định nên file không bao giờ xuất hiện trên đĩa của máy.
+    """
+    pdf = spark_df.toPandas()
+    for d in (PROJECT_ROOT / "data" / "results", PROJECT_ROOT / "results"):
+        d.mkdir(parents=True, exist_ok=True)
+        target = d / filename
+        if target.is_dir():
+            raise RuntimeError(f"{target} là thư mục, cần xử lý thủ công")
+        pdf.to_parquet(target, index=False)
 
 
 def generate_als_recommendations(model, user_df, train_df, item_col, k=10, fetch_k=50):
@@ -264,6 +282,13 @@ def run_als_pipeline_for_dataset(spark, dataset_name: str, item_col: str, param_
         item_col=item_col
     )
 
+    # Lưu tham số tốt nhất (chọn bằng validation) để các bước đối chiếu dùng lại, không tinh chỉnh lại
+    best_params_path = PROJECT_ROOT / "results" / f"als_best_params_{dataset_name}.json"
+    best_params_path.write_text(json.dumps(
+        {"dataset": dataset_name, "rank": best_params["rank"], "regParam": best_params["regParam"],
+         "maxIter": best_params["maxIter"], "seed": 42, "nonnegative": True}, ensure_ascii=False, indent=2),
+        encoding="utf-8")
+
     als_result = {
         "dataset": dataset_name,
         "model": "ALS Matrix Factorization",
@@ -306,9 +331,8 @@ def run_als_pipeline_for_dataset(spark, dataset_name: str, item_col: str, param_
                             .join(meta_recipes, on=item_col, how="left")
         
         recs_out_path = get_path("results", "", "recommendations_food_com.parquet")
-        recs_local_path = PROJECT_ROOT / "data" / "results" / "recommendations_food_com.parquet"
         exploded.write.mode("overwrite").parquet(recs_out_path)
-        exploded.write.mode("overwrite").parquet(str(recs_local_path))
+        save_local_copies(exploded, "recommendations_food_com.parquet")
     else:
         # ViFoodRec: lấy cho toàn bộ 101 user
         user_recs = generate_als_recommendations(best_model, test_users, train_df, item_col, k=10)
@@ -319,9 +343,8 @@ def run_als_pipeline_for_dataset(spark, dataset_name: str, item_col: str, param_
                             .join(meta_foods, on=item_col, how="left")
         
         recs_out_path = get_path("results", "", "recommendations_food_vietnam.parquet")
-        recs_local_path = PROJECT_ROOT / "data" / "results" / "recommendations_food_vietnam.parquet"
         exploded.coalesce(1).write.mode("overwrite").parquet(recs_out_path)
-        exploded.coalesce(1).write.mode("overwrite").parquet(str(recs_local_path))
+        save_local_copies(exploded, "recommendations_food_vietnam.parquet")
 
     print(f"-> Đã xuất tệp recommendations thành công!")
 
@@ -331,23 +354,33 @@ def run_als_pipeline_for_dataset(spark, dataset_name: str, item_col: str, param_
         top_items_limit = train_df.groupBy(item_col).count().orderBy(F.col("count").desc()).limit(20000).select(item_col)
         neighbors_df = compute_item_cosine_neighbors(spark, best_model, item_col, limit_items=top_items_limit, top_k=10)
         item_nb_path = get_path("results", "", "item_neighbors_food_com.parquet")
-        item_nb_local = PROJECT_ROOT / "data" / "results" / "item_neighbors_food_com.parquet"
         neighbors_df.write.mode("overwrite").parquet(item_nb_path)
-        neighbors_df.write.mode("overwrite").parquet(str(item_nb_local))
+        save_local_copies(neighbors_df, "item_neighbors_food_com.parquet")
     else:
         # Toàn bộ 4.000 món của ViFoodRec
         neighbors_df = compute_item_cosine_neighbors(spark, best_model, item_col, limit_items=None, top_k=10)
         item_nb_path = get_path("results", "", "item_neighbors_food_vietnam.parquet")
-        item_nb_local = PROJECT_ROOT / "data" / "results" / "item_neighbors_food_vietnam.parquet"
         neighbors_df.coalesce(1).write.mode("overwrite").parquet(item_nb_path)
-        neighbors_df.coalesce(1).write.mode("overwrite").parquet(str(item_nb_local))
+        save_local_copies(neighbors_df, "item_neighbors_food_vietnam.parquet")
 
     print(f"-> Đã xuất tệp item_neighbors thành công!")
 
     return als_result, rating_metrics["rmse_per_rating"]
 
 
-def main():
+def merge_keep_other_datasets(new_df, csv_path, dataset_name):
+    """
+    Thay các dòng của dataset_name trong csv_path bằng new_df, giữ nguyên dòng của bộ khác.
+    Dùng khi chỉ chạy lại ViFoodRec (--only vietnam) mà Food.com đã kiểm chứng và không chạy lại.
+    """
+    if csv_path.exists():
+        old_df = pd.read_csv(csv_path)
+        kept = old_df[old_df["dataset"] != dataset_name]
+        return pd.concat([kept, new_df], ignore_index=True)
+    return new_df
+
+
+def main(only=None):
     print("=" * 70)
     print("CHƯƠNG TRÌNH HUẤN LUYỆN, TINH CHỈNH VÀ ĐÁNH GIÁ MÔ HÌNH ALS (P7)")
     print(f"Chế độ lưu trữ: {get_storage_mode()}")
@@ -390,32 +423,34 @@ def main():
     # =========================================================================
     # Lưới tham số đại diện cho Food.com (565k train, 30k users, 78k món)
     # Rút gọn hợp lý để đảm bảo hoàn thành nhanh chóng trên cụm 4 cores
-    fc_param_grid = [
-        {"rank": 10, "regParam": 0.01, "maxIter": 10},
-        {"rank": 10, "regParam": 0.05, "maxIter": 10},
-        {"rank": 10, "regParam": 0.1,  "maxIter": 10},
-        {"rank": 10, "regParam": 0.2,  "maxIter": 10},
-        {"rank": 20, "regParam": 0.05, "maxIter": 10},
-        {"rank": 20, "regParam": 0.1,  "maxIter": 10},
-        {"rank": 20, "regParam": 0.05, "maxIter": 15},
-        {"rank": 50, "regParam": 0.1,  "maxIter": 10}
-    ]
+    # Bỏ qua khi --only vietnam: Food.com đã kiểm chứng, giữ nguyên mô hình và kết quả cũ.
+    if only != "vietnam":
+        fc_param_grid = [
+            {"rank": 10, "regParam": 0.01, "maxIter": 10},
+            {"rank": 10, "regParam": 0.05, "maxIter": 10},
+            {"rank": 10, "regParam": 0.1,  "maxIter": 10},
+            {"rank": 10, "regParam": 0.2,  "maxIter": 10},
+            {"rank": 20, "regParam": 0.05, "maxIter": 10},
+            {"rank": 20, "regParam": 0.1,  "maxIter": 10},
+            {"rank": 20, "regParam": 0.05, "maxIter": 15},
+            {"rank": 50, "regParam": 0.1,  "maxIter": 10}
+        ]
 
-    fc_als_res, fc_breakdown = run_als_pipeline_for_dataset(
-        spark=spark,
-        dataset_name="food_com",
-        item_col="recipe_id",
-        param_grid=fc_param_grid,
-        is_food_com=True
-    )
-    als_results.append(fc_als_res)
-    for r_val, r_rmse in fc_breakdown.items():
-        rmse_breakdowns.append({
-            "dataset": "food_com",
-            "model": "ALS Matrix Factorization",
-            "rating_level": r_val,
-            "rmse": round(r_rmse, 4)
-        })
+        fc_als_res, fc_breakdown = run_als_pipeline_for_dataset(
+            spark=spark,
+            dataset_name="food_com",
+            item_col="recipe_id",
+            param_grid=fc_param_grid,
+            is_food_com=True
+        )
+        als_results.append(fc_als_res)
+        for r_val, r_rmse in fc_breakdown.items():
+            rmse_breakdowns.append({
+                "dataset": "food_com",
+                "model": "ALS Matrix Factorization",
+                "rating_level": r_val,
+                "rmse": round(r_rmse, 4)
+            })
 
     # =========================================================================
     # 3. TẠO BẢNG SO SÁNH TỔNG HỢP MODEL_COMPARISON.CSV
@@ -431,7 +466,13 @@ def main():
     # Lấy các cột chung
     common_cols = ["dataset", "model", "RMSE", "MAE", "Precision@10", "Recall@10", "coverage"]
     als_common = als_df[common_cols]
-    
+
+    if only == "vietnam":
+        # Giữ dòng ALS Food.com cũ (không chạy lại), thêm dòng ALS ViFoodRec mới
+        old_comp = pd.read_csv(PROJECT_ROOT / "results" / "model_comparison.csv")
+        old_als_other = old_comp[(old_comp["model"] == "ALS Matrix Factorization") & (old_comp["dataset"] != "food_vietnam")]
+        als_common = pd.concat([als_common, old_als_other[common_cols]], ignore_index=True)
+
     comparison_df = pd.concat([base_df, als_common], ignore_index=True)
 
     out_comp_data = PROJECT_ROOT / "data" / "results" / "model_comparison.csv"
@@ -446,6 +487,8 @@ def main():
     breakdown_df = pd.DataFrame(rmse_breakdowns)
     out_bk_data = PROJECT_ROOT / "data" / "results" / "als_rmse_breakdown.csv"
     out_bk_res = PROJECT_ROOT / "results" / "als_rmse_breakdown.csv"
+    if only == "vietnam":
+        breakdown_df = merge_keep_other_datasets(breakdown_df, out_bk_res, "food_vietnam")
     breakdown_df.to_csv(out_bk_data, index=False)
     breakdown_df.to_csv(out_bk_res, index=False)
 
@@ -459,4 +502,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--only", choices=["vietnam"], default=None,
+                        help="Chỉ chạy lại ViFoodRec, giữ nguyên mô hình và kết quả Food.com")
+    main(only=parser.parse_args().only)

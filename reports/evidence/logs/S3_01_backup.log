@@ -1,0 +1,13 @@
+=== Sao lưu trước S3 Wed Oct 14 20:56:14 SEAST 2026 ===
+3.0M	/tmp/bk3/data_results_hdfs
+264K	/tmp/bk3/models_food_vietnam
+364K	/tmp/bk3/splits_food_vietnam
+--- nội dung
+19M	backup_v3_truoc_S3/app_data
+2.7M	backup_v3_truoc_S3/data_results
+3.6M	backup_v3_truoc_S3/hdfs
+51K	backup_v3_truoc_S3/reports_evidence
+9.4M	backup_v3_truoc_S3/reports_figures
+2.7M	backup_v3_truoc_S3/results
+4.3M	backup_v3_truoc_S3/web_data
+232

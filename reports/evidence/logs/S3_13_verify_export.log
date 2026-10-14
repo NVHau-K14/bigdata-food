@@ -1,0 +1,159 @@
+===========================================================================
+CHƯƠNG TRÌNH KIỂM CHỨNG XUẤT DỮ LIỆU ĐỘC LẬP CHO DASHBOARD (P10)
+Đường dẫn kiểm tra: /home/jovyan/work/app/data
+===========================================================================
+
+======================================================================
+PHẦN 1: KIỂM TRA SỰ TỒN TẠI VÀ DUNG LƯỢNG FILE
+======================================================================
+  [PASS] Thư mục app/data/ tồn tại
+         └─ /home/jovyan/work/app/data
+  [PASS] File bắt buộc: foods_vietnam.parquet
+         └─ Kích thước: 3360.98 KB
+  [PASS] File bắt buộc: recipes_foodcom_sample.parquet
+         └─ Kích thước: 10512.04 KB
+  [PASS] File bắt buộc: recommendations_vietnam.parquet
+         └─ Kích thước: 8.34 KB
+  [PASS] File bắt buộc: recommendations_foodcom_sample.parquet
+         └─ Kích thước: 254.50 KB
+  [PASS] File bắt buộc: item_neighbors_vietnam.parquet
+         └─ Kích thước: 98.08 KB
+  [PASS] File bắt buộc: item_neighbors_foodcom.parquet
+         └─ Kích thước: 1552.00 KB
+  [PASS] File bắt buộc: user_clusters_vietnam.parquet
+         └─ Kích thước: 2.78 KB
+  [PASS] File bắt buộc: user_clusters_foodcom.parquet
+         └─ Kích thước: 194.60 KB
+  [PASS] File bắt buộc: food_clusters_vietnam.parquet
+         └─ Kích thước: 91.18 KB
+  [PASS] File bắt buộc: cluster_profiles_food_vietnam.csv
+         └─ Kích thước: 0.73 KB
+  [PASS] File bắt buộc: cluster_profiles_food_com.csv
+         └─ Kích thước: 1.11 KB
+  [PASS] File bắt buộc: food_cluster_profiles_vietnam.csv
+         └─ Kích thước: 0.78 KB
+  [PASS] File bắt buộc: kmeans_tuning.csv
+         └─ Kích thước: 0.70 KB
+  [PASS] File bắt buộc: model_comparison.csv
+         └─ Kích thước: 0.54 KB
+  [PASS] File bắt buộc: als_tuning_food_vietnam.csv
+         └─ Kích thước: 1.01 KB
+  [PASS] File bắt buộc: als_tuning_food_com.csv
+         └─ Kích thước: 0.35 KB
+  [PASS] File bắt buộc: scalability.csv
+         └─ Kích thước: 2.54 KB
+  [PASS] File bắt buộc: storage_benchmark.csv
+         └─ Kích thước: 1.73 KB
+  [PASS] File bắt buộc: cleaning_log.csv
+         └─ Kích thước: 2.34 KB
+  [PASS] File bắt buộc: baseline_metrics.csv
+         └─ Kích thước: 0.40 KB
+  [PASS] Thư mục app/data/eda/ tồn tại
+  [PASS] Số lượng bảng EDA tổng hợp (đạt 20/20 file)
+  [PASS] Tổng dung lượng app/data/ < 100 MB
+         └─ Thực tế đo được: 17.78 MB (Chỉ chiếm 17.8% giới hạn)
+
+======================================================================
+PHẦN 2: KIỂM TRA SCHEMA VÀ CÁC CỘT BẮT BUỘC
+======================================================================
+  [PASS] Cột foods_vietnam.parquet
+         └─ Số dòng: 4,000 | Thiếu: []
+  [PASS] Số lượng món ViFoodRec chính xác 4,000 món
+         └─ Thực tế: 4,000
+  [PASS] Cột recipes_foodcom_sample.parquet
+         └─ Số dòng: 78,171 | Thiếu: []
+  [PASS] Quy mô recipes_foodcom_sample bao phủ đầy đủ món sạch
+         └─ Thực tế: 78,171 món
+  [PASS] Cột recommendations_vietnam.parquet
+         └─ Số dòng: 1,010 | Thiếu: []
+  [PASS] recommendations_vietnam có đủ 101 user
+         └─ Thực tế: 101 users, 1010 dòng
+  [PASS] Mỗi user có đúng 10 gợi ý (101 x 10 = 1,010 dòng)
+         └─ Thực tế: 1,010 dòng
+  [PASS] Cột recommendations_foodcom_sample.parquet
+         └─ Số dòng: 50,000 | Thiếu: []
+  [PASS] recommendations_foodcom_sample có đủ 5,000 user mẫu
+         └─ Thực tế: 5000 users
+  [PASS] Đúng 50,000 bản ghi gợi ý (5,000 x 10)
+         └─ Thực tế: 50,000 dòng
+  [PASS] Cột item_neighbors_vietnam.parquet
+         └─ Số dòng: 4,000 | Thiếu: []
+  [PASS] item_neighbors_vietnam có đủ 4,000 món
+         └─ Thực tế: 4,000
+  [PASS] Cột item_neighbors_foodcom.parquet
+         └─ Số dòng: 20,000 | Thiếu: []
+  [PASS] item_neighbors_foodcom có đúng 20,000 món phổ biến
+         └─ Thực tế: 20,000
+  [PASS] Cột user_clusters_vietnam.parquet
+         └─ Số dòng: 101
+  [PASS] user_clusters_vietnam có đủ 101 user
+         └─ Thực tế: 101
+  [PASS] Cột user_clusters_foodcom.parquet
+         └─ Số dòng: 30772
+  [PASS] user_clusters_foodcom có đủ 30,772 users tập Train
+         └─ Thực tế: 30772
+  [PASS] Cột food_clusters_vietnam.parquet
+         └─ Số dòng: 4000
+  [PASS] food_clusters_vietnam có đủ 4,000 món
+         └─ Thực tế: 4000
+
+======================================================================
+PHẦN 3: KIỂM TRA TOÀN VẸN KHÓA NGOẠI (FOREIGN KEY INTEGRITY)
+======================================================================
+  [PASS] user_id trong recommendations_vietnam khớp 100% với user_clusters_vietnam
+         └─ Số user lệch: 0
+  [PASS] food_id trong recommendations_vietnam tồn tại trong foods_vietnam
+         └─ Số food_id không khớp: 0
+  [PASS] food_id trong item_neighbors_vietnam tồn tại trong foods_vietnam
+         └─ Số food_id không khớp: 0
+  [PASS] Tất cả neighbor_ids trong item_neighbors_vietnam tồn tại trong foods_vietnam
+         └─ Số neighbor_id không tồn tại: 0
+  [PASS] recipe_id trong recommendations_foodcom_sample tồn tại trong recipes_foodcom_sample
+         └─ Số recipe_id không khớp: 0
+  [PASS] recipe_id trong item_neighbors_foodcom tồn tại trong recipes_foodcom_sample
+         └─ Số recipe_id không khớp: 0
+  [PASS] Tất cả neighbor_ids trong item_neighbors_foodcom tồn tại trong recipes_foodcom_sample
+         └─ Số neighbor_id không tồn tại: 0
+
+======================================================================
+PHẦN 4: KIỂM TRA BẢO MẬT VÀ LÀM SẠCH (KHÔNG VĂN BẢN REVIEW THÔ)
+======================================================================
+  [PASS] File foods_vietnam.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File food_clusters_vietnam.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File item_neighbors_foodcom.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File item_neighbors_food_com.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File item_neighbors_food_vietnam.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File item_neighbors_vietnam.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File recipes_foodcom_sample.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File recommendations_foodcom_sample.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File recommendations_food_com.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File recommendations_food_vietnam.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File recommendations_vietnam.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File user_clusters_foodcom.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File user_clusters_food_com.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File user_clusters_food_vietnam.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+  [PASS] File user_clusters_vietnam.parquet không chứa cột review thô
+         └─ Sạch hoàn toàn
+
+===========================================================================
+TỔNG KẾT KẾT QUẢ KIỂM CHỨNG GIAI ĐOẠN P10:
+Tổng số tiêu chí kiểm tra: 66
+Số tiêu chí ĐẠT:           66 / 66 (100.0%)
+Số tiêu chí THẤT BẠI:      0
+===========================================================================
+
+===> KẾT LUẬN: TẤT CẢ CÁC KIỂM TRA ĐỀU ĐẠT 100%! HỢP ĐỒNG DỮ LIỆU HỢP LỆ.

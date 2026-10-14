@@ -1,0 +1,10 @@
+variant,description,n_rows_clean,n_levels,n_train,n_test,model,RMSE,MAE,coverage
+chinh,"Giữ cả 11 mức 0,0 đến 5,0 (kết quả chính)",182631,11,146012,18415,Global Mean,1.5706,1.3502,100.0
+chinh,"Giữ cả 11 mức 0,0 đến 5,0 (kết quả chính)",182631,11,146012,18415,Smoothed Item Mean,1.5873,1.369,100.0
+chinh,"Giữ cả 11 mức 0,0 đến 5,0 (kết quả chính)",182631,11,146012,18415,ALS Matrix Factorization,1.6654,1.4185,100.0
+A_bo_0_0,"Bỏ riêng điểm 0,0",166128,10,132771,16776,Global Mean,1.4325,1.2464,100.0
+A_bo_0_0,"Bỏ riêng điểm 0,0",166128,10,132771,16776,Smoothed Item Mean,1.4507,1.2537,100.0
+A_bo_0_0,"Bỏ riêng điểm 0,0",166128,10,132771,16776,ALS Matrix Factorization,1.5337,1.3043,100.0
+B_giu_1_den_5,"Quy tắc cũ: chỉ giữ điểm 1,0 đến 5,0",149431,9,119416,15080,Global Mean,1.2895,1.1103,100.0
+B_giu_1_den_5,"Quy tắc cũ: chỉ giữ điểm 1,0 đến 5,0",149431,9,119416,15080,Smoothed Item Mean,1.3058,1.128,100.0
+B_giu_1_den_5,"Quy tắc cũ: chỉ giữ điểm 1,0 đến 5,0",149431,9,119416,15080,ALS Matrix Factorization,1.3929,1.1822,100.0

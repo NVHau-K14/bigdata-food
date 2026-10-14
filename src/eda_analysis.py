@@ -77,8 +77,8 @@ def run_eda():
     # Vẽ Biểu đồ 1
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
     bars1 = ax1.bar(fc_dist_df["rating"].astype(str), fc_dist_df["count"], color="#e67e22", alpha=0.85)
-    ax1.set_title("Phân phối Điểm Đánh giá: Food.com\n(706,514 tương tác - Thiên lệch mạnh 5 sao)", fontsize=11, fontweight="bold")
-    ax1.set_xlabel("Mức điểm đánh giá (Sao ⭐)", fontsize=10)
+    ax1.set_title(f"Phân phối điểm đánh giá: Food.com\n({fc_total:,} tương tác, điểm 1 đến 5)", fontsize=11, fontweight="bold")
+    ax1.set_xlabel("Mức điểm đánh giá (sao)", fontsize=10)
     ax1.set_ylabel("Số lượng đánh giá", fontsize=10)
     ax1.yaxis.set_major_formatter(ticker.FuncFormatter(lambda y, _: f"{int(y):,}"))
     for b, pct in zip(bars1, fc_dist_df["pct"]):
@@ -87,8 +87,8 @@ def run_eda():
                      xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
                      
     bars2 = ax2.bar(vn_dist_df["rating"].astype(str), vn_dist_df["count"], color="#27ae60", alpha=0.85)
-    ax2.set_title("Phân phối Điểm Đánh giá: ViFoodRec\n(149,431 tương tác - Phân phối đều nhân tạo)", fontsize=11, fontweight="bold")
-    ax2.set_xlabel("Mức điểm đánh giá (Sao ⭐)", fontsize=10)
+    ax2.set_title(f"Phân phối điểm đánh giá: ViFoodRec\n({vn_total:,} tương tác, 11 mức điểm 0,0 đến 5,0)", fontsize=11, fontweight="bold")
+    ax2.set_xlabel("Mức điểm đánh giá (sao)", fontsize=10)
     ax2.set_ylabel("Số lượng đánh giá", fontsize=10)
     ax2.yaxis.set_major_formatter(ticker.FuncFormatter(lambda y, _: f"{int(y):,}"))
     for b, pct in zip(bars2, vn_dist_df["pct"]):
@@ -163,14 +163,14 @@ def run_eda():
     ax1.set_title("Top 10 Món Ăn Phổ Biến Nhất (Food.com)\n(Xếp theo số lượt đánh giá)", fontsize=11, fontweight="bold")
     ax1.set_xlabel("Số lượt đánh giá", fontsize=10)
     for idx, (val, avg_r) in enumerate(zip(top_popular_fc["num_ratings"][::-1], top_popular_fc["avg_rating"][::-1])):
-        ax1.annotate(f"{val:,} lượt (TB: {avg_r:.2f}⭐)", xy=(val, idx), xytext=(5, -2), textcoords="offset points", fontsize=8, fontweight="bold")
+        ax1.annotate(f"{val:,} lượt (TB: {avg_r:.2f} sao)", xy=(val, idx), xytext=(5, -2), textcoords="offset points", fontsize=8, fontweight="bold")
         
     ax2.barh(top_highest_fc["name"][::-1], top_highest_fc["avg_rating"][::-1], color="#f39c12", alpha=0.85)
     ax2.set_xlim(4.8, 5.05)
     ax2.set_title("Top 10 Món Ăn Điểm Cao Nhất (Food.com)\n(Chỉ xét món có ≥ 20 lượt đánh giá)", fontsize=11, fontweight="bold")
-    ax2.set_xlabel("Điểm đánh giá trung bình (Sao ⭐)", fontsize=10)
+    ax2.set_xlabel("Điểm đánh giá trung bình (sao)", fontsize=10)
     for idx, (val, n_cnt) in enumerate(zip(top_highest_fc["avg_rating"][::-1], top_highest_fc["num_ratings"][::-1])):
-        ax2.annotate(f"{val:.2f}⭐ ({n_cnt} lượt)", xy=(val, idx), xytext=(5, -2), textcoords="offset points", fontsize=8, fontweight="bold")
+        ax2.annotate(f"{val:.2f} sao ({n_cnt} lượt)", xy=(val, idx), xytext=(5, -2), textcoords="offset points", fontsize=8, fontweight="bold")
         
     plt.tight_layout()
     plt.savefig(figures_dir / "eda_03_top_recipes_food_com.png", dpi=300)
@@ -199,14 +199,14 @@ def run_eda():
     ax1.set_title("Top 10 Món Ăn Được Đánh Giá Nhiều Nhất (ViFoodRec)", fontsize=11, fontweight="bold")
     ax1.set_xlabel("Số lượt đánh giá", fontsize=10)
     for idx, (val, avg_r) in enumerate(zip(top_popular_vn["num_ratings"][::-1], top_popular_vn["avg_rating"][::-1])):
-        ax1.annotate(f"{val} lượt (TB: {avg_r:.2f}⭐)", xy=(val, idx), xytext=(5, -2), textcoords="offset points", fontsize=8, fontweight="bold")
+        ax1.annotate(f"{val} lượt (TB: {avg_r:.2f} sao)", xy=(val, idx), xytext=(5, -2), textcoords="offset points", fontsize=8, fontweight="bold")
         
     ax2.barh(top_highest_vn["dish_name"][::-1], top_highest_vn["avg_rating"][::-1], color="#d35400", alpha=0.85)
-    ax2.set_xlim(3.0, 4.2)
+    ax2.set_xlim(0, 5.0)
     ax2.set_title("Top 10 Món Ăn Điểm Cao Nhất (ViFoodRec)", fontsize=11, fontweight="bold")
-    ax2.set_xlabel("Điểm đánh giá trung bình (Sao ⭐)", fontsize=10)
+    ax2.set_xlabel("Điểm đánh giá trung bình (sao)", fontsize=10)
     for idx, (val, n_cnt) in enumerate(zip(top_highest_vn["avg_rating"][::-1], top_highest_vn["num_ratings"][::-1])):
-        ax2.annotate(f"{val:.2f}⭐ ({n_cnt} lượt)", xy=(val, idx), xytext=(5, -2), textcoords="offset points", fontsize=8, fontweight="bold")
+        ax2.annotate(f"{val:.2f} sao ({n_cnt} lượt)", xy=(val, idx), xytext=(5, -2), textcoords="offset points", fontsize=8, fontweight="bold")
         
     plt.tight_layout()
     plt.savefig(figures_dir / "eda_04_top_foods_vifoodrec.png", dpi=300)
@@ -234,7 +234,7 @@ def run_eda():
     
     ax2 = ax1.twinx()
     color = "#c0392b"
-    ax2.set_ylabel("Điểm đánh giá trung bình (Sao ⭐)", color=color, fontsize=11, fontweight="bold")
+    ax2.set_ylabel("Điểm đánh giá trung bình (sao)", color=color, fontsize=11, fontweight="bold")
     line = ax2.plot(df_fc_time["year"], df_fc_time["avg_rating"], color=color, lw=2.5, marker="o", label="Điểm trung bình")
     ax2.tick_params(axis="y", labelcolor=color)
     ax2.set_ylim(4.4, 4.9)
@@ -320,20 +320,20 @@ def run_eda():
     bars1 = ax1.bar(time_grouped["time_group"], time_grouped["avg_rating"], color="#3498db", alpha=0.85)
     ax1.set_ylim(4.5, 4.85)
     ax1.set_title("Điểm Đánh Giá theo Nhóm Thời Gian Nấu (Food.com)", fontsize=11, fontweight="bold")
-    ax1.set_ylabel("Điểm đánh giá trung bình (Sao ⭐)", fontsize=10)
+    ax1.set_ylabel("Điểm đánh giá trung bình (sao)", fontsize=10)
     plt.setp(ax1.get_xticklabels(), rotation=20, ha="right", fontsize=8)
     for b in bars1:
         h = b.get_height()
-        ax1.annotate(f"{h:.2f}⭐", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
+        ax1.annotate(f"{h:.2f} sao", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
         
     bars2 = ax2.bar(calo_grouped["calo_group"], calo_grouped["avg_rating"], color="#e67e22", alpha=0.85)
     ax2.set_ylim(4.5, 4.85)
     ax2.set_title("Điểm Đánh Giá theo Nhóm Năng Lượng Calo (Food.com)", fontsize=11, fontweight="bold")
-    ax2.set_ylabel("Điểm đánh giá trung bình (Sao ⭐)", fontsize=10)
+    ax2.set_ylabel("Điểm đánh giá trung bình (sao)", fontsize=10)
     plt.setp(ax2.get_xticklabels(), rotation=20, ha="right", fontsize=8)
     for b in bars2:
         h = b.get_height()
-        ax2.annotate(f"{h:.2f}⭐", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
+        ax2.annotate(f"{h:.2f} sao", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
         
     plt.tight_layout()
     plt.savefig(figures_dir / "eda_07_food_com_time_calo_rating.png", dpi=300)
@@ -395,12 +395,12 @@ def run_eda():
         ax1.annotate(f"{int(h):,} món\n({h/4000*100:.1f}%)", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=9, fontweight="bold")
         
     bars2 = ax2.bar(vn_type_stats["dish_type"], vn_type_stats["mean_score"], color=["#c0392b", "#27ae60"], alpha=0.85, width=0.5)
-    ax2.set_ylim(2.5, 3.5)
+    ax2.set_ylim(0, 5.0)
     ax2.set_title("Điểm Đánh Giá Trung Bình: Món Mặn vs Món Chay", fontsize=11, fontweight="bold")
-    ax2.set_ylabel("Điểm đánh giá trung bình (Sao ⭐)", fontsize=10)
+    ax2.set_ylabel("Điểm đánh giá trung bình (sao)", fontsize=10)
     for b in bars2:
         h = b.get_height()
-        ax2.annotate(f"{h:.2f} ⭐", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=9, fontweight="bold")
+        ax2.annotate(f"{h:.2f} sao", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=9, fontweight="bold")
         
     plt.tight_layout()
     plt.savefig(figures_dir / "eda_09_vifoodrec_man_vs_chay.png", dpi=300)
@@ -436,20 +436,20 @@ def run_eda():
     
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
     bars1 = ax1.bar(vn_time_grouped["time_group"], vn_time_grouped["avg_rating"], color="#16a085", alpha=0.85)
-    ax1.set_ylim(2.8, 3.2)
+    ax1.set_ylim(0, 5.0)
     ax1.set_title("Điểm Đánh Giá theo Nhóm Thời Gian Nấu (ViFoodRec)", fontsize=11, fontweight="bold")
-    ax1.set_ylabel("Điểm đánh giá trung bình (Sao ⭐)", fontsize=10)
+    ax1.set_ylabel("Điểm đánh giá trung bình (sao)", fontsize=10)
     for b in bars1:
         h = b.get_height()
-        ax1.annotate(f"{h:.2f}⭐", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
+        ax1.annotate(f"{h:.2f} sao", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
         
     bars2 = ax2.bar(vn_calo_grouped["calo_group"], vn_calo_grouped["avg_rating"], color="#d35400", alpha=0.85)
-    ax2.set_ylim(2.8, 3.2)
+    ax2.set_ylim(0, 5.0)
     ax2.set_title("Điểm Đánh Giá theo Nhóm Calo (ViFoodRec)", fontsize=11, fontweight="bold")
-    ax2.set_ylabel("Điểm đánh giá trung bình (Sao ⭐)", fontsize=10)
+    ax2.set_ylabel("Điểm đánh giá trung bình (sao)", fontsize=10)
     for b in bars2:
         h = b.get_height()
-        ax2.annotate(f"{h:.2f}⭐", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
+        ax2.annotate(f"{h:.2f} sao", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
         
     plt.tight_layout()
     plt.savefig(figures_dir / "eda_10_vifoodrec_time_calo_rating.png", dpi=300)
@@ -480,58 +480,74 @@ def run_eda():
     # EDA 12: SO SÁNH MA TRẬN HAI BỘ DỮ LIỆU
     # ---------------------------------------------------------
     print("\n[13/13] EDA 12: So sánh Ma trận tương tác hai bộ dữ liệu...")
+    def dataset_stats(df, item_col):
+        """Số user, số món, số tương tác, độ thưa, điểm trung bình, trung vị tương tác mỗi user và mỗi món."""
+        n_inter = df.count()
+        per_user = df.groupBy("user_id").agg(spark_count("*").alias("n")).toPandas()["n"]
+        per_item = df.groupBy(item_col).agg(spark_count("*").alias("n")).toPandas()["n"]
+        mean_rating = df.agg(avg("rating")).collect()[0][0]
+        n_users, n_items = len(per_user), len(per_item)
+        sparsity = (1 - n_inter / (n_users * n_items)) * 100
+        return {"users": n_users, "items": n_items, "inter": n_inter, "sparsity": sparsity,
+                "mean": mean_rating, "med_user": float(per_user.median()), "med_item": float(per_item.median())}
+
+    st_fc = dataset_stats(df_fc_inter, "recipe_id")
+    st_vn = dataset_stats(df_vn_rat, "food_id")
+    print(f"   Food.com : {st_fc}")
+    print(f"   ViFoodRec: {st_vn}")
+
     comparison_data = {
         "ChiSo": ["Số User (Users)", "Số Món (Items)", "Số Tương tác (Ratings)", "Độ thưa ma trận (Sparsity %)", "Điểm TB (Mean Rating)", "Trung vị tương tác/User", "Trung vị tương tác/Item"],
-        "Food_com": [30836, 78171, 706514, 99.97, 4.71, 6, 5],
-        "ViFoodRec": [101, 4000, 149431, 63.01, 3.00, 1469, 37]
+        "Food_com": [st_fc["users"], st_fc["items"], st_fc["inter"], round(st_fc["sparsity"], 2), round(st_fc["mean"], 2), st_fc["med_user"], st_fc["med_item"]],
+        "ViFoodRec": [st_vn["users"], st_vn["items"], st_vn["inter"], round(st_vn["sparsity"], 2), round(st_vn["mean"], 2), st_vn["med_user"], st_vn["med_item"]]
     }
     df_comp = pd.DataFrame(comparison_data)
     df_comp.to_csv(eda_results_dir / "eda_12_dataset_comparison.csv", index=False)
-    
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
     metrics = ["User", "Món ăn", "Tương tác"]
-    fc_vals = [30836, 78171, 706514]
-    vn_vals = [101, 4000, 149431]
-    
+    fc_vals = [st_fc["users"], st_fc["items"], st_fc["inter"]]
+    vn_vals = [st_vn["users"], st_vn["items"], st_vn["inter"]]
+
     x = np.arange(len(metrics))
     width = 0.35
     ax1.bar(x - width/2, fc_vals, width, label="Food.com", color="#e67e22", alpha=0.85)
     ax1.bar(x + width/2, vn_vals, width, label="ViFoodRec", color="#27ae60", alpha=0.85)
     ax1.set_yscale("log")
-    ax1.set_title("So sánh Quy mô (Thang Log)", fontsize=11, fontweight="bold")
+    ax1.set_title("So sánh quy mô (thang log)", fontsize=11, fontweight="bold")
     ax1.set_xticks(x)
     ax1.set_xticklabels(metrics, fontsize=10)
-    ax1.set_ylabel("Số lượng (Thang Log)", fontsize=10)
+    ax1.set_ylabel("Số lượng (thang log)", fontsize=10)
     ax1.legend(fontsize=10)
     for b in ax1.patches:
         h = b.get_height()
         ax1.annotate(f"{int(h):,}", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=8, fontweight="bold")
-        
-    sparsities = [99.97, 63.01]
-    labels = ["Food.com\n(99.97% - Rất thưa)", "ViFoodRec\n(63.01% - Rất dày)"]
+
+    sparsities = [st_fc["sparsity"], st_vn["sparsity"]]
+    labels = ["Food.com", "ViFoodRec"]
     bars_sp = ax2.bar(labels, sparsities, color=["#e67e22", "#27ae60"], width=0.45, alpha=0.85)
     ax2.set_ylim(0, 115)
-    ax2.set_title("So sánh Độ Thưa của Ma Trận Tương Tác (%)", fontsize=11, fontweight="bold")
-    ax2.set_ylabel("Độ thưa (%) = 1 - Tương tác / (User x Item)", fontsize=10)
+    ax2.set_title("So sánh độ thưa của ma trận tương tác (%)", fontsize=11, fontweight="bold")
+    ax2.set_ylabel("Độ thưa (%) = 1 - tương tác / (user x món)", fontsize=10)
     for b in bars_sp:
         h = b.get_height()
         ax2.annotate(f"{h:.2f}%", xy=(b.get_x() + b.get_width()/2, h), xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=10, fontweight="bold")
-        
+
     plt.tight_layout()
     plt.savefig(figures_dir / "eda_12_dataset_comparison.png", dpi=300)
     plt.close()
 
     # ---------------------------------------------------------
-    # EDA 13: VIFOODREC KIỂM TRA TÍNH ĐỒNG ĐỀU NHÂN TẠO CỦA RATING
+    # EDA 13: VIFOODREC SO SÁNH PHÂN PHỐI ĐIỂM VỚI PHÂN PHỐI ĐỀU
     # ---------------------------------------------------------
-    print("\n[+] EDA 13: Kiểm tra tính đồng đều nhân tạo (ViFoodRec Uniform Check)...")
+    print("\n[+] EDA 13: So sánh phân phối điểm ViFoodRec với phân phối đều...")
     expected_uniform = 100.0 / len(vn_dist_df)
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.bar(vn_dist_df["rating"].astype(str), vn_dist_df["pct"], color="#2980b9", alpha=0.8, label="Tỷ lệ thực tế từng mức điểm (%)")
-    ax.axhline(expected_uniform, color="#c0392b", linestyle="--", lw=2, label=f"Mức phân phối đều kỳ vọng ({expected_uniform:.2f}%)")
+    ax.axhline(expected_uniform, color="#c0392b", linestyle="--", lw=2, label=f"Phân phối đều ({expected_uniform:.2f}% mỗi mức)")
     ax.set_ylim(0, 15)
-    ax.set_title("Kiểm chứng Tính Đồng Đều Nhân Tạo của Điểm Đánh Giá ViFoodRec\n(Phân phối đều tuyệt đối ~11.1% mỗi mức điểm 1.0 - 5.0)", fontsize=11, fontweight="bold")
-    ax.set_xlabel("Mức điểm đánh giá (Sao ⭐)", fontsize=10)
+    ax.set_title(f"So sánh phân phối điểm ViFoodRec với phân phối đều\n({len(vn_dist_df)} mức điểm 0,0 đến 5,0, bước 0,5; phân phối đều là {expected_uniform:.2f}% mỗi mức)", fontsize=11, fontweight="bold")
+    ax.set_xlabel("Mức điểm đánh giá (sao)", fontsize=10)
     ax.set_ylabel("Tỷ lệ phần trăm (%)", fontsize=10)
     ax.legend(fontsize=10)
     for b, pct in zip(ax.patches, vn_dist_df["pct"]):

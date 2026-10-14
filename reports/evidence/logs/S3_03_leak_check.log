@@ -1,0 +1,15 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/14 14:19:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 2:>                                                          (0 + 1) / 1]                                                                                [Stage 4:>                                                          (0 + 1) / 1]                                                                                [Stage 10:>                                                         (0 + 1) / 1]                                                                                [Stage 76:>                                                         (0 + 1) / 1]                                                                                [Stage 81:>                                                         (0 + 1) / 1]                                                                                Số dòng clean      : 182631
+Số dòng train      : 146012 | cặp phân biệt: 146012
+Số dòng validation : 18204 | cặp phân biệt: 18204
+Số dòng test       : 18415 | cặp phân biệt: 18415
+Tổng train+validation+test: 182631
+Giao cặp (user_id, food_id) train và validation: 0
+Giao cặp (user_id, food_id) train và test: 0
+Giao cặp (user_id, food_id) validation và test: 0
+Số mức điểm phân biệt ở train: 11 | ở validation: 11 | ở test: 11
+User và món ở test/validation không có trong train: 0 0
