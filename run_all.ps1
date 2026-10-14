@@ -1,4 +1,4 @@
-# ==============================================================================
+﻿# ==============================================================================
 # Pipeline thực thi toàn diện đồ án Big Data: Phân tích hành vi & Gợi ý món ăn
 # Không dùng Streamlit - Chuyển sang xuất dữ liệu web và giao diện tĩnh độc lập
 # ==============================================================================
@@ -37,8 +37,13 @@ if (-not $SkipExport) {
     Write-Host "[2/4] Bỏ qua bước xuất dữ liệu theo tùy chọn -SkipExport" -ForegroundColor Yellow
 }
 
-# 3. Kiểm thử đối chiếu số liệu độc lập (verify_web.py)
-Write-Host "[3/4] Kiểm tra đối chiếu số liệu độc lập (src/verify_web.py)..." -ForegroundColor Cyan
+# 3. Kiểm thử: Chrome hoặc Edge headless đọc văn bản hiển thị (verify_web_ui.mjs), rồi đối chiếu số liệu (verify_web.py)
+Write-Host "[3/4] Kiểm tra giao diện và đối chiếu số liệu (src/verify_web_ui.mjs, src/verify_web.py)..." -ForegroundColor Cyan
+node src/verify_web_ui.mjs
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Kiểm tra giao diện thất bại! Dừng thực thi."
+    exit $LASTEXITCODE
+}
 & $pythonCmd src/verify_web.py
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Kiểm tra đối chiếu số liệu thất bại (có chênh lệch với dữ liệu gốc)! Dừng thực thi."

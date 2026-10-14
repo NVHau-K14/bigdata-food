@@ -1,0 +1,71 @@
+﻿dataset,cluster,rank,item_id,name,count,calories,time,dish_type
+food_com,0,1,39087,creamy cajun chicken pasta,73,719.1,25,
+food_com,0,2,89204,crock pot chicken with black beans   cream cheese,61,679.2,243,
+food_com,0,3,27208,to die for crock pot roast,50,295.2,545,
+food_com,0,4,54257,yes  virginia there is a great meatloaf,46,493.1,80,
+food_com,0,5,28148,oven fried chicken chimichangas,35,353.9,45,
+food_com,0,6,82102,kittencal s moist cheddar garlic oven fried chicken breast,33,452.1,60,
+food_com,0,7,32204,whatever floats your boat  brownies,32,390.7,35,
+food_com,0,8,22782,jo mama s world famous spaghetti,31,555.9,80,
+food_com,0,9,33919,creamy burrito casserole,31,512.6,50,
+food_com,0,10,68955,japanese mum s chicken,31,313.1,45,
+food_com,1,1,89204,crock pot chicken with black beans   cream cheese,220,679.2,243,
+food_com,1,2,27208,to die for crock pot roast,216,295.2,545,
+food_com,1,3,39087,creamy cajun chicken pasta,183,719.1,25,
+food_com,1,4,69173,kittencal s italian melt in your mouth meatballs,174,1312.6,50,
+food_com,1,5,22782,jo mama s world famous spaghetti,157,555.9,80,
+food_com,1,6,32204,whatever floats your boat  brownies,155,390.7,35,
+food_com,1,7,54257,yes  virginia there is a great meatloaf,148,493.1,80,
+food_com,1,8,67256,best ever banana cake with cream cheese frosting,136,503.5,75,
+food_com,1,9,33671,crock pot whole chicken,112,327.0,1380,
+food_com,1,10,33919,creamy burrito casserole,109,512.6,50,
+food_com,2,1,32614,fudge crinkles  a great 4 ingredient cake mix cookie,70,110.8,15,
+food_com,2,2,32204,whatever floats your boat  brownies,68,390.7,35,
+food_com,2,3,39087,creamy cajun chicken pasta,63,719.1,25,
+food_com,2,4,25885,banana banana bread,59,233.8,75,
+food_com,2,5,2886,best banana bread,58,272.8,65,
+food_com,2,6,29679,reeses squares   5 ingredients   no bake  reese s,53,222.8,15,
+food_com,2,7,28148,oven fried chicken chimichangas,52,353.9,45,
+food_com,2,8,33919,creamy burrito casserole,52,512.6,50,
+food_com,2,9,54257,yes  virginia there is a great meatloaf,52,493.1,80,
+food_com,2,10,68955,japanese mum s chicken,51,313.1,45,
+food_com,3,1,27208,to die for crock pot roast,521,295.2,545,
+food_com,3,2,89204,crock pot chicken with black beans   cream cheese,483,679.2,243,
+food_com,3,3,32204,whatever floats your boat  brownies,442,390.7,35,
+food_com,3,4,39087,creamy cajun chicken pasta,433,719.1,25,
+food_com,3,5,69173,kittencal s italian melt in your mouth meatballs,415,1312.6,50,
+food_com,3,6,22782,jo mama s world famous spaghetti,396,555.9,80,
+food_com,3,7,28148,oven fried chicken chimichangas,380,353.9,45,
+food_com,3,8,68955,japanese mum s chicken,359,313.1,45,
+food_com,3,9,25885,banana banana bread,350,233.8,75,
+food_com,3,10,54257,yes  virginia there is a great meatloaf,336,493.1,80,
+vifoodrec_users,0,1,1380,Bánh Khoai Lang,11,301.0,35,Món mặn
+vifoodrec_users,0,2,2621,Mứt Ổi Ngày Tết,11,479.0,20,Món mặn
+vifoodrec_users,0,3,730,Thịt gà nấu long nhãn,10,382.0,40,Món mặn
+vifoodrec_users,0,4,995,Đậu hũ xào nấm,10,518.0,20,Món mặn
+vifoodrec_users,0,5,2675,Bánh Su Kem Nhân Sữa Tươi,10,303.0,40,Món mặn
+vifoodrec_users,0,6,3299,Bao Tử Cá Xào Cải Chua,10,576.0,40,Món mặn
+vifoodrec_users,0,7,347,Chả mực bánh xe chiên giòn,9,364.0,30,Món mặn
+vifoodrec_users,0,8,408,Canh đu đủ lá lốt,9,274.0,25,Món mặn
+vifoodrec_users,0,9,713,Bánh canh khoai tím,9,456.0,35,Món mặn
+vifoodrec_users,0,10,770,Lẩu hoa cá kèo,9,308.0,40,Món mặn
+vifoodrec_users,1,1,886,Cá nục kho thơm,11,592.0,40,Món mặn
+vifoodrec_users,1,2,1219,Chè Khoai Lang Tím Sương Sáo,11,441.0,35,Món mặn
+vifoodrec_users,1,3,2478,Gà Rán Bóng Đêm,11,371.0,15,Món mặn
+vifoodrec_users,1,4,644,Tôm viên tuyết hoa,10,525.0,25,Món mặn
+vifoodrec_users,1,5,1411,TrứNg Chiên Rim Sa Tế,10,293.0,40,Món mặn
+vifoodrec_users,1,6,1756,"Cá Lóc Quay Me, Cá Lóc Nướng Mỡ Hành",10,597.0,35,Món mặn
+vifoodrec_users,1,7,2693,Chân Gà Trộn Cóc Xoài Non,10,305.0,35,Món mặn
+vifoodrec_users,1,8,2769,Trứng Gà Nướng Thái Lan,10,187.0,45,Món mặn
+vifoodrec_users,1,9,1522,Bánh Flan,9,512.0,25,Món mặn
+vifoodrec_users,1,10,2112,Cà Phê Bạc Xỉu,9,462.0,40,Món mặn
+vifoodrec_users,2,1,97,Nicoise salad (Salad trứng cá ngừ),10,600.0,50,Món mặn
+vifoodrec_users,2,2,284,Lẩu kim chi chân gà,10,302.0,50,Món mặn
+vifoodrec_users,2,3,518,Salad cam đậu đỏ,10,423.0,30,Món mặn
+vifoodrec_users,2,4,535,Ba chỉ xiên que chiên giòn,10,290.0,30,Món mặn
+vifoodrec_users,2,5,733,Càng cua chiên mè xốt Mayo,10,342.0,45,Món mặn
+vifoodrec_users,2,6,956,Ngưu bàng xào hải sản,10,562.0,25,Món mặn
+vifoodrec_users,2,7,2396,Cá Hường Chiên Xả Ớt,10,432.0,45,Món mặn
+vifoodrec_users,2,8,3032,Bánh Dâu Tây Không Dùng Lò Nướng,10,338.0,40,Món mặn
+vifoodrec_users,2,9,3798,Dưa Cải Muối Chua,10,587.0,20,Món mặn
+vifoodrec_users,2,10,120,Mực xào hoa trứng,9,528.0,25,Món mặn

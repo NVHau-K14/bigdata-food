@@ -1,0 +1,4 @@
+Số món trong foods.csv thô có 'muỗng' dính liền chữ khác: 2568 trên 4000 món
+Mẫu thường gặp: [('muỗngu', 7084), ('muỗngl', 1734), ('muỗngi', 348), ('muỗngc', 10), ('muỗngà', 6), ('muỗngú', 5), ('muỗng/', 3), ('muỗngớ', 3)]
+Ví dụ dòng thô: Thịt má heo: 500g, Hành tím băm: 1 muỗng, Tỏi băm: 1/2 muỗng, Nước táo hộp: 200 muỗngl, Tương cà Heinz: 2 muỗng, Tương ớt: 1 muỗng, Mè trắng
+Số món chứa 'muỗng cà phê' viết đúng: 6

@@ -1,0 +1,144 @@
+======================================================================
+ KIỂM THỬ ĐỐI CHIẾU SỐ LIỆU VÀ NỘI DUNG DASHBOARD WEB (src/verify_web.py)
+======================================================================
+
+--- Nhóm 0: bảng nhãn dùng chung ---
+[DAT] labels.js khớp src/web_labels.py (loại món)
+[DAT] labels.js khớp src/web_labels.py (tên mô hình)
+
+--- Nhóm 1: trang Dữ liệu (cleaning_log.csv, eda_12, eda_01) ---
+[DAT] ViFoodRec dòng thô: 182.678 : trang du-lieu
+[DAT] ViFoodRec loại khóa ngoại: Loại 47 dòng : trang du-lieu
+[DAT] ViFoodRec dòng sạch: 182.631 : trang du-lieu
+[DAT] ViFoodRec K-core hội tụ: Đã hội tụ sau 1 vòng : trang du-lieu
+[DAT] Food.com dòng thô: 1.132.367 : trang du-lieu
+[DAT] Food.com loại điểm 0: Loại 60.847 dòng : trang du-lieu
+[DAT] Food.com loại K-core: Loại 365.006 dòng sau 5 vòng : trang du-lieu
+[DAT] Phễu ViFoodRec không còn bước loại điểm 0,0 và 0,5 (A5)
+[DAT] Số người dùng (ViFoodRec): 101 : trang du-lieu
+[DAT] Số người dùng (Food.com): 30.836 : trang du-lieu
+[DAT] Số món (ViFoodRec): 4.000 : trang du-lieu
+[DAT] Số món (Food.com): 78.171 : trang du-lieu
+[DAT] Số đánh giá (ViFoodRec): 182.631 : trang du-lieu
+[DAT] Số đánh giá (Food.com): 706.514 : trang du-lieu
+[DAT] Độ thưa của ma trận (ViFoodRec): 54,79% : trang du-lieu
+[DAT] Độ thưa của ma trận (Food.com): 99,97% : trang du-lieu
+[DAT] Điểm trung bình (ViFoodRec): 2,50 : trang du-lieu
+[DAT] Điểm trung bình (Food.com): 4,71 : trang du-lieu
+[DAT] Trung vị đánh giá mỗi người (ViFoodRec): 1.795 : trang du-lieu
+[DAT] Trung vị đánh giá mỗi người (Food.com): 6 : trang du-lieu
+[DAT] Trung vị đánh giá mỗi món (ViFoodRec): 46 : trang du-lieu
+[DAT] Trung vị đánh giá mỗi món (Food.com): 5 : trang du-lieu
+[DAT] Phần trăm mức điểm nhỏ nhất ViFoodRec: 8,99% : trang du-lieu
+[DAT] Phần trăm mức điểm lớn nhất ViFoodRec: 9,23% : trang du-lieu
+[DAT] Phân phối ViFoodRec có 11 mức điểm từ 0,0 đến 5,0 (A5)
+[DAT] Food.com 5 sao: 78,4% : trang du-lieu
+
+--- Nhóm 2: trang Hệ thống (storage_benchmark.csv, scalability.csv, docker-compose.yml) ---
+[DAT] Đánh giá thô: CSV: 333,25 MB : trang he-thong-luu-tru
+[DAT] Đánh giá thô: Parquet: 189,79 MB : trang he-thong-luu-tru
+[DAT] Đánh giá thô: tỷ lệ nén: 1,76 lần : trang he-thong-luu-tru
+[DAT] Công thức thô: CSV: 280,88 MB : trang he-thong-luu-tru
+[DAT] Công thức thô: Parquet: 120,25 MB : trang he-thong-luu-tru
+[DAT] Công thức thô: tỷ lệ nén: 2,34 lần : trang he-thong-luu-tru
+[DAT] Đánh giá sạch: CSV: 19,11 MB : trang he-thong-luu-tru
+[DAT] Đánh giá sạch: Parquet: 4,56 MB : trang he-thong-luu-tru
+[DAT] Đánh giá sạch: tỷ lệ nén: 4,19 lần : trang he-thong-luu-tru
+[DAT] Công thức sạch: CSV: 124,92 MB : trang he-thong-luu-tru
+[DAT] Công thức sạch: Parquet: 17,78 MB : trang he-thong-luu-tru
+[DAT] Công thức sạch: tỷ lệ nén: 7,03 lần : trang he-thong-luu-tru
+[DAT] Food.com Q1_Row_Count: thời gian CSV: 0,508 s (độ lệch 0,104) : trang he-thong-luu-tru
+[DAT] Food.com Q1_Row_Count: tăng tốc: 1,72 lần : trang he-thong-luu-tru
+[DAT] Food.com Q2_Avg_Rating_By_Recipe: thời gian CSV: 0,697 s (độ lệch 0,099) : trang he-thong-luu-tru
+[DAT] Food.com Q2_Avg_Rating_By_Recipe: tăng tốc: 2,06 lần : trang he-thong-luu-tru
+[DAT] Food.com Q3_Projection_Filter_3_Cols: thời gian CSV: 0,507 s (độ lệch 0,102) : trang he-thong-luu-tru
+[DAT] Food.com Q3_Projection_Filter_3_Cols: tăng tốc: 1,80 lần : trang he-thong-luu-tru
+[DAT] Phiên bản Hadoop (A3): HDFS 3.3.6 : trang he-thong-luu-tru
+[DAT] Phiên bản Spark (A3): Spark 4.2.0 : trang he-thong-luu-tru
+[DAT] Replication khớp docker-compose.yml (A3): Replication 2 : trang he-thong-luu-tru
+[DAT] Thời gian 10% dữ liệu, 2 Worker: 12,0 s : trang he-thong-mo-rong
+[DAT] Thời gian 100% dữ liệu, 2 Worker: 7,9 s : trang he-thong-mo-rong
+[DAT] Không còn chuỗi "Spark 3." trong web/ (A3)
+[DAT] Không còn chuỗi "rep=2" hay "Replication = 2" viết cứng trong web/js và web/index.html (A3)
+[DAT] Spark trong dữ liệu web khớp phiên bản chạy thật : 4.2.0
+
+--- Nhóm 3: trang Mô hình (model_comparison.csv) (A4) ---
+[DAT] food_vietnam Trung bình toàn cục RMSE: 1,5706 : dòng: Trung bình toàn cục	1,5706	1,3502	0,00000	0,00000
+[DAT] food_vietnam Trung bình toàn cục MAE: 1,3502 : dòng: Trung bình toàn cục	1,5706	1,3502	0,00000	0,00000
+[DAT] food_vietnam Trung bình toàn cục Precision@10: 0,00000 : dòng: Trung bình toàn cục	1,5706	1,3502	0,00000	0,00000
+[DAT] food_vietnam Trung bình toàn cục Recall@10: 0,00000 : dòng: Trung bình toàn cục	1,5706	1,3502	0,00000	0,00000
+[DAT] food_vietnam Trung bình món làm trơn RMSE: 1,5873 : dòng: Trung bình món làm trơn	1,5873	1,3690	0,01584	0,00321
+[DAT] food_vietnam Trung bình món làm trơn MAE: 1,3690 : dòng: Trung bình món làm trơn	1,5873	1,3690	0,01584	0,00321
+[DAT] food_vietnam Trung bình món làm trơn Precision@10: 0,01584 : dòng: Trung bình món làm trơn	1,5873	1,3690	0,01584	0,00321
+[DAT] food_vietnam Trung bình món làm trơn Recall@10: 0,00321 : dòng: Trung bình món làm trơn	1,5873	1,3690	0,01584	0,00321
+[DAT] food_vietnam Top món phổ biến RMSE: 1,5924 : dòng: Top món phổ biến	1,5924	1,3723	0,02277	0,00461
+[DAT] food_vietnam Top món phổ biến MAE: 1,3723 : dòng: Top món phổ biến	1,5924	1,3723	0,02277	0,00461
+[DAT] food_vietnam Top món phổ biến Precision@10: 0,02277 : dòng: Top món phổ biến	1,5924	1,3723	0,02277	0,00461
+[DAT] food_vietnam Top món phổ biến Recall@10: 0,00461 : dòng: Top món phổ biến	1,5924	1,3723	0,02277	0,00461
+[DAT] food_vietnam ALS dự đoán điểm RMSE: 1,6654 : dòng: ALS dự đoán điểm	1,6654	1,4185	0,01386	0,00285
+[DAT] food_vietnam ALS dự đoán điểm MAE: 1,4185 : dòng: ALS dự đoán điểm	1,6654	1,4185	0,01386	0,00285
+[DAT] food_vietnam ALS dự đoán điểm Precision@10: 0,01386 : dòng: ALS dự đoán điểm	1,6654	1,4185	0,01386	0,00285
+[DAT] food_vietnam ALS dự đoán điểm Recall@10: 0,00285 : dòng: ALS dự đoán điểm	1,6654	1,4185	0,01386	0,00285
+[DAT] food_vietnam ALS ngầm định RMSE: không áp dụng : dòng: ALS ngầm định	không áp dụng	không áp dụng	0,01980	0,00428
+[DAT] food_vietnam ALS ngầm định MAE: không áp dụng : dòng: ALS ngầm định	không áp dụng	không áp dụng	0,01980	0,00428
+[DAT] food_vietnam ALS ngầm định Precision@10: 0,01980 : dòng: ALS ngầm định	không áp dụng	không áp dụng	0,01980	0,00428
+[DAT] food_vietnam ALS ngầm định Recall@10: 0,00428 : dòng: ALS ngầm định	không áp dụng	không áp dụng	0,01980	0,00428
+[DAT] food_com Trung bình toàn cục RMSE: 0,6266 : dòng: Trung bình toàn cục	0,6266	0,4468	0,00000	0,00000
+[DAT] food_com Trung bình toàn cục MAE: 0,4468 : dòng: Trung bình toàn cục	0,6266	0,4468	0,00000	0,00000
+[DAT] food_com Trung bình toàn cục Precision@10: 0,00000 : dòng: Trung bình toàn cục	0,6266	0,4468	0,00000	0,00000
+[DAT] food_com Trung bình toàn cục Recall@10: 0,00000 : dòng: Trung bình toàn cục	0,6266	0,4468	0,00000	0,00000
+[DAT] food_com Trung bình món làm trơn RMSE: 0,6177 : dòng: Trung bình món làm trơn	0,6177	0,4214	0,00048	0,00130
+[DAT] food_com Trung bình món làm trơn MAE: 0,4214 : dòng: Trung bình món làm trơn	0,6177	0,4214	0,00048	0,00130
+[DAT] food_com Trung bình món làm trơn Precision@10: 0,00048 : dòng: Trung bình món làm trơn	0,6177	0,4214	0,00048	0,00130
+[DAT] food_com Trung bình món làm trơn Recall@10: 0,00130 : dòng: Trung bình món làm trơn	0,6177	0,4214	0,00048	0,00130
+[DAT] food_com Top món phổ biến RMSE: 0,6568 : dòng: Top món phổ biến	0,6568	0,4120	0,00534	0,02170
+[DAT] food_com Top món phổ biến MAE: 0,4120 : dòng: Top món phổ biến	0,6568	0,4120	0,00534	0,02170
+[DAT] food_com Top món phổ biến Precision@10: 0,00534 : dòng: Top món phổ biến	0,6568	0,4120	0,00534	0,02170
+[DAT] food_com Top món phổ biến Recall@10: 0,02170 : dòng: Top món phổ biến	0,6568	0,4120	0,00534	0,02170
+[DAT] food_com ALS dự đoán điểm RMSE: 0,6747 : dòng: ALS dự đoán điểm	0,6747	0,5094	0,00017	0,00096
+[DAT] food_com ALS dự đoán điểm MAE: 0,5094 : dòng: ALS dự đoán điểm	0,6747	0,5094	0,00017	0,00096
+[DAT] food_com ALS dự đoán điểm Precision@10: 0,00017 : dòng: ALS dự đoán điểm	0,6747	0,5094	0,00017	0,00096
+[DAT] food_com ALS dự đoán điểm Recall@10: 0,00096 : dòng: ALS dự đoán điểm	0,6747	0,5094	0,00017	0,00096
+[DAT] food_com ALS ngầm định RMSE: không áp dụng : dòng: ALS ngầm định	không áp dụng	không áp dụng	0,00570	0,02118
+[DAT] food_com ALS ngầm định MAE: không áp dụng : dòng: ALS ngầm định	không áp dụng	không áp dụng	0,00570	0,02118
+[DAT] food_com ALS ngầm định Precision@10: 0,00570 : dòng: ALS ngầm định	không áp dụng	không áp dụng	0,00570	0,02118
+[DAT] food_com ALS ngầm định Recall@10: 0,02118 : dòng: ALS ngầm định	không áp dụng	không áp dụng	0,00570	0,02118
+[DAT] P@10 của ALS dự đoán điểm ViFoodRec hiển thị 0,01386, không phải 0,01390 (A4)
+[DAT] R@10 của ALS dự đoán điểm ViFoodRec hiển thị 0,00285, không phải 0,00310 (A4)
+[DAT] RMSE validation tốt nhất: 1,6576 : trang mo-hinh-vifoodrec
+
+--- Nhóm 4: trang Hành vi (cluster_profiles_*.csv) ---
+[DAT] Food.com cụm 0 số người: 3.993 người : trang hanh-vi-food-com
+[DAT] Food.com cụm 1 số người: 10.679 người : trang hanh-vi-food-com
+[DAT] Food.com cụm 2 số người: 7.905 người : trang hanh-vi-food-com
+[DAT] Food.com cụm 3 số người: 8.195 người : trang hanh-vi-food-com
+[DAT] ViFoodRec cụm 1 số người: 33 người : trang hanh-vi-vifoodrec-nguoi-dung
+[DAT] ViFoodRec cụm 2 số người: 31 người : trang hanh-vi-vifoodrec-nguoi-dung
+[DAT] ViFoodRec cụm 3 số người: 37 người : trang hanh-vi-vifoodrec-nguoi-dung
+[DAT] Cụm món 0 số món: 1.486 món : trang hanh-vi-vifoodrec-mon
+[DAT] Cụm món 1 số món: 1.211 món : trang hanh-vi-vifoodrec-mon
+[DAT] Cụm món 2 số món: 195 món : trang hanh-vi-vifoodrec-mon
+[DAT] Cụm món 3 số món: 1.108 món : trang hanh-vi-vifoodrec-mon
+[DAT] Silhouette Food.com k = 4: 0,2743 : trang hanh-vi-food-com
+[DAT] Tiêu đề trang Hành vi không còn khẳng định "rõ rệt" (A7)
+[DAT] Tên cụm ViFoodRec hiển thị là Cụm 1, 2, 3 (A2)
+
+--- Nhóm 5: A1 món tiêu biểu thuộc đúng danh mục của bộ dữ liệu ---
+[DAT] Mọi món trong panel Food.com có id thuộc danh mục Food.com : 40 món
+[DAT] Tên món Food.com khớp danh mục theo id
+[DAT] Không món Food.com nào trùng tên món ViFoodRec
+[DAT] Mọi món trong panel người dùng ViFoodRec có id thuộc danh mục ViFoodRec : 30 món
+[DAT] Mọi món trong panel cụm món ViFoodRec có id thuộc danh mục ViFoodRec : 40 món
+[DAT] Món trong behavior.js khớp cluster_top_items.csv : 70 dòng
+[DAT] Catalog gợi ý Food.com chứa mọi món có trong danh sách láng giềng (không còn 'Món <mã>')
+[DAT] Catalog gợi ý ViFoodRec chứa đủ 4.000 món
+
+--- Nhóm 6: C2 định dạng số kiểu Việt Nam qua một hàm ---
+[DAT] Không có mẫu chữ số-chấm-chữ số (số thập phân dấu chấm) trong văn bản hiển thị
+[DAT] Chỉ web/js/format.js dùng toFixed hay thay dấu chấm bằng dấu phẩy (một hàm duy nhất)
+[DAT] Tiêu đề mọi trang (dòng đầu của văn bản trang) không quá 90 ký tự : 75; 79; 79; 62; 64; 79; 86; 86; 85; 85; 89; 86
+
+======================================================================
+ KẾT QUẢ: 122/122 đạt
+======================================================================
+[THÀNH CÔNG] Số liệu và nội dung hiển thị khớp nguồn.

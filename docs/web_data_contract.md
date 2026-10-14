@@ -1,90 +1,66 @@
-# HỢP ĐỒNG DỮ LIỆU GIAO DIỆN WEB TĨNH (WEB DATA CONTRACT)
+# Hợp đồng dữ liệu giao diện web tĩnh
 
-- **Phiên bản:** 1.0 (Triển khai Web Dashboard Tĩnh độc lập)
+- **Phiên bản:** 2.0 (cập nhật ngày 14/10/2026 ở stage S4; thay phiên bản 1.0)
 - **Thư mục đích:** `web/data/`
-- **Công cụ sinh dữ liệu:** `src/export_for_web.py`
-- **Cơ chế nạp:** Nạp qua thẻ `<script src="data/...js">`, gán dữ liệu vào đối tượng toàn cục `window.WEB_DATA_*` để hỗ trợ 100% chạy offline khi mở trực tiếp bằng giao thức `file://` (không bị CORS block) hoặc qua máy chủ cục bộ (`python -m http.server`).
+- **Công cụ sinh dữ liệu:** `src/export_for_web.py` (đọc `app/data/`, `docker-compose.yml`, log của S1 đến S3)
+- **Cơ chế nạp:** thẻ `<script src="data/...js">`, gán vào đối tượng toàn cục `window.WEB_*`; chạy offline khi mở trực tiếp bằng `file://` hoặc qua máy chủ cục bộ.
+- **Nguyên tắc:** mọi số và chữ hiển thị đến từ các tệp này, không viết cứng trong JS. Các trường `facts` chỉ chứa SỐ; định dạng kiểu Việt Nam (dấu phẩy thập phân, dấu chấm nghìn) làm ở `web/js/format.js`, một hàm `fmt()` duy nhất.
 
----
+## 1. Danh mục tệp và dung lượng
 
-## 1. Danh mục Tệp Dữ liệu và Ngân sách Dung lượng
+| Tệp | Biến toàn cục | Dung lượng (14/10/2026) | Ngân sách | Trang dùng | Nạp |
+|---|---|---:|---:|---|---|
+| `labels.js` | `WEB_LABELS` | 0,5 KB | 3 MB | mọi trang | ngay |
+| `summary.js` | `WEB_DATA_SUMMARY` | 6,4 KB | 3 MB | Dữ liệu | ngay |
+| `system.js` | `WEB_DATA_SYSTEM` | 2,3 KB | 3 MB | Hệ thống | ngay |
+| `behavior.js` | `WEB_DATA_BEHAVIOR` | 13,2 KB | 3 MB | Hành vi | ngay |
+| `models.js` | `WEB_DATA_MODELS` | 13,4 KB | 3 MB | Mô hình | ngay |
+| `recs_vietnam.js` | `WEB_DATA_RECS_VN` | 1.799 KB | 12 MB | Gợi ý | ngay |
+| `recs_foodcom.js` | `WEB_DATA_RECS_FC` | 4.850 KB | 12 MB | Gợi ý | khi chọn Food.com |
 
-| Tên tệp | Đối tượng toàn cục | Dung lượng thực tế | Ngân sách cho phép | Trang sử dụng | Cơ chế nạp |
-|---|---|:---:|:---:|---|---|
-| `summary.js` | `window.WEB_DATA_SUMMARY` | 5.7 KB | < 3 MB | Trang 1: Dữ liệu (`#/du-lieu`) | Nạp ngay ban đầu (Eager) |
-| `system.js` | `window.WEB_DATA_SYSTEM` | 10.0 KB | < 3 MB | Trang 2: Hệ thống (`#/he-thong`) | Nạp ngay ban đầu (Eager) |
-| `behavior.js` | `window.WEB_DATA_BEHAVIOR` | 8.5 KB | < 3 MB | Trang 3: Hành vi (`#/hanh-vi`) | Nạp ngay ban đầu (Eager) |
-| `models.js` | `window.WEB_DATA_MODELS` | 10.8 KB | < 3 MB | Trang 5: Mô hình (`#/mo-hinh`) | Nạp ngay ban đầu (Eager) |
-| `recs_vietnam.js` | `window.WEB_DATA_RECS_VN` | 1,916.4 KB (1.87 MB) | < 12 MB | Trang 4: Gợi ý (`#/goi-y`) | Nạp khi vào trang Gợi ý |
-| `recs_foodcom.js` | `window.WEB_DATA_RECS_FC` | 2,410.1 KB (2.35 MB) | < 12 MB | Trang 4: Gợi ý (`#/goi-y`) | Nạp lười (Lazy) khi chọn Food.com |
-| **Tổng cộng** | — | **4.36 MB** | **< 40 MB** | — | **ĐẠT 100% NGÂN SÁCH** |
+Tổng khoảng 6,6 MB, trong ngân sách 40 MB.
 
----
+## 2. Schema
 
-## 2. Đặc tả Chi tiết Schema Từng Tệp
+### 2.1. `labels.js`
+Bảng nhãn hiển thị duy nhất (nguồn `src/web_labels.py`, `verify_web.py` đối chiếu): `dish_type` ("Món mặn" thành "Không chay", "Món chay" thành "Chay"), `models` (tên mô hình tiếng Việt), `datasets`, `cluster_name_replacements`. Lý do: cột nguồn `dish_type` chỉ có hai giá trị, và chè, bánh cũng mang "Món mặn", nên "mặn" thực chất là "không gắn nhãn chay". Dữ liệu gốc không đổi.
 
-### 2.1. `summary.js` (`window.WEB_DATA_SUMMARY`)
-- **Nguồn gốc:** `app/data/cleaning_log.csv`, `app/data/eda_12_dataset_comparison.csv`, `app/data/eda/eda_01_*_rating_dist.csv`.
-- **Cấu trúc trường:**
-  - `cleaning_log`: Mảng 18 bản ghi quy trình làm sạch dữ liệu:
-    - `dataset`: Tên tập (`food_com_recipes`, `food_com_interactions`, `vifoodrec_foods`, `vifoodrec_ratings`).
-    - `step_name`: Tên bước xử lý kỹ thuật.
-    - `rows_before`, `rows_after`, `rows_dropped`: Số lượng bản ghi trước, sau và bị loại bỏ.
-    - `notes`: Giải thích kỹ thuật nguyên nhân dòng bị loại.
-  - `dataset_comparison`: Mảng 7 chỉ số so sánh Food.com và ViFoodRec (`ChiSo`, `Food_com`, `ViFoodRec`).
-  - `rating_dist_vn`: Mảng 9 mức điểm của ViFoodRec (1.0 đến 5.0, bước 0.5) gồm `rating`, `count`, `pct`.
-  - `rating_dist_fc`: Mảng 5 mức điểm của Food.com (1.0 đến 5.0) gồm `rating`, `count`, `pct`.
-  - `data_limits`: Mảng 3 chuỗi giới hạn cốt lõi của dữ liệu.
+### 2.2. `summary.js`
+Nguồn: `cleaning_log.csv`, `eda_12_dataset_comparison.csv`, `eda/eda_01_*_rating_dist.csv`.
+- `cleaning_log`: toàn bộ nhật ký làm sạch.
+- `funnel`: `vifoodrec` (4 bước: raw, scale, fk, kcore) và `food_com` (3 bước: raw, zero, kcore); mỗi bước có `count`, `dropped` và số kèm theo (`levels`, `rounds`).
+- `dataset_comparison`: 7 chỉ số, mỗi chỉ số có `key` (tên gốc trong CSV), `label` (tên hiển thị), `vifoodrec`, `food_com`.
+- `rating_dist_vn`: 11 mức điểm 0,0 đến 5,0 (`rating`, `count`, `pct`); `rating_dist_fc`: 5 mức.
+- `facts`: số dùng trong tiêu đề và ghi chú (số người dùng, món, đánh giá, độ thưa, phần trăm nhỏ nhất và lớn nhất, 5 sao của Food.com, số dòng loại ở khóa ngoại).
+- `source`: tên các tệp nguồn.
 
-### 2.2. `system.js` (`window.WEB_DATA_SYSTEM`)
-- **Nguồn gốc:** `reports/evidence/stage_P2.md`, `app/data/storage_benchmark.csv`, `app/data/scalability.csv`.
-- **Cấu trúc trường:**
-  - `cluster_info`: Cấu hình cụm phân tán thật đo đạc từ môi trường Docker:
-    - `mode`: Docker Cluster phân tán HDFS + Apache Spark.
-    - `host`: Windows 11 WSL2, 24GB RAM vật lý, 16GB RAM Docker.
-    - `hdfs`: 1 NameNode (IPC: 9000, UI: 9870), 2 DataNodes, replication 2.
-    - `spark`: 1 Master (7077/8080), 2 Workers (mỗi worker 2 cores, 3.5GB RAM; tổng 4 cores, 7GB RAM).
-    - `client`: `bigdata_spark_env` (2GB driver RAM).
-  - `storage_benchmark`: 14 bản ghi đo lường dung lượng CSV vs Parquet và độ trễ truy vấn (Exp A, Exp B, Exp C).
-  - `scalability`: 32 bản ghi đo thời gian chạy của 1 Worker vs 2 Workers trên các tỷ lệ dữ liệu 10%, 25%, 50%, 100%.
+### 2.3. `system.js`
+Nguồn: `docker-compose.yml`, `reports/evidence/logs/S3_14_fsck.log`, log `S2_03` (dòng "Running Spark version"), `storage_benchmark.csv`, `scalability.csv`.
+- `cluster_info.hdfs`: `version`, `namenodes`, `datanodes`, `replication`, `fsck` (từng đường dẫn: trạng thái, số khối thiếu bản sao, số tệp).
+- `cluster_info.spark`: `version` (phiên bản chạy thật), `workers`, `worker_cores`, `worker_ram_mb`, tổng.
+- `storage_rows` (4 dòng: CSV, Parquet, tỷ lệ nén), `latency_rows` (3 truy vấn: trung bình, độ lệch chuẩn, tỷ lệ tăng tốc), `scalability` (thời gian chạy cả pipeline theo tỷ lệ dữ liệu và số Worker).
 
-### 2.3. `behavior.js` (`window.WEB_DATA_BEHAVIOR`)
-- **Nguồn gốc:** `app/data/cluster_profiles_*.csv`, `app/data/food_cluster_profiles_vietnam.csv`, `app/data/kmeans_tuning.csv`, `app/data/food_clusters_vietnam.parquet`.
-- **Cấu trúc trường:**
-  - `vn_user_clusters`: 4 hàng (3 cụm + overall) cho người dùng ViFoodRec.
-  - `fc_user_clusters`: 5 hàng (4 cụm + overall) cho người dùng Food.com.
-  - `vn_food_clusters`: 5 hàng (4 cụm món + overall) cho món ăn Việt Nam.
-  - `kmeans_tuning`: 18 hàng dữ liệu dò tìm số cụm k (k, silhouette, wssse, time_sec).
-  - `representative_foods_vn`: Từ điển {cluster_id: danh sách 5 món tiêu biểu}.
+### 2.4. `behavior.js`
+Nguồn: `cluster_profiles_*.csv`, `food_cluster_profiles_vietnam.csv`, `kmeans_tuning.csv`, `cluster_top_items.csv`, `food_clusters_vietnam.parquet`, `foods_vietnam.parquet`.
+- `fc_user_clusters`, `vn_user_clusters`, `vn_food_clusters`: hồ sơ cụm (cluster = -1 là dòng toàn hệ thống); tên cụm đã qua bảng thay thế "Món mặn" thành "Món không chay".
+- `top_items`: khóa theo bộ dữ liệu (`food_com`, `vifoodrec_users`, `vifoodrec_foods`) rồi theo id cụm của chính bộ đó. `food_com` và `vifoodrec_users`: 5 món có điểm từ 4 trở lên nhiều lượt nhất trong tập train của cụm (`count`); `vifoodrec_foods`: 5 món có mã nhỏ nhất của cụm món (ví dụ minh họa, `count` là null). Đây là sửa lỗi A1: trước S4 web dùng nhầm danh sách cụm món ViFoodRec cho mọi bộ.
+- `kmeans_tuning`, `facts` (khoảng điểm trung bình, thời gian nấu, hệ số Silhouette, chênh lệch tương đối giữa các cụm ViFoodRec).
 
-### 2.4. `models.js` (`window.WEB_DATA_MODELS`)
-- **Nguồn gốc:** `app/data/model_comparison.csv`, `app/data/als_rmse_breakdown.csv`, `app/data/baseline_rmse_breakdown.csv`, `app/data/als_tuning_*.csv`.
-- **Cấu trúc trường:**
-  - `model_comparison`: 8 hàng đối đầu giữa 3 baselines và ALS trên 2 bộ dữ liệu (RMSE, MAE, Precision@10, Recall@10, coverage).
-  - `als_rmse_breakdown`: Sai số RMSE của ALS phân rã theo điểm thật (1.0 - 5.0).
-  - `baseline_rmse_breakdown`: Sai số RMSE của các baseline phân rã theo điểm thật.
-  - `als_tuning_vn`: 24 cấu hình Grid Search ALS cho ViFoodRec.
-  - `als_tuning_fc`: 8 cấu hình Grid Search ALS cho Food.com.
+### 2.5. `models.js`
+Nguồn: `model_comparison.csv`, `als_rmse_breakdown.csv`, `baseline_rmse_breakdown.csv`, `als_tuning_*.csv`.
+- `model_comparison`: các dòng của S3 và S3b (ALS ngầm định có RMSE, MAE là null); bỏ dòng "ALS Matrix Factorization (lưới mở rộng)" vì trùng hệt ALS cũ của Food.com. Mỗi dòng có `model_label` và `is_als`.
+- `als_rmse_breakdown`, `baseline_rmse_breakdown`: RMSE theo điểm thật (ViFoodRec 11 mức, Food.com 5 mức).
+- `als_tuning_vn` (24 cấu hình), `als_tuning_fc` (8 cấu hình dòng cũ).
+- `facts`: mô hình đứng đầu từng độ đo theo bộ dữ liệu, dùng để sinh tiêu đề trang.
 
-### 2.5. `recs_vietnam.js` (`window.WEB_DATA_RECS_VN`)
-- **Nguồn gốc:** `app/data/foods_vietnam.parquet`, `app/data/recommendations_vietnam.parquet`, `app/data/user_clusters_vietnam.parquet`, `app/data/item_neighbors_vietnam.parquet`.
-- **Cấu trúc trường:**
-  - `catalog`: 4,000 món ăn Việt (`food_id`, `dish_name`, `dish_type`, `calories`, `cooking_time_min`, `ingredients`).
-  - `recommendations`: 1,010 gợi ý ALS cho 101 người dùng (10 món/người).
-  - `user_clusters`: Bản đồ 101 người dùng -> cụm hành vi.
-  - `item_neighbors`: Bản đồ 4,000 món -> danh sách 10 món tương đồng gần nhất và điểm cosine.
+### 2.6. `recs_vietnam.js`, `recs_foodcom.js`
+- `catalog`: ViFoodRec 4.000 món (`food_id`, `dish_name`, `dish_type`, `calories`, `cooking_time_min`, `ingredients`); Food.com gồm các công thức xuất hiện trong gợi ý, trong danh sách món có láng giềng và trong chính danh sách láng giềng (sửa lỗi: trước S4 thiếu các món láng giềng nên web hiện "Món <mã>").
+- `recommendations`: ViFoodRec 1.010 dòng (101 người dùng x 10 món); Food.com 10.000 dòng (1.000 người dùng x 10 món).
+- `user_clusters`: người dùng sang cụm; ViFoodRec là "Cụm 1, 2, 3".
+- `item_neighbors`: món sang 10 món có độ tương đồng cosine cao nhất.
+- `neighbor_stats`: nhỏ nhất, trung vị và tỷ lệ điểm tương đồng từ 0,999 trở lên. Ở ViFoodRec cả 40.000 điểm bằng 1,0 (nhỏ nhất 1,0), nên web cảnh báo rằng thứ tự gợi ý cho người dùng mới chưa phản ánh khác biệt giữa các món.
 
-### 2.6. `recs_foodcom.js` (`window.WEB_DATA_RECS_FC`)
-- **Nguồn gốc:** `app/data/recipes_foodcom_sample.parquet`, `app/data/recommendations_foodcom_sample.parquet`, `app/data/user_clusters_foodcom.parquet`, `app/data/item_neighbors_foodcom.parquet`.
-- **Cấu trúc trường:**
-  - `catalog`: 3,055 công thức Food.com chọn lọc xuất hiện trong gợi ý và láng giềng hàng đầu (`recipe_id`, `name`, `calories`, `minutes_clean`, `ingredients`).
-  - `recommendations`: 10,000 gợi ý ALS cho 1,000 người dùng mẫu.
-  - `user_clusters`: Bản đồ 1,000 người dùng -> cụm hành vi.
-  - `item_neighbors`: Bản đồ 2,500 món phổ biến -> danh sách 10 món tương đồng và điểm cosine.
-
----
-
-## 3. Quy tắc Kiểm định Toàn vẹn
-- Tất cả các trường số được làm sạch bằng `clean_val` đảm bảo không có `NaN`, `Infinity` gây lỗi `JSON.parse`.
-- Giá trị chuỗi tiếng Việt chuẩn hóa UTF-8.
-- Kịch bản xác thực `src/verify_web.py` sẽ đối chiếu trực tiếp các con số giữa `web/data/*.js` và các tệp nguồn gốc CSV/Parquet.
+## 3. Kiểm định
+- `src/verify_web.py`: đối chiếu `web/data/*.js` với tệp nguồn, và văn bản thực sự hiển thị (do `src/verify_web_ui.mjs` ghi) với số kỳ vọng định dạng theo đúng số chữ số hiển thị; kiểm tra A1, A3, A4, C2.
+- `src/verify_web_ui.mjs`: Chrome headless, không cuộn trang ở 1920x1080 và 1366x768, quét văn bản hiển thị, luồng demo, ảnh chụp.
+- `src/verify_web_style.py`: quét mã, tương phản, thang xám, diện tích màu cam, ảnh chia sẻ.

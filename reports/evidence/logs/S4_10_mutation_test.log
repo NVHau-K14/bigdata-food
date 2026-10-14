@@ -1,0 +1,7 @@
+[KHONG DAT] food_vietnam ALS dự đoán điểm Precision@10: 0,01386 : dòng: ALS dự đoán điểm	1,6654	1,4185	0,01390	0,00285
+[KHONG DAT] P@10 của ALS dự đoán điểm ViFoodRec hiển thị 0,01386, không phải 0,01390 (A4)
+[KHONG DAT] Food.com cụm 0 số người: 3.993 người : trang hanh-vi-food-com
+[KHONG DAT] Không có mẫu chữ số-chấm-chữ số (số thập phân dấu chấm) trong văn bản hiển thị : 1920x1080 hanh-vi-food-com
+ KẾT QUẢ: 118/122 đạt
+[LỖI] 4 mục không khớp
+mã thoát: 1

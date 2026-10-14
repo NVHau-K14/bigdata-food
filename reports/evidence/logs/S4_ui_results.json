@@ -1,0 +1,1518 @@
+{
+  "results": [
+    {
+      "name": "Không cuộn trang: 1920x1080 du-lieu",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 du-lieu",
+      "ok": true,
+      "detail": "75 ký tự: ViFoodRec nhỏ nhưng dày (độ thưa 54,79%), Food.com lớn nhưng độ thưa 99,97%"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 du-lieu",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 du-lieu",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 he-thong-luu-tru",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 he-thong-luu-tru",
+      "ok": true,
+      "detail": "79 ký tự: HDFS 3.3.6 và Spark 4.2.0; Parquet nhỏ hơn CSV 4,19 đến 7,03 lần ở dữ liệu sạch"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 he-thong-luu-tru",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Hệ thống: mỗi panel trống không quá 25%: 1920x1080 he-thong-luu-tru",
+      "ok": true,
+      "detail": "lớn nhất 24.0%"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 he-thong-luu-tru",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 he-thong-mo-rong",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 he-thong-mo-rong",
+      "ok": true,
+      "detail": "79 ký tự: HDFS 3.3.6 và Spark 4.2.0; Parquet nhỏ hơn CSV 4,19 đến 7,03 lần ở dữ liệu sạch"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 he-thong-mo-rong",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Hệ thống: mỗi panel trống không quá 25%: 1920x1080 he-thong-mo-rong",
+      "ok": true,
+      "detail": "lớn nhất 22.6%"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 he-thong-mo-rong",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 hanh-vi-food-com",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 hanh-vi-food-com",
+      "ok": true,
+      "detail": "62 ký tự: Food.com: 4 nhóm khác nhau về điểm trung bình và thời gian nấu"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 hanh-vi-food-com",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Hành vi: danh sách món của cụm không cuộn trong ở 1920x1080: 1920x1080 hanh-vi-food-com",
+      "ok": true,
+      "detail": "panel cao 632px"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 hanh-vi-food-com",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": "64 ký tự: ViFoodRec: 3 cụm chênh nhau ít, điểm trung bình từ 2,47 đến 2,54"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Hành vi: danh sách món của cụm không cuộn trong ở 1920x1080: 1920x1080 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": "panel cao 684px"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": "79 ký tự: ViFoodRec: 4 cụm món, khác nhau nhiều nhất ở tỷ lệ món không chay và lượng calo"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Hành vi: danh sách món của cụm không cuộn trong ở 1920x1080: 1920x1080 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": "panel cao 632px"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": "86 ký tự: ViFoodRec: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Gợi ý: danh sách 10 món không cuộn trong ở 1920x1080: 1920x1080 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": "panel cao 927px"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": "86 ký tự: ViFoodRec: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Gợi ý: danh sách 10 món không cuộn trong ở 1920x1080: 1920x1080 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": "panel cao 927px"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": "85 ký tự: Food.com: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Gợi ý: danh sách 10 món không cuộn trong ở 1920x1080: 1920x1080 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": "panel cao 927px"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 goi-y-food-com-moi",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 goi-y-food-com-moi",
+      "ok": true,
+      "detail": "85 ký tự: Food.com: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 goi-y-food-com-moi",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Trang Gợi ý: danh sách 10 món không cuộn trong ở 1920x1080: 1920x1080 goi-y-food-com-moi",
+      "ok": true,
+      "detail": "panel cao 927px"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 goi-y-food-com-moi",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 mo-hinh-vifoodrec",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 mo-hinh-vifoodrec",
+      "ok": true,
+      "detail": "89 ký tự: ViFoodRec: ALS không đứng đầu ở độ đo nào; RMSE thấp nhất là Trung bình toàn cục (1,5706)"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 mo-hinh-vifoodrec",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 mo-hinh-vifoodrec",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 mo-hinh-food-com",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1920x1080 mo-hinh-food-com",
+      "ok": true,
+      "detail": "86 ký tự: Food.com: ALS ngầm định đứng đầu P@10 (0,00570); RMSE, MAE và R@10 thuộc mô hình cơ sở"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1920x1080 mo-hinh-food-com",
+      "ok": true,
+      "detail": "đáy 1070"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 mo-hinh-food-com",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 glossary",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 glossary",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1920x1080 tuning-modal",
+      "ok": true,
+      "detail": "scrollHeight 1080 / innerHeight 1080, mainOverflow 0"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1920x1080 tuning-modal",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 du-lieu",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 du-lieu",
+      "ok": true,
+      "detail": "75 ký tự: ViFoodRec nhỏ nhưng dày (độ thưa 54,79%), Food.com lớn nhưng độ thưa 99,97%"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 du-lieu",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 du-lieu",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 he-thong-luu-tru",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 he-thong-luu-tru",
+      "ok": true,
+      "detail": "79 ký tự: HDFS 3.3.6 và Spark 4.2.0; Parquet nhỏ hơn CSV 4,19 đến 7,03 lần ở dữ liệu sạch"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 he-thong-luu-tru",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Trang Hệ thống: mỗi panel trống không quá 25%: 1366x768 he-thong-luu-tru",
+      "ok": true,
+      "detail": "lớn nhất 17.2%"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 he-thong-luu-tru",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 he-thong-mo-rong",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 he-thong-mo-rong",
+      "ok": true,
+      "detail": "79 ký tự: HDFS 3.3.6 và Spark 4.2.0; Parquet nhỏ hơn CSV 4,19 đến 7,03 lần ở dữ liệu sạch"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 he-thong-mo-rong",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Trang Hệ thống: mỗi panel trống không quá 25%: 1366x768 he-thong-mo-rong",
+      "ok": true,
+      "detail": "lớn nhất 17.2%"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 he-thong-mo-rong",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 hanh-vi-food-com",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 hanh-vi-food-com",
+      "ok": true,
+      "detail": "62 ký tự: Food.com: 4 nhóm khác nhau về điểm trung bình và thời gian nấu"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 hanh-vi-food-com",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 hanh-vi-food-com",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": "64 ký tự: ViFoodRec: 3 cụm chênh nhau ít, điểm trung bình từ 2,47 đến 2,54"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 hanh-vi-vifoodrec-nguoi-dung",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": "79 ký tự: ViFoodRec: 4 cụm món, khác nhau nhiều nhất ở tỷ lệ món không chay và lượng calo"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 hanh-vi-vifoodrec-mon",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": "86 ký tự: ViFoodRec: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 goi-y-vifoodrec-co-san",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": "86 ký tự: ViFoodRec: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 goi-y-vifoodrec-moi",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": "85 ký tự: Food.com: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 goi-y-food-com-co-san",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 goi-y-food-com-moi",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 goi-y-food-com-moi",
+      "ok": true,
+      "detail": "85 ký tự: Food.com: người dùng có sẵn dùng ALS dự đoán điểm, người dùng mới dùng món tương đồng"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 goi-y-food-com-moi",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 goi-y-food-com-moi",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 mo-hinh-vifoodrec",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 mo-hinh-vifoodrec",
+      "ok": true,
+      "detail": "89 ký tự: ViFoodRec: ALS không đứng đầu ở độ đo nào; RMSE thấp nhất là Trung bình toàn cục (1,5706)"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 mo-hinh-vifoodrec",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 mo-hinh-vifoodrec",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 mo-hinh-food-com",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Tiêu đề một dòng và không quá 90 ký tự: 1366x768 mo-hinh-food-com",
+      "ok": true,
+      "detail": "86 ký tự: Food.com: ALS ngầm định đứng đầu P@10 (0,00570); RMSE, MAE và R@10 thuộc mô hình cơ sở"
+    },
+    {
+      "name": "Chân trang nằm trong khung nhìn: 1366x768 mo-hinh-food-com",
+      "ok": true,
+      "detail": "đáy 760"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 mo-hinh-food-com",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 glossary",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 glossary",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Không cuộn trang: 1366x768 tuning-modal",
+      "ok": true,
+      "detail": "scrollHeight 768 / innerHeight 768, mainOverflow 0"
+    },
+    {
+      "name": "Văn bản hiển thị sạch: 1366x768 tuning-modal",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Demo: người dùng ViFoodRec 70 xem 10 món",
+      "ok": true,
+      "detail": "Sườn Cốt Lết Rim Nước Tương Maggi | Tim heo xào măng tây | Kho Quẹt Tóp Mỡ Tôm Khô | Bún Bò Nam Bộ | Chè Dừa Dẻo Trân Châu Bắp Nữ Hoàng | Bánh Ướt Lòng Gà | Canh nghêu bó xôi | Làm Chả Lụa Tại Nhà | Đậu hũ chiên xốt cà | Nghêu Hai Còi Hấp Sả Ớt"
+    },
+    {
+      "name": "Demo: huy hiệu cụm dùng nhãn Cụm n (A2)",
+      "ok": true,
+      "detail": "Cụm hành vi: Cụm 3"
+    },
+    {
+      "name": "Demo: người dùng mới chọn bun bo, canh chua, pho cho ra danh sách",
+      "ok": true,
+      "detail": "đã chọn: Bún bò giò heo (Không chay) / Canh Chua Tôm Bông So Đũa (Không chay) / Khoai Tây Viên Phô Mai Chiên (Không chay); 10 món; đầu danh sách: Bún gạo xào mayo | Xáo lòng | Phở trộn"
+    },
+    {
+      "name": "Demo: người dùng mới chọn banh xeo, che, goi cuon cho ra danh sách",
+      "ok": true,
+      "detail": "đã chọn: Bánh Xèo Kim Chi (Không chay) / Chè Cam (Không chay) / Gỏi cuốn cá hồi (Không chay); 10 món; đầu danh sách: Cá điêu hồng nướng riềng mẻ | Nghêu kho tộ | Bò kho"
+    },
+    {
+      "name": "Demo: người dùng mới chọn com tam, lau, bo kho cho ra danh sách",
+      "ok": true,
+      "detail": "đã chọn: Nước Mắm Cơm Tấm (Không chay) / Lẩu bạch tuộc (Không chay) / Thịt Bò Kho Sả (Không chay); 10 món; đầu danh sách: Canh Cà Bung Đơn Giản | Váng đậu cuộn rau củ chiên | Canh hàu sữa măng chua"
+    },
+    {
+      "name": "Demo: 3 bộ món cho 3 danh sách khác nhau",
+      "ok": true,
+      "detail": "3 danh sách khác nhau"
+    },
+    {
+      "name": "Demo: tìm không dấu \"bun bo\" ra \"Bún bò\"",
+      "ok": true,
+      "detail": "Bún bò giò heo (Không chay) | Bún Bò Huế Chay (Chay) | Bún Bò Nam Bộ (Không chay) | Bún Bò Tái (Không chay)"
+    },
+    {
+      "name": "Bộ lọc loại món \"Chay\": mọi món là Chay",
+      "ok": true,
+      "detail": "1 món"
+    },
+    {
+      "name": "Bộ lọc loại món \"Không chay\": mọi món là Không chay",
+      "ok": true,
+      "detail": "10 món"
+    },
+    {
+      "name": "Bộ lọc thời gian nấu tối đa 30 phút",
+      "ok": true,
+      "detail": "10 món, thời gian lớn nhất 30"
+    },
+    {
+      "name": "Bộ lọc calo tối đa 400",
+      "ok": true,
+      "detail": "10 món, calo lớn nhất 370"
+    },
+    {
+      "name": "Bộ lọc số món hiển thị: 5 món",
+      "ok": true,
+      "detail": "5 món (trước lọc: 10)"
+    },
+    {
+      "name": "Nút \"Xóa bộ lọc\" khôi phục số món",
+      "ok": true,
+      "detail": "10 món"
+    },
+    {
+      "name": "Hành vi Food.com: không có tên món tiếng Việt có dấu (A1)",
+      "ok": true,
+      "detail": "40 món, ví dụ: 1. creamy cajun chicken pasta  | 2. crock pot chicken with black beans   cream cheese  | 3. to die for crock pot roast "
+    }
+  ],
+  "panels": [
+    {
+      "tag": "1920x1080 du-lieu",
+      "panels": [
+        {
+          "title": "Phễu làm sạch dữ liệu",
+          "height": 852,
+          "emptyFraction": 0.011,
+          "scrolls": false
+        },
+        {
+          "title": "So sánh hai bộ dữ liệu",
+          "height": 351,
+          "emptyFraction": 0.026,
+          "scrolls": false
+        },
+        {
+          "title": "Phân phối điểm đánh giá",
+          "height": 489,
+          "emptyFraction": 0.018,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 8,
+        "13": 270,
+        "14": 425,
+        "15": 95,
+        "18": 66,
+        "22": 75,
+        "13.5": 147,
+        "15.7": 179,
+        "12.5": 43
+      }
+    },
+    {
+      "tag": "1920x1080 he-thong-luu-tru",
+      "panels": [
+        {
+          "title": "Luồng xử lý và hạ tầng phân tán",
+          "height": 334,
+          "emptyFraction": 0.033,
+          "scrolls": false
+        },
+        {
+          "title": "Thông số cụm",
+          "height": 586,
+          "emptyFraction": 0.226,
+          "scrolls": false
+        },
+        {
+          "title": "",
+          "height": 932,
+          "emptyFraction": 0.24,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "13": 89,
+        "14": 227,
+        "15": 95,
+        "16": 84,
+        "18": 43,
+        "22": 79,
+        "20.5": 38,
+        "21.2": 51,
+        "18.2": 231,
+        "15.7": 683
+      }
+    },
+    {
+      "tag": "1920x1080 he-thong-mo-rong",
+      "panels": [
+        {
+          "title": "Luồng xử lý và hạ tầng phân tán",
+          "height": 334,
+          "emptyFraction": 0.033,
+          "scrolls": false
+        },
+        {
+          "title": "Thông số cụm",
+          "height": 586,
+          "emptyFraction": 0.226,
+          "scrolls": false
+        },
+        {
+          "title": "",
+          "height": 932,
+          "emptyFraction": 0.012,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 56,
+        "13": 134,
+        "14": 183,
+        "15": 76,
+        "18": 43,
+        "22": 79,
+        "20.5": 38,
+        "21.2": 51,
+        "18.2": 231,
+        "15.7": 305,
+        "11.5": 47
+      }
+    },
+    {
+      "tag": "1920x1080 hanh-vi-food-com",
+      "panels": [
+        {
+          "title": "Người dùng khắt khe: độ lệch so với trung bình hệ thống",
+          "height": 905,
+          "emptyFraction": 0.01,
+          "scrolls": false
+        },
+        {
+          "title": "Các cụm",
+          "height": 261,
+          "emptyFraction": 0.019,
+          "scrolls": false
+        },
+        {
+          "title": "Món được chấm từ 4 sao nhiều nhất",
+          "height": 632,
+          "emptyFraction": 0.112,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 18,
+        "13": 831,
+        "14": 214,
+        "15": 487,
+        "18": 95,
+        "22": 62,
+        "13.5": 78,
+        "12.5": 27
+      }
+    },
+    {
+      "tag": "1920x1080 hanh-vi-vifoodrec-nguoi-dung",
+      "panels": [
+        {
+          "title": "Cụm 1: độ lệch so với trung bình hệ thống",
+          "height": 905,
+          "emptyFraction": 0.01,
+          "scrolls": false
+        },
+        {
+          "title": "Các cụm",
+          "height": 209,
+          "emptyFraction": 0.024,
+          "scrolls": false
+        },
+        {
+          "title": "Món được chấm từ 4 sao nhiều nhất",
+          "height": 684,
+          "emptyFraction": 0.178,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 116,
+        "13": 828,
+        "14": 210,
+        "15": 224,
+        "18": 81,
+        "22": 64,
+        "13.5": 144,
+        "12.5": 25
+      }
+    },
+    {
+      "tag": "1920x1080 hanh-vi-vifoodrec-mon",
+      "panels": [
+        {
+          "title": "Món không chay nhiều calo và đường: độ lệch so với trung bình hệ thống",
+          "height": 905,
+          "emptyFraction": 0.01,
+          "scrolls": false
+        },
+        {
+          "title": "Các cụm",
+          "height": 261,
+          "emptyFraction": 0.019,
+          "scrolls": false
+        },
+        {
+          "title": "Ví dụ món thuộc cụm",
+          "height": 632,
+          "emptyFraction": 0.111,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 118,
+        "13": 519,
+        "14": 227,
+        "15": 294,
+        "18": 96,
+        "22": 79,
+        "13.5": 51,
+        "12.5": 27
+      }
+    },
+    {
+      "tag": "1920x1080 goi-y-vifoodrec-co-san",
+      "panels": [
+        {
+          "title": "Thiết lập gợi ý",
+          "height": 927,
+          "emptyFraction": 0.402,
+          "scrolls": false
+        },
+        {
+          "title": "Món gợi ý cho người dùng 70",
+          "height": 927,
+          "emptyFraction": 0.263,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 100,
+        "13": 1494,
+        "14": 1621,
+        "15": 10,
+        "18": 42,
+        "22": 86,
+        "18.4": 217
+      }
+    },
+    {
+      "tag": "1920x1080 goi-y-vifoodrec-moi",
+      "panels": [
+        {
+          "title": "Thiết lập gợi ý",
+          "height": 927,
+          "emptyFraction": 0.369,
+          "scrolls": false
+        },
+        {
+          "title": "Món gợi ý theo độ tương đồng với các món đã chọn",
+          "height": 927,
+          "emptyFraction": 0.074,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 104,
+        "13": 1803,
+        "14": 497,
+        "15": 10,
+        "18": 63,
+        "22": 86,
+        "18.4": 222
+      }
+    },
+    {
+      "tag": "1920x1080 goi-y-food-com-co-san",
+      "panels": [
+        {
+          "title": "Thiết lập gợi ý",
+          "height": 927,
+          "emptyFraction": 0.48,
+          "scrolls": false
+        },
+        {
+          "title": "Món gợi ý cho người dùng 1676",
+          "height": 927,
+          "emptyFraction": 0.263,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "13": 1099,
+        "14": 5098,
+        "15": 10,
+        "18": 44,
+        "22": 85,
+        "18.4": 270
+      }
+    },
+    {
+      "tag": "1920x1080 goi-y-food-com-moi",
+      "panels": [
+        {
+          "title": "Thiết lập gợi ý",
+          "height": 927,
+          "emptyFraction": 0.448,
+          "scrolls": false
+        },
+        {
+          "title": "Món gợi ý theo độ tương đồng với các món đã chọn",
+          "height": 927,
+          "emptyFraction": 0.074,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 4,
+        "13": 1551,
+        "14": 328,
+        "15": 10,
+        "18": 63,
+        "22": 85,
+        "18.4": 336
+      }
+    },
+    {
+      "tag": "1920x1080 mo-hinh-vifoodrec",
+      "panels": [
+        {
+          "title": "So sánh mô hình trên tập kiểm tra",
+          "height": 300,
+          "emptyFraction": 0.03,
+          "scrolls": false
+        },
+        {
+          "title": "Tinh chỉnh ALS dự đoán điểm trên tập validation",
+          "height": 614,
+          "emptyFraction": 0.223,
+          "scrolls": false
+        },
+        {
+          "title": "Sai số RMSE theo điểm thật",
+          "height": 927,
+          "emptyFraction": 0.01,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 12,
+        "13": 317,
+        "14": 223,
+        "18": 106,
+        "22": 89,
+        "15.7": 428,
+        "12.5": 33
+      }
+    },
+    {
+      "tag": "1920x1080 mo-hinh-food-com",
+      "panels": [
+        {
+          "title": "So sánh mô hình trên tập kiểm tra",
+          "height": 300,
+          "emptyFraction": 0.03,
+          "scrolls": false
+        },
+        {
+          "title": "Tinh chỉnh ALS dự đoán điểm trên tập validation",
+          "height": 614,
+          "emptyFraction": 0.373,
+          "scrolls": false
+        },
+        {
+          "title": "Sai số RMSE theo điểm thật",
+          "height": 927,
+          "emptyFraction": 0.01,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 15,
+        "13": 223,
+        "14": 223,
+        "18": 106,
+        "22": 86,
+        "15.7": 388,
+        "12.5": 5
+      }
+    },
+    {
+      "tag": "1920x1080 glossary",
+      "panels": [
+        {
+          "title": "Phễu làm sạch dữ liệu",
+          "height": 852,
+          "emptyFraction": 0.011,
+          "scrolls": false
+        },
+        {
+          "title": "So sánh hai bộ dữ liệu",
+          "height": 351,
+          "emptyFraction": 0.026,
+          "scrolls": false
+        },
+        {
+          "title": "Phân phối điểm đánh giá",
+          "height": 489,
+          "emptyFraction": 0.018,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 8,
+        "13": 270,
+        "14": 425,
+        "15": 95,
+        "18": 66,
+        "22": 75,
+        "13.5": 147,
+        "15.7": 179,
+        "12.5": 43
+      }
+    },
+    {
+      "tag": "1920x1080 tuning-modal",
+      "panels": [
+        {
+          "title": "Người dùng khắt khe: độ lệch so với trung bình hệ thống",
+          "height": 905,
+          "emptyFraction": 0.01,
+          "scrolls": false
+        },
+        {
+          "title": "Các cụm",
+          "height": 261,
+          "emptyFraction": 0.019,
+          "scrolls": false
+        },
+        {
+          "title": "Món được chấm từ 4 sao nhiều nhất",
+          "height": 632,
+          "emptyFraction": 0.112,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 18,
+        "13": 831,
+        "14": 214,
+        "15": 487,
+        "18": 95,
+        "22": 62,
+        "13.5": 78,
+        "12.5": 27
+      }
+    },
+    {
+      "tag": "1366x768 du-lieu",
+      "panels": [
+        {
+          "title": "Phễu làm sạch dữ liệu",
+          "height": 553,
+          "emptyFraction": 0.016,
+          "scrolls": false
+        },
+        {
+          "title": "So sánh hai bộ dữ liệu",
+          "height": 282,
+          "emptyFraction": 0.032,
+          "scrolls": false
+        },
+        {
+          "title": "Phân phối điểm đánh giá",
+          "height": 259,
+          "emptyFraction": 0.035,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 8,
+        "13": 576,
+        "14": 119,
+        "15": 274,
+        "17": 66,
+        "22": 75,
+        "13.5": 147,
+        "12.5": 43
+      }
+    },
+    {
+      "tag": "1366x768 he-thong-luu-tru",
+      "panels": [
+        {
+          "title": "Luồng xử lý và hạ tầng phân tán",
+          "height": 251,
+          "emptyFraction": 0.044,
+          "scrolls": false
+        },
+        {
+          "title": "Thông số cụm",
+          "height": 365,
+          "emptyFraction": 0.172,
+          "scrolls": false
+        },
+        {
+          "title": "",
+          "height": 628,
+          "emptyFraction": 0.018,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "13": 89,
+        "14": 227,
+        "15": 831,
+        "17": 43,
+        "22": 79,
+        "14.6": 38,
+        "15.1": 51,
+        "12.9": 231
+      }
+    },
+    {
+      "tag": "1366x768 he-thong-mo-rong",
+      "panels": [
+        {
+          "title": "Luồng xử lý và hạ tầng phân tán",
+          "height": 251,
+          "emptyFraction": 0.044,
+          "scrolls": false
+        },
+        {
+          "title": "Thông số cụm",
+          "height": 365,
+          "emptyFraction": 0.172,
+          "scrolls": false
+        },
+        {
+          "title": "",
+          "height": 628,
+          "emptyFraction": 0.018,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 56,
+        "13": 134,
+        "14": 183,
+        "15": 350,
+        "17": 43,
+        "22": 79,
+        "14.6": 38,
+        "15.1": 51,
+        "12.9": 231,
+        "11.5": 47
+      }
+    },
+    {
+      "tag": "1366x768 hanh-vi-food-com",
+      "panels": [
+        {
+          "title": "Người dùng khắt khe: độ lệch so với trung bình hệ thống",
+          "height": 603,
+          "emptyFraction": 0.015,
+          "scrolls": false
+        },
+        {
+          "title": "Các cụm",
+          "height": 256,
+          "emptyFraction": 0.02,
+          "scrolls": false
+        },
+        {
+          "title": "Món được chấm từ 4 sao nhiều nhất",
+          "height": 335,
+          "emptyFraction": 0.168,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 18,
+        "13": 748,
+        "14": 97,
+        "15": 305,
+        "17": 95,
+        "22": 62,
+        "13.5": 78,
+        "12.5": 27
+      }
+    },
+    {
+      "tag": "1366x768 hanh-vi-vifoodrec-nguoi-dung",
+      "panels": [
+        {
+          "title": "Cụm 1: độ lệch so với trung bình hệ thống",
+          "height": 603,
+          "emptyFraction": 0.015,
+          "scrolls": false
+        },
+        {
+          "title": "Các cụm",
+          "height": 203,
+          "emptyFraction": 0.025,
+          "scrolls": false
+        },
+        {
+          "title": "Món được chấm từ 4 sao nhiều nhất",
+          "height": 387,
+          "emptyFraction": 0.279,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 66,
+        "13": 745,
+        "14": 97,
+        "15": 115,
+        "17": 81,
+        "22": 64,
+        "13.5": 144,
+        "12.5": 25
+      }
+    },
+    {
+      "tag": "1366x768 hanh-vi-vifoodrec-mon",
+      "panels": [
+        {
+          "title": "Món không chay nhiều calo và đường: độ lệch so với trung bình hệ thống",
+          "height": 603,
+          "emptyFraction": 0.015,
+          "scrolls": false
+        },
+        {
+          "title": "Các cụm",
+          "height": 256,
+          "emptyFraction": 0.02,
+          "scrolls": false
+        },
+        {
+          "title": "Ví dụ món thuộc cụm",
+          "height": 335,
+          "emptyFraction": 0.167,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 68,
+        "13": 566,
+        "14": 94,
+        "15": 192,
+        "17": 96,
+        "22": 79,
+        "13.5": 51,
+        "12.5": 27
+      }
+    },
+    {
+      "tag": "1366x768 goi-y-vifoodrec-co-san",
+      "panels": [
+        {
+          "title": "Thiết lập gợi ý",
+          "height": 623,
+          "emptyFraction": 0.174,
+          "scrolls": false
+        },
+        {
+          "title": "Món gợi ý cho người dùng 70",
+          "height": 623,
+          "emptyFraction": 0.126,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 100,
+        "13": 1494,
+        "14": 1621,
+        "15": 10,
+        "17": 259,
+        "22": 86
+      }
+    },
+    {
+      "tag": "1366x768 goi-y-vifoodrec-moi",
+      "panels": [
+        {
+          "title": "Thiết lập gợi ý",
+          "height": 623,
+          "emptyFraction": 0.126,
+          "scrolls": false
+        },
+        {
+          "title": "Món gợi ý theo độ tương đồng với các món đã chọn",
+          "height": 623,
+          "emptyFraction": 0,
+          "scrolls": true
+        }
+      ],
+      "fonts": {
+        "12": 104,
+        "13": 1803,
+        "14": 497,
+        "15": 10,
+        "17": 285,
+        "22": 86
+      }
+    },
+    {
+      "tag": "1366x768 goi-y-food-com-co-san",
+      "panels": [
+        {
+          "title": "Thiết lập gợi ý",
+          "height": 623,
+          "emptyFraction": 0.283,
+          "scrolls": false
+        },
+        {
+          "title": "Món gợi ý cho người dùng 1676",
+          "height": 623,
+          "emptyFraction": 0.126,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "13": 1099,
+        "14": 5098,
+        "15": 10,
+        "17": 314,
+        "22": 85
+      }
+    },
+    {
+      "tag": "1366x768 goi-y-food-com-moi",
+      "panels": [
+        {
+          "title": "Thiết lập gợi ý",
+          "height": 623,
+          "emptyFraction": 0.186,
+          "scrolls": false
+        },
+        {
+          "title": "Món gợi ý theo độ tương đồng với các món đã chọn",
+          "height": 623,
+          "emptyFraction": 0,
+          "scrolls": true
+        }
+      ],
+      "fonts": {
+        "12": 4,
+        "13": 1551,
+        "14": 328,
+        "15": 10,
+        "17": 399,
+        "22": 85
+      }
+    },
+    {
+      "tag": "1366x768 mo-hinh-vifoodrec",
+      "panels": [
+        {
+          "title": "So sánh mô hình trên tập kiểm tra",
+          "height": 248,
+          "emptyFraction": 0.036,
+          "scrolls": false
+        },
+        {
+          "title": "Tinh chỉnh ALS dự đoán điểm trên tập validation",
+          "height": 363,
+          "emptyFraction": 0.341,
+          "scrolls": false
+        },
+        {
+          "title": "Sai số RMSE theo điểm thật",
+          "height": 623,
+          "emptyFraction": 0.014,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 12,
+        "13": 317,
+        "14": 223,
+        "15": 322,
+        "17": 106,
+        "22": 89,
+        "12.5": 33
+      }
+    },
+    {
+      "tag": "1366x768 mo-hinh-food-com",
+      "panels": [
+        {
+          "title": "So sánh mô hình trên tập kiểm tra",
+          "height": 248,
+          "emptyFraction": 0.036,
+          "scrolls": false
+        },
+        {
+          "title": "Tinh chỉnh ALS dự đoán điểm trên tập validation",
+          "height": 363,
+          "emptyFraction": 0.391,
+          "scrolls": false
+        },
+        {
+          "title": "Sai số RMSE theo điểm thật",
+          "height": 623,
+          "emptyFraction": 0.014,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 15,
+        "13": 223,
+        "14": 223,
+        "15": 324,
+        "17": 106,
+        "22": 86,
+        "12.5": 5
+      }
+    },
+    {
+      "tag": "1366x768 glossary",
+      "panels": [
+        {
+          "title": "Phễu làm sạch dữ liệu",
+          "height": 553,
+          "emptyFraction": 0.016,
+          "scrolls": false
+        },
+        {
+          "title": "So sánh hai bộ dữ liệu",
+          "height": 282,
+          "emptyFraction": 0.032,
+          "scrolls": false
+        },
+        {
+          "title": "Phân phối điểm đánh giá",
+          "height": 259,
+          "emptyFraction": 0.035,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 8,
+        "13": 576,
+        "14": 119,
+        "15": 274,
+        "17": 66,
+        "22": 75,
+        "13.5": 147,
+        "12.5": 43
+      }
+    },
+    {
+      "tag": "1366x768 tuning-modal",
+      "panels": [
+        {
+          "title": "Người dùng khắt khe: độ lệch so với trung bình hệ thống",
+          "height": 603,
+          "emptyFraction": 0.015,
+          "scrolls": false
+        },
+        {
+          "title": "Các cụm",
+          "height": 256,
+          "emptyFraction": 0.02,
+          "scrolls": false
+        },
+        {
+          "title": "Món được chấm từ 4 sao nhiều nhất",
+          "height": 335,
+          "emptyFraction": 0.168,
+          "scrolls": false
+        }
+      ],
+      "fonts": {
+        "12": 18,
+        "13": 748,
+        "14": 97,
+        "15": 305,
+        "17": 95,
+        "22": 62,
+        "13.5": 78,
+        "12.5": 27
+      }
+    }
+  ]
+}
