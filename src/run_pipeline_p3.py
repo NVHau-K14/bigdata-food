@@ -7,8 +7,13 @@ Thực thi toàn bộ pipeline làm sạch P3 cho cả hai bộ dữ liệu (Foo
 3. Tổng hợp danh sách nhật ký các bước thành DataFrame.
 4. Ghi CSV tại reports/evidence/cleaning_log.csv.
 5. Ghi Parquet tại data/results/cleaning_log.parquet (theo STORAGE_MODE).
+
+Tham số --only vietnam: chỉ chạy lại ViFoodRec, giữ nguyên Parquet sạch của Food.com
+(ghi lại sẽ đổi thứ tự dòng và làm đổi cách chia train/validation/test theo seed). Các dòng
+Food.com trong nhật ký được lấy từ cleaning_log.csv hiện có.
 """
 
+import argparse
 import sys
 import time
 from pathlib import Path
@@ -26,7 +31,7 @@ from src.clean_food_com import clean_food_com
 from src.clean_vietnam import clean_vietnam
 
 
-def run_full_cleaning_pipeline():
+def run_full_cleaning_pipeline(only=None):
     start_time = time.time()
     spark = get_spark_session("RunPipelineP3")
     
@@ -34,8 +39,17 @@ def run_full_cleaning_pipeline():
     print("   BẮT ĐẦU CHẠY PIPELINE LÀM SẠCH TOÀN DIỆN P3")
     print("=" * 80)
     
-    # 1. Chạy Food.com
-    food_com_logs = clean_food_com(spark)
+    evidence_dir = ROOT_DIR / "reports" / "evidence"
+    evidence_dir.mkdir(parents=True, exist_ok=True)
+    csv_log_path = evidence_dir / "cleaning_log.csv"
+    
+    # 1. Chạy Food.com (hoặc lấy lại nhật ký đã có nếu chỉ chạy ViFoodRec)
+    if only == "vietnam":
+        old_log = pd.read_csv(csv_log_path)
+        food_com_logs = old_log[old_log["dataset"].str.startswith("food_com")].to_dict("records")
+        print(f"\n[Bỏ qua Food.com] Giữ {len(food_com_logs)} dòng nhật ký từ {csv_log_path}")
+    else:
+        food_com_logs = clean_food_com(spark)
     
     # 2. Chạy ViFoodRec
     vifood_logs = clean_vietnam(spark)
@@ -43,9 +57,6 @@ def run_full_cleaning_pipeline():
     all_logs = food_com_logs + vifood_logs
     
     # 3. Ghi cleaning_log.csv vào reports/evidence/
-    evidence_dir = ROOT_DIR / "reports" / "evidence"
-    evidence_dir.mkdir(parents=True, exist_ok=True)
-    csv_log_path = evidence_dir / "cleaning_log.csv"
     
     df_pandas = pd.DataFrame(all_logs)
     df_pandas.to_csv(csv_log_path, index=False, encoding="utf-8-sig")
@@ -74,4 +85,8 @@ def run_full_cleaning_pipeline():
 
 
 if __name__ == "__main__":
-    run_full_cleaning_pipeline()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--only", choices=["vietnam"], default=None,
+                        help="Chỉ chạy lại ViFoodRec, giữ nguyên Food.com")
+    args = parser.parse_args()
+    run_full_cleaning_pipeline(only=args.only)

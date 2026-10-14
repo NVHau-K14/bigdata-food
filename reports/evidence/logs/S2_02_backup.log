@@ -1,0 +1,16 @@
+3.7M	/tmp/bk2/clean_food_vietnam
+8.0K	/tmp/bk2/cleaning_log.parquet
+--- backup contents
+19M	backup_v2_truoc_S2/app
+2.7M	backup_v2_truoc_S2/data
+3.7M	backup_v2_truoc_S2/hdfs
+12K	backup_v2_truoc_S2/reports_evidence
+2.7M	backup_v2_truoc_S2/results
+4.3M	backup_v2_truoc_S2/web
+141
+backup_v2_truoc_S2/hdfs/cleaning_log.parquet/part-00000-3d4ac54f-f916-4e81-ab5e-d11b3ca23ed8-c000.snappy.parquet
+backup_v2_truoc_S2/hdfs/cleaning_log.parquet/_SUCCESS
+backup_v2_truoc_S2/hdfs/clean_food_vietnam/foods_clean.parquet/part-00000-f7a88198-ee9e-403b-a3d1-62f83f1db19d-c000.snappy.parquet
+backup_v2_truoc_S2/hdfs/clean_food_vietnam/foods_clean.parquet/_SUCCESS
+backup_v2_truoc_S2/hdfs/clean_food_vietnam/ratings_clean.parquet/part-00000-608f50bd-8741-44d6-9916-e569082e2c2e-c000.snappy.parquet
+backup_v2_truoc_S2/hdfs/clean_food_vietnam/ratings_clean.parquet/_SUCCESS

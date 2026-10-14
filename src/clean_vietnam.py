@@ -12,10 +12,10 @@ Pipeline làm sạch chuẩn hóa cho bộ dữ liệu ViFoodRec (món ăn Việ
    - Gắn cờ is_duplicate nếu trùng tên và nguyên liệu (không xóa để bảo toàn đánh giá).
 3. Làm sạch bảng ratings:
    - Đổi tên userId -> user_id, foodId -> food_id.
-   - Khảo sát và ghi nhận phân phối 11 mức điểm (0.0 đến 5.0, mỗi mức ~16,500 đánh giá).
-   - Lọc bỏ điểm ngoài [1.0, 5.0] (loại 33,211 dòng rating 0.0 và 0.5).
+   - Giữ nguyên thang điểm 11 mức (0.0 đến 5.0, bước 0.5); chỉ loại điểm nằm ngoài thang đó.
+     Không loại 0.0 và 0.5 vì số dòng mỗi mức ngang nhau (quyết định ngày 14/10/2026).
    - Khử trùng cặp (user_id, food_id).
-   - Kiểm tra khóa ngoại với foods (loại bỏ 36 dòng mang food_id = 4000 không tồn tại trong foods).
+   - Kiểm tra khóa ngoại với foods (loại các dòng mang food_id không có trong foods).
    - Lọc K-core lặp đến khi hội tụ (K=3).
 4. Gắn cờ has_ratings cho bảng foods.
 5. Ghi Parquet sạch dạng coalesce(1) tránh phân mảnh file nhỏ.
@@ -35,10 +35,13 @@ from pyspark.sql.types import (
 )
 from pyspark.sql.functions import (
     col, trim, when, split, regexp_replace, regexp_extract, row_number,
-    count as spark_count, lit
+    count as spark_count, lit, round as spark_round
 )
 from pyspark.sql.window import Window
-from src.config import get_spark_session, get_path, K_CORE_DEFAULT
+from src.config import (
+    get_spark_session, get_path, K_CORE_DEFAULT,
+    RATING_MIN_VN, RATING_MAX_VN, RATING_STEP_VN
+)
 
 
 def clean_vietnam(spark=None):
@@ -183,18 +186,27 @@ def clean_vietnam(spark=None):
         "notes": "Bỏ NULL ở user_id, food_id, rating"
     })
     
-    # R2: Lọc bỏ rating ngoài [1.0, 5.0] (loại 16,509 dòng 0.0 và 16,702 dòng 0.5)
-    df_rat_range = df_rat_valid.filter((col("rating") >= 1.0) & (col("rating") <= 5.0))
+    # R2: Giữ rating thuộc thang 0.0, 0.5, ..., 5.0. Điểm đã nằm trong thang nên bước này
+    # chỉ loại giá trị lệch bước 0.5 hoặc ngoài [0.0, 5.0] (nếu có). Bước 0.5 là lũy thừa của 2
+    # nên phép chia và nhân với bước là chính xác trong số thực nhị phân.
+    on_scale = (
+        (col("rating") >= RATING_MIN_VN) & (col("rating") <= RATING_MAX_VN) &
+        (spark_round(col("rating") / RATING_STEP_VN) * RATING_STEP_VN == col("rating"))
+    )
+    df_rat_range = df_rat_valid.filter(on_scale)
     r2_count = df_rat_range.count()
     r2_dropped = r1_count - r2_count
-    print(f"  - Sau lọc rating trong đoạn [1.0, 5.0]: {r2_count:,} (Loại điểm < 1.0: {r2_dropped:,})")
+    n_levels = int(round((RATING_MAX_VN - RATING_MIN_VN) / RATING_STEP_VN)) + 1
+    print(f"  - Sau lọc thang điểm {RATING_MIN_VN} đến {RATING_MAX_VN}, bước {RATING_STEP_VN} ({n_levels} mức): "
+          f"{r2_count:,} (Loại ngoài thang: {r2_dropped:,})")
     logs.append({
         "dataset": "vifoodrec_ratings",
-        "step_name": "filter_rating_range_1_to_5",
+        "step_name": "filter_rating_scale_0_to_5_step_half",
         "rows_before": r1_count,
         "rows_after": r2_count,
         "rows_dropped": r2_dropped,
-        "notes": "Loại bỏ điểm ngoài [1.0, 5.0] (gồm 16,509 dòng rating 0.0 và 16,702 dòng rating 0.5)"
+        "notes": f"Giữ rating thuộc thang {n_levels} mức từ {RATING_MIN_VN} đến {RATING_MAX_VN}, bước {RATING_STEP_VN}; "
+                 f"loại điểm ngoài thang (không loại 0.0 và 0.5)"
     })
     
     # R3: Khử trùng cặp (user_id, food_id)
@@ -212,7 +224,7 @@ def clean_vietnam(spark=None):
     })
     
     # R4: Kiểm tra toàn vẹn khóa ngoại với bảng foods
-    # (Loại bỏ 36 dòng có food_id = 4000 do foods chỉ có ID 0..3999)
+    # (Loại dòng có food_id không có trong foods; trong dữ liệu thô đó là food_id = 4000 vì foods chỉ có ID 0..3999)
     df_rat_fk = df_rat_dedup.join(
         df_foods_parsed.select("food_id"),
         on="food_id",
@@ -220,14 +232,14 @@ def clean_vietnam(spark=None):
     )
     r4_count = df_rat_fk.count()
     r4_dropped = r3_count - r4_count
-    print(f"  - Sau kiểm tra khóa ngoại với foods: {r4_count:,} (Loại sai FK food_id=4000: {r4_dropped:,})")
+    print(f"  - Sau kiểm tra khóa ngoại với foods: {r4_count:,} (Loại food_id không có trong foods: {r4_dropped:,})")
     logs.append({
         "dataset": "vifoodrec_ratings",
         "step_name": "foreign_key_join_foods",
         "rows_before": r3_count,
         "rows_after": r4_count,
         "rows_dropped": r4_dropped,
-        "notes": "Bảo đảm khóa ngoại: loại bỏ 36 dòng có food_id=4000 không tồn tại trong danh mục foods"
+        "notes": f"Bảo đảm khóa ngoại: loại bỏ {r4_dropped:,} dòng có food_id không tồn tại trong danh mục foods"
     })
     
     # R5: VÒNG LẶP K-CORE LẶP ĐẾN HỘI TỤ (K=3)
@@ -260,13 +272,16 @@ def clean_vietnam(spark=None):
     df_ratings_final = curr_df
     r5_count = c_after
     r5_dropped = r4_count - r5_count
+    # Số user và món còn lại lấy từ dữ liệu, không viết cứng vào chuỗi nhật ký
+    n_users_final = df_ratings_final.select("user_id").distinct().count()
+    n_foods_final = df_ratings_final.select("food_id").distinct().count()
     logs.append({
         "dataset": "vifoodrec_ratings",
         "step_name": "iterative_k_core_convergence",
         "rows_before": r4_count,
         "rows_after": r5_count,
         "rows_dropped": r5_dropped,
-        "notes": f"Lọc K-core lặp tới hội tụ (K={k}, hội tụ sau {iteration} vòng lặp, 100 user và 4000 món đều thỏa mãn)"
+        "notes": f"Lọc K-core lặp tới hội tụ (K={k}, hội tụ sau {iteration} vòng lặp, còn {n_users_final:,} user và {n_foods_final:,} món)"
     })
     
     # ---------------------------------------------------------

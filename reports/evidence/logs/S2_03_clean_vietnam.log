@@ -1,0 +1,114 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/14 13:45:55 INFO SparkContext: Running Spark version 4.2.0
+26/10/14 13:45:55 INFO SparkContext: OS info Linux, 6.18.33.2-microsoft-standard-WSL2, amd64
+26/10/14 13:45:55 INFO SparkContext: Java version 21.0.12.1+1-1-26.04.4-Ubuntu
+26/10/14 13:45:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/10/14 13:45:55 INFO ResourceUtils: ==============================================================
+26/10/14 13:45:55 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/10/14 13:45:55 INFO ResourceUtils: ==============================================================
+26/10/14 13:45:55 INFO SparkContext: Submitted application: RunPipelineP3
+26/10/14 13:45:55 INFO SecurityManager: Changing view acls to: root
+26/10/14 13:45:55 INFO SecurityManager: Changing modify acls to: root
+26/10/14 13:45:55 INFO SecurityManager: Changing view acls groups to: root
+26/10/14 13:45:55 INFO SecurityManager: Changing modify acls groups to: root
+26/10/14 13:45:55 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: root groups with view permissions: EMPTY; users with modify permissions: root; groups with modify permissions: EMPTY; RPC SSL disabled
+26/10/14 13:45:55 INFO Utils: Successfully started service 'sparkDriver' on port 39901.
+26/10/14 13:45:55 INFO SparkEnv: Registering MapOutputTracker
+26/10/14 13:45:55 INFO SparkEnv: Registering BlockManagerMaster
+26/10/14 13:45:55 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/10/14 13:45:55 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/10/14 13:45:55 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/10/14 13:45:55 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-9297ca82-f0fc-49d1-b310-5139a4c96c70
+26/10/14 13:45:55 INFO SparkEnv: Registering OutputCommitCoordinator
+26/10/14 13:45:55 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/10/14 13:45:55 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/10/14 13:45:55 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 2, script: , vendor: , memory -> name: memory, amount: 2048, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/10/14 13:45:55 INFO ResourceProfile: Limiting resource is cpus at 2 tasks per executor
+26/10/14 13:45:55 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/10/14 13:45:56 INFO SecurityManager: Changing view acls to: root
+26/10/14 13:45:56 INFO SecurityManager: Changing modify acls to: root
+26/10/14 13:45:56 INFO SecurityManager: Changing view acls groups to: root
+26/10/14 13:45:56 INFO SecurityManager: Changing modify acls groups to: root
+26/10/14 13:45:56 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: root groups with view permissions: EMPTY; users with modify permissions: root; groups with modify permissions: EMPTY; RPC SSL disabled
+26/10/14 13:45:56 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://spark-master:7077...
+26/10/14 13:45:56 INFO TransportClientFactory: Successfully created connection to spark-master/172.18.0.2:7077 after 24 ms (0 ms spent in bootstraps)
+26/10/14 13:45:56 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20261014134556-0001
+26/10/14 13:45:56 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20261014134556-0001/0 on worker-20261014133232-172.18.0.6-34781 (172.18.0.6:34781) with 2 core(s)
+26/10/14 13:45:56 INFO StandaloneSchedulerBackend: Granted executor ID app-20261014134556-0001/0 on hostPort 172.18.0.6:34781 with 2 core(s), 2.0 GiB RAM
+26/10/14 13:45:56 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20261014134556-0001/1 on worker-20261014133231-172.18.0.5-43853 (172.18.0.5:43853) with 2 core(s)
+26/10/14 13:45:56 INFO StandaloneSchedulerBackend: Granted executor ID app-20261014134556-0001/1 on hostPort 172.18.0.5:43853 with 2 core(s), 2.0 GiB RAM
+26/10/14 13:45:56 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 43993.
+26/10/14 13:45:56 INFO NettyBlockTransferService: Server created on spark-client:43993
+26/10/14 13:45:56 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/10/14 13:45:56 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, spark-client, 43993, None)
+26/10/14 13:45:56 INFO BlockManagerMasterEndpoint: Registering block manager spark-client:43993 with 1320.0 MiB RAM, BlockManagerId(driver, spark-client, 43993, None)
+26/10/14 13:45:56 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, spark-client, 43993, None)
+26/10/14 13:45:56 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, spark-client, 43993, None)
+26/10/14 13:45:56 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20261014134556-0001/1 is now RUNNING
+26/10/14 13:45:56 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20261014134556-0001/0 is now RUNNING
+26/10/14 13:45:56 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+26/10/14 13:45:59 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.18.0.5:59958) with ID 1, ResourceProfileId 0
+26/10/14 13:45:59 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.18.0.6:37614) with ID 0, ResourceProfileId 0
+26/10/14 13:46:00 INFO BlockManagerMasterEndpoint: Registering block manager 172.18.0.5:35827 with 1048.8 MiB RAM, BlockManagerId(1, 172.18.0.5, 35827, None)
+26/10/14 13:46:00 INFO BlockManagerMasterEndpoint: Registering block manager 172.18.0.6:36323 with 1048.8 MiB RAM, BlockManagerId(0, 172.18.0.6, 36323, None)
+
+================================================================================
+   BẮT ĐẦU CHẠY PIPELINE LÀM SẠCH TOÀN DIỆN P3
+================================================================================
+
+[Bỏ qua Food.com] Giữ 10 dòng nhật ký từ /home/jovyan/work/reports/evidence/cleaning_log.csv
+================================================================================
+   BẮT ĐẦU PIPELINE LÀM SẠCH DỮ LIỆU VIFOODREC (P3)
+================================================================================
+
+[A] Đọc dữ liệu thô foods: hdfs://namenode:9000/data/raw/food_vietnam/foods.csv
+  - Tổng số món ăn thô: 4,000
+  - Sau lọc thiếu ID/name: 4,000 (Loại: 0)
+  - Chuẩn hóa text, parse số khẩu phần/thời gian nấu, gắn cờ trùng lặp...
+
+[B] Đọc dữ liệu thô ratings: hdfs://namenode:9000/data/raw/food_vietnam/ratings.csv
+  - Tổng số đánh giá thô: 182,678
+  - Sau bỏ NULL: 182,678 (Loại: 0)
+  - Sau lọc thang điểm 0.0 đến 5.0, bước 0.5 (11 mức): 182,678 (Loại ngoài thang: 0)
+  - Sau khử trùng cặp (user_id, food_id): 182,678 (Loại trùng: 0)
+  - Sau kiểm tra khóa ngoại với foods: 182,631 (Loại food_id không có trong foods: 47)
+
+[C] Thực thi vòng lặp K-core lặp đến khi hội tụ (Ngưỡng K=3)...
+    * Vòng lặp 1: 182,631 -> 182,631 dòng (Giảm 0 dòng)
+  -> K-core ViFoodRec đã HỘI TỤ sau 1 vòng lặp tại 182,631 dòng!
+
+[D] Gắn cờ has_ratings cho bảng foods...
+
+[E] Ghi Parquet sạch (coalesce 1 partition):
+  - Ratings: hdfs://namenode:9000/data/clean/food_vietnam/ratings_clean.parquet
+  - Foods  : hdfs://namenode:9000/data/clean/food_vietnam/foods_clean.parquet
+  -> Ghi Parquet ViFoodRec hoàn tất thành công!
+
+[F] Đã ghi nhật ký làm sạch CSV: /home/jovyan/work/reports/evidence/cleaning_log.csv
+                  dataset  ... rows_dropped
+0        food_com_recipes  ...            0
+1        food_com_recipes  ...            1
+2        food_com_recipes  ...            0
+3   food_com_interactions  ...            0
+4   food_com_interactions  ...            0
+5   food_com_interactions  ...        60847
+6   food_com_interactions  ...            0
+7   food_com_interactions  ...            0
+8   food_com_interactions  ...            0
+9   food_com_interactions  ...       365006
+10        vifoodrec_foods  ...            0
+11        vifoodrec_foods  ...            0
+12      vifoodrec_ratings  ...            0
+13      vifoodrec_ratings  ...            0
+14      vifoodrec_ratings  ...            0
+15      vifoodrec_ratings  ...            0
+16      vifoodrec_ratings  ...           47
+17      vifoodrec_ratings  ...            0
+
+[18 rows x 5 columns]
+[G] Đã ghi nhật ký làm sạch Parquet: hdfs://namenode:9000/data/results/cleaning_log.parquet
+
+================================================================================
+   HOÀN TẤT TOÀN BỘ PIPELINE P3 TRONG 24.34 GIÂY
+================================================================================

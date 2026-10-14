@@ -1,0 +1,36 @@
+columns foods: ['food_id', 'dish_name', 'description', 'dish_type', 'serving_size', 'cooking_time', 'ingredients', 'cooking_method', 'dish_tags', 'calories', 'fat', 'fiber', 'sugar', 'protein', 'image_link', 'nutrient_content']
+foods rows: 4000 food_id min/max: 0 3999
+ratings rows: 182678
+dtypes: {'userId': dtype('int64'), 'foodId': dtype('int64'), 'rating': dtype('float64')}
+NULL per col: {'userId': 0, 'foodId': 0, 'rating': 0}
+n users: 101 min/max userId: 0 100
+n foods rated: 4001 min/max foodId: 0 4000
+rows in duplicated (user,food) groups: 0  extra rows (rows - distinct pairs): 0
+distinct pairs: 182678
+
+Rating distribution:
+            n   pct
+rating             
+0.0     16509  9.04
+0.5     16702  9.14
+1.0     16420  8.99
+1.5     16859  9.23
+2.0     16601  9.09
+2.5     16660  9.12
+3.0     16569  9.07
+3.5     16620  9.10
+4.0     16618  9.10
+4.5     16518  9.04
+5.0     16602  9.09
+distinct rating values: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+not multiple of 0.5: 0
+mean/std rating: 2.49948817044198 1.5798152256613405
+
+ratings per user: min/median/mean/max 1641 1795.0 1808.6930693069307 1989
+distinct foods per user: min/median/mean/max 1641 1795.0 1808.6930693069307 1989
+ratings per food: min/median/mean/max 27 46.0 45.65808547863034 68
+distinct users per food: min/median/mean/max 27 46.0 45.65808547863034 68
+foodId=4000 rows: 47  foodId not in foods: 47
+foods never rated: 0
+dup groups: 0  with differing ratings: 0
+uniform-11 std theory: 1.5811388300841898

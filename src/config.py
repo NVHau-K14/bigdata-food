@@ -30,6 +30,12 @@ K_CORE_DEFAULT = int(os.environ.get("K_CORE_THRESHOLD", 3))
 # Phân vị cắt ngoại lai minutes cho Food.com recipes (ngưỡng 99.9% là 1440 phút / 24 giờ)
 MAX_MINUTES_THRESHOLD = 1440
 
+# Thang điểm ViFoodRec: 11 mức từ 0.0 đến 5.0, bước 0.5 (trùng thang trong bài báo gốc).
+# Giữ cả 0.0 và 0.5 vì số dòng mỗi mức ngang nhau, không có bằng chứng 0.0 là "chưa chấm".
+RATING_MIN_VN = 0.0
+RATING_MAX_VN = 5.0
+RATING_STEP_VN = 0.5
+
 # Hệ số làm trơn m cho mô hình Baseline Smoothed Item Mean (P6)
 SMOOTHING_M = int(os.environ.get("SMOOTHING_M", 5))
 

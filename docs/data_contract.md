@@ -182,4 +182,20 @@ python src/verify_export.py
 - **Tổng dung lượng:** 18.22 MB $\ll$ 100 MB.
 
 ---
-*Tài liệu Hợp đồng Dữ liệu được ban hành chính thức cho Giai đoạn P10 & P11.*
+
+## 5. Dữ liệu sạch đầu vào của pipeline (cập nhật ngày 14/10/2026, stage S2)
+
+Phần này mô tả dữ liệu sạch trên HDFS (`/data/clean/...`) mà các stage sau đọc. Bản cũ (P3) loại rating 0,0 và 0,5 của ViFoodRec; bản này giữ lại.
+
+| Bảng | Khóa | Quy tắc làm sạch | Số dòng (nguồn: `reports/evidence/cleaning_log.csv`) |
+|---|---|---|---:|
+| `food_com/interactions_clean.parquet` | (`user_id`, `recipe_id`) | rating thuộc [1, 5] (đã bỏ rating 0), không trùng cặp, khóa ngoại tới recipes, K-core lặp K = 3 | 706.514 |
+| `food_vietnam/ratings_clean.parquet` | (`user_id`, `food_id`) | rating thuộc đúng 11 mức 0,0; 0,5; ...; 5,0 (`RATING_MIN_VN`, `RATING_MAX_VN`, `RATING_STEP_VN` trong `src/config.py`); bỏ NULL; không trùng cặp; `food_id` phải có trong `foods`; K-core lặp K = 3 | 182.631 |
+
+- Thang điểm ViFoodRec: 11 mức, bước 0,5. Mức 0,0 và 0,5 được giữ vì số dòng mỗi mức ngang nhau (khoảng 9,0% đến 9,2%), không có bằng chứng 0,0 là "chưa chấm".
+- Dòng bị loại của ViFoodRec: 47 dòng có `food_id = 4000` không có trong danh mục món (danh mục có `food_id` từ 0 đến 3999). Không loại dòng nào vì NULL, trùng cặp hay K-core.
+- Tên bước lọc điểm trong `cleaning_log.csv` đổi từ `filter_rating_range_1_to_5` thành `filter_rating_scale_0_to_5_step_half` cho dòng `vifoodrec_ratings`. Food.com vẫn dùng tên cũ.
+- Các file trong `app/data/` và `web/data/` chưa được tạo lại từ dữ liệu sạch mới; việc đó thuộc S3 và S4.
+
+---
+*Tài liệu Hợp đồng Dữ liệu được ban hành chính thức cho Giai đoạn P10 & P11; mục 5 bổ sung ở stage S2.*

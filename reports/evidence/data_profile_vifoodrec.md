@@ -1,8 +1,10 @@
-# HỒ SƠ DỮ LIỆU SẠCH (DATA PROFILE): VIFOODREC (MÓN ĂN VIỆT NAM)
+# Hồ sơ dữ liệu sạch: ViFoodRec (món ăn Việt Nam)
 
-- **Tập dữ liệu:** ViFoodRec (Tập dữ liệu đánh giá và danh mục món ăn Việt Nam)
-- **Giai đoạn:** Sau làm sạch chuẩn hóa P3 (Loại bỏ điểm < 1.0, loại bỏ lỗi khóa ngoại food_id=4000, chuẩn hóa dinh dưỡng và văn bản)
-- **Định dạng lưu trữ:** Parquet Snappy trên HDFS (`hdfs://namenode:9000/data/clean/food_vietnam/`, lưu dạng `coalesce(1)`)
+- **Tập dữ liệu:** ViFoodRec (danh mục món ăn và đánh giá món Việt Nam).
+- **Giai đoạn:** sau làm sạch lại ở stage S2 (14/10/2026): giữ toàn bộ thang điểm 0,0 đến 5,0; chỉ loại dòng có `food_id` không có trong danh mục món; chuẩn hóa dinh dưỡng và văn bản.
+- **Định dạng lưu trữ:** Parquet Snappy trên HDFS (`hdfs://namenode:9000/data/clean/food_vietnam/`, lưu dạng `coalesce(1)`).
+- **Nguồn số liệu:** `reports/evidence/logs/S2_05_stats_clean.log` (tính từ `ratings_clean.parquet` và `foods_clean.parquet`) và `reports/evidence/cleaning_log.csv`. Mục 4 và 5 (món ăn, schema) giữ từ bản P3 vì bảng `foods_clean` không đổi.
+- Bản P3 cũ (loại 0,0 và 0,5, 149.431 dòng) nằm ở `backup_v2_truoc_S2/reports_evidence/`.
 
 ---
 
@@ -10,46 +12,46 @@
 
 | Chỉ số | Giá trị đo được | Ghi chú |
 |---|---|---|
-| **Số lượng đánh giá sạch (`ratings_clean`)** | **149,431** dòng | Giảm từ 182,678 dòng thô (loại 33,211 dòng rating 0.0 & 0.5; loại 36 dòng lỗi ngoại lai food_id=4000) |
-| **Số User duy nhất (`user_id`)** | **101** users | User ID từ 0 đến 100 |
-| **Số Món ăn có tương tác (`food_id`)** | **4,000** món | Food ID từ 0 đến 3999 (100% món trong danh mục đều có đánh giá) |
-| **Tổng số món trong danh mục (`foods_clean`)** | **4,000** món | Toàn bộ 4,000 món đều có cờ `has_ratings = true` |
-| **Độ thưa của ma trận (Sparsity)** | **63.0121%** | $1 - \frac{149,431}{101 \times 4,000} = 0.630121$ (ma trận dày, mật độ tương tác rất cao) |
+| Số đánh giá sạch (`ratings_clean`) | **182.631** dòng | Từ 182.678 dòng thô: loại 47 dòng có `food_id` = 4000 (không có trong danh mục) |
+| Số người dùng (`user_id`) | **101** | `user_id` từ 0 đến 100 |
+| Số món có đánh giá (`food_id`) | **4.000** | `food_id` từ 0 đến 3999; mọi món trong danh mục đều có đánh giá |
+| Số món trong danh mục (`foods_clean`) | **4.000** | Cờ `has_ratings` đều đúng |
+| Độ thưa của ma trận | **54,7943%** | 1 − 182.631 / (101 × 4.000) |
 
 ---
 
-## 2. Phân phối điểm đánh giá (Rating Distribution)
+## 2. Phân phối điểm đánh giá
 
-Sau khi loại bỏ 16,509 dòng rating 0.0 và 16,702 dòng rating 0.5 (tổng 33,211 dòng điểm $< 1.0$), tập dữ liệu còn lại 9 mức điểm phân bố hoàn toàn đồng đều:
+Dữ liệu sạch có đủ 11 mức điểm (0,0 đến 5,0, bước 0,5). Mỗi mức chiếm từ 8,99% đến 9,23% số dòng.
 
-| Mức điểm (Rating) | Số lượng bản ghi | Tỷ lệ phần trăm | Biểu đồ thanh |
-|:---:|:---:|:---:|---|
-| **1.0 ⭐** | 16,418 | 10.99% | ███████████ |
-| **1.5 ⭐** | 16,849 | 11.28% | ███████████ |
-| **2.0 ⭐** | 16,596 | 11.11% | ███████████ |
-| **2.5 ⭐** | 16,654 | 11.14% | ███████████ |
-| **3.0 ⭐** | 16,568 | 11.09% | ███████████ |
-| **3.5 ⭐** | 16,615 | 11.12% | ███████████ |
-| **4.0 ⭐** | 16,615 | 11.12% | ███████████ |
-| **4.5 ⭐** | 16,516 | 11.05% | ███████████ |
-| **5.0 ⭐** | 16,600 | 11.11% | ███████████ |
-| **Tổng** | **149,431** | **100.0%** | Điểm trung bình: **3.00 ⭐** |
+| Mức điểm | Số dòng | Tỷ lệ |
+|:---:|---:|---:|
+| 0,0 | 16.503 | 9,04% |
+| 0,5 | 16.697 | 9,14% |
+| 1,0 | 16.418 | 8,99% |
+| 1,5 | 16.849 | 9,23% |
+| 2,0 | 16.596 | 9,09% |
+| 2,5 | 16.654 | 9,12% |
+| 3,0 | 16.568 | 9,07% |
+| 3,5 | 16.615 | 9,10% |
+| 4,0 | 16.615 | 9,10% |
+| 4,5 | 16.516 | 9,04% |
+| 5,0 | 16.600 | 9,09% |
+| **Tổng** | **182.631** | điểm trung bình 2,4996; độ lệch chuẩn 1,5798 |
 
-> **Phát hiện quan trọng về dữ liệu ViFoodRec:**
-> Phân phối điểm của ViFoodRec là **phân phối đều tuyệt đối (Uniform Distribution)** với bước nhảy 0.5 sao. Mỗi mức điểm chiếm chính xác ~11.1% tổng số bản ghi. Đây là minh chứng rõ ràng cho thấy dữ liệu đánh giá này được sinh bằng thuật toán mô phỏng (Synthetic Data / Simulation) hoặc bộ sinh điểm đồng đều của nhóm tác giả đề tài nghiên cứu ViFoodRec, khác biệt hoàn toàn với phân phối tự nhiên thiên lệch 5 sao của Food.com.
+Nhận xét có số: phân phối gần đều trên 11 mức. Độ lệch chuẩn của phân phối đều lý thuyết trên 11 mức bước 0,5 là 1,5811; giá trị đo được 1,5798. Chưa có kiểm định nào về cách dữ liệu được tạo ra, nên không kết luận về nguồn gốc (xem `stage_S2.md`, mục 2).
 
 ---
 
-## 3. Thống kê mức độ hoạt động của User và Món ăn
+## 3. Thống kê mức độ hoạt động của người dùng và món ăn
 
-| Tiêu chí | Min (K-core) | Phân vị 25% | **Trung vị (50%)** | Trung bình (Mean) | Phân vị 75% | Phân vị 90% | Phân vị 99% | Max |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Số đánh giá / User** | **1,334** | 1,420 | **1,469** | 1,479.5 | 1,534 | 1,596 | 1,633 | 1,651 |
-| **Số đánh giá / Food** | **20** | 34 | **37** | 37.36 | 41 | 44 | 49 | 55 |
+| Tiêu chí | Nhỏ nhất | Phân vị 25% | **Trung vị** | Trung bình | Phân vị 75% | Phân vị 90% | Phân vị 99% | Lớn nhất |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Số đánh giá mỗi người dùng | 1.641 | 1.733 | **1.795** | 1.808,2 | 1.875 | 1.953 | 1.985 | 1.989 |
+| Số đánh giá mỗi món | 27 | 42 | **46** | 45,66 | 49 | 52 | 58 | 68 |
 
-- Mỗi user đánh giá trung bình **1,480 món ăn** (chiếm ~37% toàn bộ menu 4,000 món).
-- Mỗi món ăn có trung bình **37.4 lượt đánh giá** (tối thiểu 20 lượt, tối đa 55 lượt).
-- Cả hai chiều đều vượt xa ngưỡng K-core = 3 ($1,334 \gg 3$ và $20 \gg 3$), do đó thuật toán K-core hội tụ ngay tại vòng lặp 1 mà không làm mất thêm bất kỳ bản ghi nào!
+- Mỗi người dùng đánh giá trung bình khoảng 1.808 món (khoảng 45% danh mục 4.000 món).
+- Cả hai chiều vượt xa ngưỡng K-core = 3 (1.641 và 27), nên K-core hội tụ ngay ở vòng 1 và không loại thêm dòng nào.
 
 ---
 

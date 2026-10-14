@@ -3,7 +3,7 @@ src/verify_clean.py
 -------------------
 Kịch bản kiểm chứng tự động độc lập cho dữ liệu sạch sau P3:
 1. Kiểm tra NULL ở tất cả các cột khóa và rating.
-2. Kiểm tra khoảng giá trị rating trong [1.0, 5.0].
+2. Kiểm tra thang điểm: Food.com trong [1.0, 5.0]; ViFoodRec chỉ thuộc đúng 11 mức 0.0, 0.5, ..., 5.0.
 3. Kiểm tra tính duy nhất (không trùng lặp cặp user - món).
 4. Kiểm tra tiêu chí K-core (mọi user và mọi món có ít nhất 3 tương tác).
 5. Kiểm tra toàn vẹn khóa ngoại (100% món trong tương tác phải có trong danh mục món).
@@ -20,7 +20,10 @@ if str(ROOT_DIR) not in sys.path:
 
 import pandas as pd
 from pyspark.sql.functions import col, count as spark_count, min as spark_min, max as spark_max
-from src.config import get_spark_session, get_path, K_CORE_DEFAULT
+from src.config import (
+    get_spark_session, get_path, K_CORE_DEFAULT,
+    RATING_MIN_VN, RATING_MAX_VN, RATING_STEP_VN
+)
 
 
 def verify_all():
@@ -82,19 +85,24 @@ def verify_all():
     if not ok1: passed_all = False
 
     # ---------------------------------------------------------
-    # 2. KIỂM TRA KHOẢNG ĐIỂM RATING [1.0, 5.0]
+    # 2. KIỂM TRA THANG ĐIỂM RATING
     # ---------------------------------------------------------
-    print("\n[2] Kiểm tra khoảng giá trị rating trong [1.0, 5.0]...")
+    n_levels = int(round((RATING_MAX_VN - RATING_MIN_VN) / RATING_STEP_VN)) + 1
+    vn_levels = [RATING_MIN_VN + i * RATING_STEP_VN for i in range(n_levels)]
+    print(f"\n[2] Kiểm tra thang điểm: Food.com trong [1.0, 5.0]; ViFoodRec thuộc đúng {n_levels} mức {vn_levels[0]} đến {vn_levels[-1]}...")
     fc_rat_out = df_fc_inter.filter((col("rating") < 1.0) | (col("rating") > 5.0)).count()
-    vn_rat_out = df_vn_rat.filter((col("rating") < 1.0) | (col("rating") > 5.0)).count()
+    # So khớp bằng danh sách mức tường minh, không dùng khoảng, để bắt cả giá trị lệch bước 0.5
+    vn_rat_out = df_vn_rat.filter(~col("rating").isin(vn_levels)).count()
+    vn_distinct = sorted(r[0] for r in df_vn_rat.select("rating").distinct().collect())
+    print(f"  - ViFoodRec: các mức điểm có trong dữ liệu sạch ({len(vn_distinct)} mức): {vn_distinct}")
     
     ok2 = (fc_rat_out == 0 and vn_rat_out == 0)
     check_results.append({
-        "check": "Rating range within [1.0, 5.0]",
-        "detail": f"fc_out={fc_rat_out}, vn_out={vn_rat_out}",
+        "check": f"Rating scale (Food.com 1-5, ViFoodRec {n_levels} levels)",
+        "detail": f"fc_out={fc_rat_out}, vn_out={vn_rat_out}, vn_distinct_levels={len(vn_distinct)}",
         "passed": ok2
     })
-    print(f"  -> Kết quả: {'ĐẠT' if ok2 else 'KHÔNG ĐẠT'} (Điểm ngoài khoảng = 0)")
+    print(f"  -> Kết quả: {'ĐẠT' if ok2 else 'KHÔNG ĐẠT'} (Điểm ngoài thang: Food.com={fc_rat_out}, ViFoodRec={vn_rat_out})")
     if not ok2: passed_all = False
 
     # ---------------------------------------------------------
